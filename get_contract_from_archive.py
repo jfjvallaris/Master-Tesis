@@ -12,10 +12,7 @@ from bs4 import BeautifulSoup
 import time
 from waybackpy import WaybackMachineCDXServerAPI
 from datetime import datetime, timedelta
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from _functions import make_request
-
-import os
 
 
 def get_closest_archive(url, transfer_date, max_retries=5, base_delay=5, 
@@ -205,7 +202,7 @@ def extract_contract_date(soup, code_from, transfer_date, archive_date):
 
         # Verificar condiciones
         if owning_club_id == 515 and (pd.to_datetime(transfer_date) - pd.to_datetime(archive_date)).days < 60:
-            print(f"Se cumple la condición de jugador libre.")
+            print("Se cumple la condición de jugador libre.")
             transfer_date = pd.to_datetime(transfer_date)
             archive_date = pd.to_datetime(archive_date)
             if transfer_date.month in [7, 8, 9]:  # Julio, Agosto, Septiembre
@@ -268,7 +265,7 @@ def extract_contract_date(soup, code_from, transfer_date, archive_date):
 
 
 
-def scrape_transfermarkt_archive(player_url, transfer_date, code_from, paralel_mirrors=False, aditional_mirrors=False):
+def scrape_transfermarkt_archive(player_url, transfer_date, code_from, aditional_mirrors=False):
     """
     Busca la página archivada más cercana antes de transfer_date en los dominios de Transfermarkt
     y procesa el snapshot más cercano con validación del código del club propietario.
@@ -294,21 +291,6 @@ def scrape_transfermarkt_archive(player_url, transfer_date, code_from, paralel_m
             print(f"Error al consultar el mirror {mirror}: {e}")
             return None, mirror
 
-    if paralel_mirrors:
-        with ThreadPoolExecutor(max_workers=len(mirrors)) as executor:
-            future_to_mirror = {executor.submit(process_mirror, mirror): mirror for mirror in mirrors}
-            for future in as_completed(future_to_mirror):
-                try:
-                    result, mirror = future.result()
-                    if result and result["available"]:
-                        closest_snapshots.append({
-                            "url": result["url"],
-                            "timestamp": result["timestamp"],
-                            "mirror": mirror
-                        })
-                except Exception as e:
-                    print(f"Error procesando el mirror {future_to_mirror[future]}: {e}")
-    else:
         for mirror in mirrors:
             try:
                 time.sleep(30)  # Respetar el tiempo entre solicitudes
@@ -370,10 +352,10 @@ def update_contract_dates(df):
     # Filtrar filas a procesar
     rows_to_scrape = df[
         (df['ends_contract_date'].isnull())  # Falta fecha de contrato
-        & (df['processing_status'] != "no_mirrors")  # No intentar filas sin mirrors válidos
+        & (df['processing_status'] != "no_mirrors")  # No reintentar filas sin mirrors válidos
         & (df['archive_date'].isnull())  # Añadir condición para filas sin archive_date
-        # & (df['code_from'] != 515)  # Filtro adicional según lógica original
-        # & (df['code_to'] != 515)    # Filtro adicional según lógica original
+        # & (df['code_from'] != 515)  # Filtro jugadores sin club
+        # & (df['code_to'] != 515)    # Filtro jugadores que no consiguieron club
     ]
 
     for idx, row in rows_to_scrape.iterrows():
