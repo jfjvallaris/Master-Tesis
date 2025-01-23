@@ -350,51 +350,6 @@ def scrape_transfermarkt_archive(player_url, transfer_date, code_from, paralel_m
     return None, None, None
 
 
-# def get_soup_from_url(archived_url):
-
-
-# def update_contract_dates(df):
-#     """
-#     Actualiza el DataFrame agregando información de 'ends_contract_date' y 'archive_date'
-#     mediante el scraping en las filas donde falta esta información y validando con el código del club propietario.
-    
-#     :param df: DataFrame con las columnas 'player_url', 'transfer_date', 'ends_contract_date', 'code_from'.
-#     :return: DataFrame actualizado con las columnas 'ends_contract_date' y 'archive_date'.
-#     """
-
-#     if 'archive_date' not in df.columns:
-#         df['archive_date'] = None
-
-#     rows_to_scrape = df[
-#         (df['ends_contract_date'].isnull())
-#         & (df['code_from'] != 515)
-#         & (df['code_to'] != 515)
-#     ]
-
-#     for idx, row in rows_to_scrape.iterrows():
-#         try:
-#             print(f"Procesando fila {idx} con URL {row['player_url']} y fecha de transferencia {row['transfer_date']}...")
-    
-#             # Scrapeo con validación del club propietario
-#             contract_date, archive_date, archive_url = scrape_transfermarkt_archive(
-#                 row['player_url'],
-#                 row['transfer_date'],
-#                 row['code_from']
-#             )
-    
-#             if contract_date:
-#                 df.at[idx, 'ends_contract_date'] = contract_date
-#                 df.at[idx, 'archive_date'] = archive_date
-#                 df.at[idx, 'url_contract'] = archive_url
-#                 print(f"Fila {idx} actualizada con fecha de contrato {contract_date} y fecha de archivo {archive_date}.")
-#             else:
-#                 print(f"No se encontró información válida para la fila {idx}.")
-
-#         except KeyboardInterrupt:
-#             break
-
-#     return df
-
 def update_contract_dates(df):
     """
     Actualiza el DataFrame agregando información de 'ends_contract_date' y 'archive_date'
