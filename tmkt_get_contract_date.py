@@ -125,7 +125,7 @@ def update_contract_date(df):
         df.at[index, 'url_contract'] = url
 
     df['ends_contract_date'] = pd.to_datetime(df['ends_contract_date'], errors='coerce', dayfirst=True)
-    df['ends_contract_date'] = df['ends_contract_date'].dt.strftime('%Y-%m-%d')
+    df['ends_contract_date'] = df['ends_contract_date'].dt.strftime('%d/%m/%Y')
 
     return df
 
