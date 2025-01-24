@@ -115,13 +115,13 @@ def make_request(url, params=None, retries=5, timeout=20, retry_delay=5, **kwarg
             time.sleep(retry_delay)
 
         except HTTPError as e:
-            if response.status_code in [500, 502, 504]:
+            if response.status_code in [403, 500, 502, 504]:
                 error_type = "502 Bad Gateway" if response.status_code == 502 else "500 or 504 Gateway Time-out"
                 print(f"Intento {attempt + 1} de {retries}: Error {error_type}. Reintentando en {retry_delay} segundos...")
                 time.sleep(retry_delay)
-            elif response.status_code == 403:
-                print(f"Intento {attempt + 1} de {retries}: Error 403 - Esperando 1 minutos para reintentar...")
-                time.sleep(60)  # Espera de 1 minuto
+            # elif response.status_code == 403:
+            #     print(f"Intento {attempt + 1} de {retries}: Error 403 - Esperando 1 minutos para reintentar...")
+            #     time.sleep(60)  # Espera de 1 minuto
             else:
                 print(f"Error HTTP: {e}. No es un error recuperable, deteniendo reintentos.")
                 return None

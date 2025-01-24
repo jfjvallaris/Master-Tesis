@@ -12,7 +12,10 @@ from bs4 import BeautifulSoup
 import time
 from waybackpy import WaybackMachineCDXServerAPI
 from datetime import datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from _functions import make_request
+
+import os
 
 
 def get_closest_archive(url, transfer_date, max_retries=5, base_delay=5, 
@@ -163,13 +166,16 @@ def extract_contract_date(soup, code_from, transfer_date, archive_date):
                                 except ValueError:
                                     pass  # Continuar si no se puede convertir a entero
 
+                            # Intentar con el atributo id
+
                             # Intentando recorriendo los links
                             links = info_club.find_all("a", href=True)
                             for link in links:
                                 try:
-                                    print(int(link["href"].split("/")[-1]))  # Extraer el ID desde la URL
+                                    return int(link["href"].split("/")[-1])  # Extraer el ID desde la URL
                                 except ValueError:
                                     pass  # Continuar si no se puede convertir a entero
+
 
                 else:
                     # código para fechas anteriores o iguales al 1 de septiembre 2021
@@ -201,21 +207,25 @@ def extract_contract_date(soup, code_from, transfer_date, archive_date):
 
 
         # Verificar condiciones
-        if owning_club_id == 515 and (pd.to_datetime(transfer_date) - pd.to_datetime(archive_date)).days < 60:
-            print("Se cumple la condición de jugador libre.")
-            transfer_date = pd.to_datetime(transfer_date)
-            archive_date = pd.to_datetime(archive_date)
-            if transfer_date.month in [7, 8, 9]:  # Julio, Agosto, Septiembre
-                contract_date = transfer_date.replace(month=6, day=30)  # Último día de junio del mismo año
-            elif transfer_date.month in [1, 2]:  # Enero, Febrero
-                contract_date = transfer_date.replace(year=transfer_date.year - 1, month=12, day=31)  # Último día de diciembre del año anterior
+        if owning_club_id == 515:
+            print(f"Se cumple la condición de jugador libre.")
+            if (pd.to_datetime(transfer_date) - pd.to_datetime(archive_date)).days < 90:
+                print("La informacion es lo suficientemente cercana como para asumir traspaso libre")
+                transfer_date = pd.to_datetime(transfer_date)
+                archive_date = pd.to_datetime(archive_date)
+                if transfer_date.month in [7, 8, 9]:  # Julio, Agosto, Septiembre
+                    contract_date = transfer_date.replace(month=6, day=30)  # Último día de junio del mismo año
+                elif transfer_date.month in [1, 2]:  # Enero, Febrero
+                    contract_date = transfer_date.replace(year=transfer_date.year - 1, month=12, day=31)  # Último día de diciembre del año anterior
+                else:
+                    # Calcular el último día del mes anterior
+                    first_day_of_month = transfer_date.replace(day=1)  # Primer día del mes de transfer_date
+                    last_day_prev_month = first_day_of_month - timedelta(days=1)  # Día previo al primer día del mes
+                    contract_date = last_day_prev_month
+                print(f"Fecha del contrato: {contract_date}")
+                return contract_date.strftime("%d/%m/%Y")
             else:
-                # Calcular el último día del mes anterior
-                first_day_of_month = transfer_date.replace(day=1)  # Primer día del mes de transfer_date
-                last_day_prev_month = first_day_of_month - timedelta(days=1)  # Día previo al primer día del mes
-                contract_date = last_day_prev_month
-            print(f"Fecha del contrato: {contract_date}")
-            return contract_date.strftime("%d/%m/%Y")
+                print("La informacion es demasiado antigua para computarlo como libre")
 
         if owning_club_id != code_from:
             print(f"El código del club propietario ({owning_club_id}) no coincide con el código del DataFrame ({code_from}).")
@@ -265,7 +275,7 @@ def extract_contract_date(soup, code_from, transfer_date, archive_date):
 
 
 
-def scrape_transfermarkt_archive(player_url, transfer_date, code_from, aditional_mirrors=False):
+def scrape_transfermarkt_archive(player_url, transfer_date, code_from, paralel_mirrors=False, aditional_mirrors=False):
     """
     Busca la página archivada más cercana antes de transfer_date en los dominios de Transfermarkt
     y procesa el snapshot más cercano con validación del código del club propietario.
@@ -291,6 +301,21 @@ def scrape_transfermarkt_archive(player_url, transfer_date, code_from, aditional
             print(f"Error al consultar el mirror {mirror}: {e}")
             return None, mirror
 
+    if paralel_mirrors:
+        with ThreadPoolExecutor(max_workers=len(mirrors)) as executor:
+            future_to_mirror = {executor.submit(process_mirror, mirror): mirror for mirror in mirrors}
+            for future in as_completed(future_to_mirror):
+                try:
+                    result, mirror = future.result()
+                    if result and result["available"]:
+                        closest_snapshots.append({
+                            "url": result["url"],
+                            "timestamp": result["timestamp"],
+                            "mirror": mirror
+                        })
+                except Exception as e:
+                    print(f"Error procesando el mirror {future_to_mirror[future]}: {e}")
+    else:
         for mirror in mirrors:
             try:
                 time.sleep(30)  # Respetar el tiempo entre solicitudes
@@ -314,6 +339,10 @@ def scrape_transfermarkt_archive(player_url, transfer_date, code_from, aditional
         print(f"Intentando con snapshot: {archived_url} (Fecha: {archive_date}, Mirror: {mirror_used})")
         try:
             response = make_request(archived_url, timeout=30)
+            if response is None:
+                print("El link no anda y deberia buscar como obtener el snap anterior")
+                return None, None, None
+
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, "html.parser")
                 contract_date = extract_contract_date(soup, code_from, transfer_date, archive_date)
@@ -323,6 +352,7 @@ def scrape_transfermarkt_archive(player_url, transfer_date, code_from, aditional
                     return contract_date, archive_date_formatted, archived_url
                 else:
                     print(f"No se encontró una fecha de contrato válida en el snapshot de {mirror_used}.")
+
             else:
                 print(f"Error al acceder al snapshot de {mirror_used}: Estado HTTP {response.status_code}.")
         except requests.exceptions.RequestException as e:
@@ -352,11 +382,13 @@ def update_contract_dates(df):
     # Filtrar filas a procesar
     rows_to_scrape = df[
         (df['ends_contract_date'].isnull())  # Falta fecha de contrato
-        & (df['processing_status'] != "no_mirrors")  # No reintentar filas sin mirrors válidos
+        & (df['processing_status'] != "no_mirrors")  # No intentar filas sin mirrors válidos
         & (df['archive_date'].isnull())  # Añadir condición para filas sin archive_date
-        # & (df['code_from'] != 515)  # Filtro jugadores sin club
-        # & (df['code_to'] != 515)    # Filtro jugadores que no consiguieron club
+        & (df['code_from'] != 515)  # Filtro adicional según lógica original
+        & (df['code_to'] != 515)    # Filtro adicional según lógica original
     ]
+
+    print(f"Scrapeando {len(rows_to_scrape)} filas")
 
     for idx, row in rows_to_scrape.iterrows():
         try:
@@ -389,31 +421,6 @@ def update_contract_dates(df):
             break
         except Exception as e:
             print(f"Error procesando la fila {idx}: {e}")
-
-    try:
-        # Primero convertir a datetime
-        df["transfer_date"] = pd.to_datetime(df["transfer_date"], format='%Y-%m-%d', errors='coerce')
-        df["ends_contract_date"] = pd.to_datetime(df["ends_contract_date"], format='mixed', dayfirst=True, errors='coerce')
-        
-        # Luego convertir al formato deseado
-        df["transfer_date"] = df["transfer_date"].dt.strftime('%d/%m/%Y')
-        df["ends_contract_date"] = df["ends_contract_date"].dt.strftime('%d/%m/%Y')
-    
-    except TypeError as e:
-        print(f"Error de tipo en la conversión de fechas: {e}")
-        print("Verificar tipos de datos en las columnas de fecha")
-    
-    except ValueError as e:
-        print(f"Error de valor en la conversión de fechas: {e}")
-        print("Posible problema con formato de fecha no reconocido")
-    
-    except AttributeError as e:
-        print(f"Error de atributo en la conversión de fechas: {e}")
-        print("Verificar que las columnas existan y sean del tipo correcto")
-    
-    except Exception as e:
-        print(f"Error inesperado en la conversión de fechas: {e}")
-
 
     return df
 
