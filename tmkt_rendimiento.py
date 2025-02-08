@@ -20,7 +20,6 @@ def extraer_datos_tabla(soup, tipos_competencia,
     tablas = soup.find_all('table', class_='items')
 
     # Lista para almacenar los datos
-    # datos = []
     rows = []
 
     # Iterar sobre las tablas y extraer datos
@@ -90,9 +89,6 @@ def extraer_datos_tabla(soup, tipos_competencia,
                     row_data[-1] = value_to_int(row_data[-1])
             rows.append(row_data)
 
-        # rows[0][0], rows[0][1] = 'Total', ''
-        # total = rows.pop(0)
-        # rows.append(total)
     try:
         headers = ['Season', 'type_competition','Competition', 'code_compet','Club', 'id_club', 'href_stats','pj', 'Goals', 'Assists', 'Own goals', 'Subbed In', 'Subbed out', 'Yellow Cards', 'Double yellow', 'Red Cards', 'Penalty Kicks', 'Minutes per goal', 'Minutes played']
         datos = pd.DataFrame(rows, columns=headers)
@@ -199,18 +195,6 @@ def dfstats_to_dict(df, t='_ant', filtrar=True):
     return result_dict
 
 
-    '''
-    /esteban-andrada/profil/spieler/105888
-    player_name = 'esteban-andrada'
-    player_id = '105888'
-    season = 2021
-    seas_w = 'verano'
-    club_to_code = '2407'
-    transfer_date = datetime(2021, 7, 4)
-
-    '''
-
-
 def get_last_stats(dic_player, DEBUG=False, filtrar=True):
     """
     Obtiene estadísticas de la temporada anterior y actual de un jugador,
@@ -224,6 +208,7 @@ def get_last_stats(dic_player, DEBUG=False, filtrar=True):
     Returns:
     - Tuple[dict, dict]: Estadísticas de la temporada anterior y actual.
     """
+
     player_name = parse_name(dic_player['player_name'])
     player_id = dic_player['player_id']
     season = dic_player['season']  # Para obtener t-2 restar uno aca
@@ -336,11 +321,6 @@ def start_before_last(df, season, seas_w, transfer_date, filtrar=True):
     return df_filtrado
 
 
-
-
-# NUEVA FUNCIÓN: Extraer datos jornada a jornada
-
-
 def produce_seas_df_stats(df, is_por=False):
     ''' 
     Funcion en construcción. Debe devolver una fila de dataframe similar a
@@ -353,13 +333,6 @@ def produce_seas_df_stats(df, is_por=False):
 
     '''
     df_stats = pd.DataFrame()
-
-    # for href in df['href_stats']:
-    #     print(href)
-    #     # href_stats = df['href_stats'][4]
-    #     df_temp = get_player_detailed_data(href)
-        
-    #     df_stats = pd.concat([df_stats, df_temp])
 
     for index, row in df.iterrows():
         # Obtener el href_stats para esta fila
@@ -382,17 +355,11 @@ def produce_seas_df_stats(df, is_por=False):
     df_stats['fecha'] = pd.to_datetime(df_stats['fecha'], format='%d/%m/%y')
     df_stats = df_stats.sort_values(by='fecha')
     print(is_por, df_stats)
-    #
 
     return df_stats
 
 
-
 def get_player_detailed_data(href_stats):
-    '''
-    href_stats=f'/brian-mansilla/leistungsdatendetails/spieler/373374/saison/2022/wettbewerb/RU1/verein/14589'
-
-    '''
     url = 'https://www.transfermarkt.es/' + href_stats
     response = make_request(url, headers=request_headers)
     # response.raise_for_status()
