@@ -1,0 +1,2306 @@
+{
+    "1029": {
+        "Club_Name": "CA V\u00e9lez Sarsfield",
+        "FBRef_name": "V\u00e9lez Sarsfield",
+        "liga_pais": "Argentina",
+        "FBRef_id": "41c139b6"
+    },
+    "1030": {
+        "Club_Name": "AA Argentinos Juniors",
+        "FBRef_name": "Arg Juniors",
+        "liga_pais": "Argentina",
+        "FBRef_id": "d01a653b"
+    },
+    "1070": {
+        "Club_Name": "CA Col\u00f3n",
+        "FBRef_name": "Col\u00f3n",
+        "liga_pais": "Argentina",
+        "FBRef_id": "2d84bb17"
+    },
+    "1106": {
+        "Club_Name": "Club de Gimnasia y Esgrima La Plata",
+        "FBRef_name": "Gimnasia\u2013LP",
+        "liga_pais": "Argentina",
+        "FBRef_id": "950a95f2"
+    },
+    "11831": {
+        "Club_Name": "CA Tigre",
+        "FBRef_name": "Tigre",
+        "liga_pais": "Argentina",
+        "FBRef_id": "0e92bf17"
+    },
+    "12301": {
+        "Club_Name": "CA Aldosivi",
+        "FBRef_name": "Aldosivi",
+        "liga_pais": "Argentina",
+        "FBRef_id": "e5927bd8"
+    },
+    "1234": {
+        "Club_Name": "CA Independiente",
+        "FBRef_name": "Independiente",
+        "liga_pais": "Argentina",
+        "FBRef_id": "40bb0ce9"
+    },
+    "12454": {
+        "Club_Name": "CA Sarmiento (Jun\u00edn)",
+        "FBRef_name": "Sarmiento",
+        "liga_pais": "Argentina",
+        "FBRef_id": "e9ae80b7"
+    },
+    "12574": {
+        "Club_Name": "CD Godoy Cruz Antonio Tomba",
+        "FBRef_name": "Godoy Cruz",
+        "liga_pais": "Argentina",
+        "FBRef_id": "ac9a09b4"
+    },
+    "1286": {
+        "Club_Name": "CA Newell's Old Boys",
+        "FBRef_name": "Newell's OB",
+        "liga_pais": "Argentina",
+        "FBRef_id": "9bf4eaf4"
+    },
+    "1418": {
+        "Club_Name": "CA Rosario Central",
+        "FBRef_name": "Rosario Central",
+        "liga_pais": "Argentina",
+        "FBRef_id": "87a920fa"
+    },
+    "1444": {
+        "Club_Name": "Racing Club",
+        "FBRef_name": "Racing Club",
+        "liga_pais": "Argentina",
+        "FBRef_id": "8e20e13d"
+    },
+    "14554": {
+        "Club_Name": "Club Atl\u00e9tico Tucum\u00e1n",
+        "FBRef_name": "Atl\u00e9 Tucum\u00e1n",
+        "liga_pais": "Argentina",
+        "FBRef_id": "42a1ab8b"
+    },
+    "1775": {
+        "Club_Name": "CA San Lorenzo de Almagro",
+        "FBRef_name": "San Lorenzo",
+        "liga_pais": "Argentina",
+        "FBRef_id": "66da6009"
+    },
+    "1829": {
+        "Club_Name": "Instituto ACC",
+        "FBRef_name": "Instituto",
+        "liga_pais": "Argentina",
+        "FBRef_id": "e2f19203"
+    },
+    "189": {
+        "Club_Name": "CA Boca Juniors",
+        "FBRef_name": "Boca Juniors",
+        "liga_pais": "Argentina",
+        "FBRef_id": "795ca75e"
+    },
+    "19806": {
+        "Club_Name": "CA Patronato",
+        "FBRef_name": "Patronato",
+        "liga_pais": "Argentina",
+        "FBRef_id": "0e6891d5"
+    },
+    "2063": {
+        "Club_Name": "CA Hurac\u00e1n",
+        "FBRef_name": "Hurac\u00e1n",
+        "liga_pais": "Argentina",
+        "FBRef_id": "1d3d37ae"
+    },
+    "209": {
+        "Club_Name": "CA River Plate",
+        "FBRef_name": "River Plate",
+        "liga_pais": "Argentina",
+        "FBRef_id": "ef99c78c"
+    },
+    "2402": {
+        "Club_Name": "CSD Defensa y Justicia",
+        "FBRef_name": "Defensa y Just",
+        "liga_pais": "Argentina",
+        "FBRef_id": "a4570206"
+    },
+    "2417": {
+        "Club_Name": "CA Belgrano",
+        "FBRef_name": "Belgrano",
+        "liga_pais": "Argentina",
+        "FBRef_id": "7765008b"
+    },
+    "25184": {
+        "Club_Name": "CA Barracas Central",
+        "FBRef_name": "Barracas Central",
+        "liga_pais": "Argentina",
+        "FBRef_id": "1d89634b"
+    },
+    "288": {
+        "Club_Name": "Club Estudiantes de La Plata",
+        "FBRef_name": "Estudiantes",
+        "liga_pais": "Argentina",
+        "FBRef_id": "df734df9"
+    },
+    "31284": {
+        "Club_Name": "CA Central C\u00f3rdoba (SdE)",
+        "FBRef_name": "Cen. C\u00f3rdoba\u2013SdE",
+        "liga_pais": "Argentina",
+        "FBRef_id": "9aa97c75"
+    },
+    "333": {
+        "Club_Name": "CA Lan\u00fas",
+        "FBRef_name": "Lan\u00fas",
+        "liga_pais": "Argentina",
+        "FBRef_id": "11b6dba8"
+    },
+    "3938": {
+        "Club_Name": "CA Talleres",
+        "FBRef_name": "Talleres",
+        "liga_pais": "Argentina",
+        "FBRef_id": "ceda2145"
+    },
+    "4673": {
+        "Club_Name": "Arsenal FC",
+        "FBRef_name": "Arsenal",
+        "liga_pais": "Argentina",
+        "FBRef_id": "4bee7ba3"
+    },
+    "7097": {
+        "Club_Name": "CA Uni\u00f3n (Santa Fe)",
+        "FBRef_name": "Uni\u00f3n",
+        "liga_pais": "Argentina",
+        "FBRef_id": "5adc7e67"
+    },
+    "830": {
+        "Club_Name": "CA Banfield",
+        "FBRef_name": "Banfield",
+        "liga_pais": "Argentina",
+        "FBRef_id": "06c1606c"
+    },
+    "928": {
+        "Club_Name": "CA Platense",
+        "FBRef_name": "Platense",
+        "liga_pais": "Argentina",
+        "FBRef_id": "3cbfa767"
+    },
+    "42208": {
+        "Club_Name": "Club Always Ready",
+        "FBRef_name": "Always Ready",
+        "liga_pais": "Bolivia",
+        "FBRef_id": "8d727f54"
+    },
+    "5570": {
+        "Club_Name": "The Strongest La Paz",
+        "FBRef_name": "The Strongest",
+        "liga_pais": "Bolivia",
+        "FBRef_id": "6dcc14bf"
+    },
+    "6985": {
+        "Club_Name": "Club Deportivo Oriente Petrolero",
+        "FBRef_name": "Oriente Petrolero",
+        "liga_pais": "Bolivia",
+        "FBRef_id": "bdc20e84"
+    },
+    "8056": {
+        "Club_Name": "Blooming Santa Cruz",
+        "FBRef_name": "Blooming",
+        "liga_pais": "Bolivia",
+        "FBRef_id": "40d8842e"
+    },
+    "10010": {
+        "Club_Name": "Esporte Clube Bahia",
+        "FBRef_name": "Bahia",
+        "liga_pais": "Brasil",
+        "FBRef_id": "157b7fee"
+    },
+    "1023": {
+        "Club_Name": "SE Palmeiras",
+        "FBRef_name": "Palmeiras",
+        "liga_pais": "Brasil",
+        "FBRef_id": "abdce579"
+    },
+    "10870": {
+        "Club_Name": "Fortaleza Esporte Clube",
+        "FBRef_name": "Fortaleza",
+        "liga_pais": "Brasil",
+        "FBRef_id": "a9d0ab0e"
+    },
+    "199": {
+        "Club_Name": "SC Corinthians",
+        "FBRef_name": "Corinthians",
+        "liga_pais": "Brasil",
+        "FBRef_id": "bf4acd28"
+    },
+    "2035": {
+        "Club_Name": "Ava\u00ed FC",
+        "FBRef_name": "Ava\u00ed",
+        "liga_pais": "Brasil",
+        "FBRef_id": "f205258a"
+    },
+    "210": {
+        "Club_Name": "Gr\u00eamio Foot-Ball Porto Alegrense",
+        "FBRef_name": "Gr\u00eamio",
+        "liga_pais": "Brasil",
+        "FBRef_id": "d5ae3703"
+    },
+    "221": {
+        "Club_Name": "Santos FC",
+        "FBRef_name": "Santos",
+        "liga_pais": "Brasil",
+        "FBRef_id": "712c528f"
+    },
+    "2462": {
+        "Club_Name": "Fluminense Football Club",
+        "FBRef_name": "Fluminense",
+        "liga_pais": "Brasil",
+        "FBRef_id": "84d9701c"
+    },
+    "2863": {
+        "Club_Name": "Am\u00e9rica Futebol Clube (MG)",
+        "FBRef_name": "Am\u00e9rica (MG)",
+        "liga_pais": "Brasil",
+        "FBRef_id": "1f68d780"
+    },
+    "585": {
+        "Club_Name": "S\u00e3o Paulo FC",
+        "FBRef_name": "S\u00e3o Paulo",
+        "liga_pais": "Brasil",
+        "FBRef_id": "5f232eb1"
+    },
+    "609": {
+        "Club_Name": "Cruzeiro Esporte Clube",
+        "FBRef_name": "Cruzeiro",
+        "liga_pais": "Brasil",
+        "FBRef_id": "03ff5eeb"
+    },
+    "6600": {
+        "Club_Name": "Sport Club Internacional",
+        "FBRef_name": "Internacional",
+        "liga_pais": "Brasil",
+        "FBRef_id": "6f7e1f03"
+    },
+    "679": {
+        "Club_Name": "Club Athletico Paranaense",
+        "FBRef_name": "Ath Paranaense",
+        "liga_pais": "Brasil",
+        "FBRef_id": "2091c619"
+    },
+    "776": {
+        "Club_Name": "Coritiba Foot Ball Club",
+        "FBRef_name": "Coritiba",
+        "liga_pais": "Brasil",
+        "FBRef_id": "d680d257"
+    },
+    "978": {
+        "Club_Name": "Clube de Regatas Vasco da Gama",
+        "FBRef_name": "Vasco da Gama",
+        "liga_pais": "Brasil",
+        "FBRef_id": "83f55dbe"
+    },
+    "1037": {
+        "Club_Name": "Universidad de Chile",
+        "FBRef_name": "U de Chile",
+        "liga_pais": "Chile",
+        "FBRef_id": "d4a88ef6"
+    },
+    "11470": {
+        "Club_Name": "CD O'Higgins",
+        "FBRef_name": "O'Higgins",
+        "liga_pais": "Chile",
+        "FBRef_id": "5049d576"
+    },
+    "13394": {
+        "Club_Name": "CD Magallanes",
+        "FBRef_name": "Deportes Magallanes",
+        "liga_pais": "Chile",
+        "FBRef_id": "0e719970"
+    },
+    "14723": {
+        "Club_Name": "CD \u00d1ublense",
+        "FBRef_name": "\u00d1ublense",
+        "liga_pais": "Chile",
+        "FBRef_id": "9c1af4fe"
+    },
+    "19027": {
+        "Club_Name": "CDP Curic\u00f3 Unido",
+        "FBRef_name": "Curico Unido",
+        "liga_pais": "Chile",
+        "FBRef_id": "c40d810e"
+    },
+    "20514": {
+        "Club_Name": "Uni\u00f3n La Calera",
+        "FBRef_name": "La Calera",
+        "liga_pais": "Chile",
+        "FBRef_id": "f052bc76"
+    },
+    "2433": {
+        "Club_Name": "CSD Colo-Colo",
+        "FBRef_name": "Colo-Colo",
+        "liga_pais": "Chile",
+        "FBRef_id": "2ff539f3"
+    },
+    "2723": {
+        "Club_Name": "Santiago Wanderers",
+        "FBRef_name": "Wanderers",
+        "liga_pais": "Chile",
+        "FBRef_id": "d6eb477c"
+    },
+    "3277": {
+        "Club_Name": "CD Universidad Cat\u00f3lica",
+        "FBRef_name": "Univ Cat\u00f3lica",
+        "liga_pais": "Chile",
+        "FBRef_id": "3e3fbf36"
+    },
+    "4321": {
+        "Club_Name": "Uni\u00f3n Espa\u00f1ola",
+        "FBRef_name": "Uni\u00f3n Espa\u00f1ola",
+        "liga_pais": "Chile",
+        "FBRef_id": "def379c5"
+    },
+    "5747": {
+        "Club_Name": "Deportes La Serena",
+        "FBRef_name": "La Serena",
+        "liga_pais": "Chile",
+        "FBRef_id": "86842c45"
+    },
+    "6363": {
+        "Club_Name": "Audax Italiano",
+        "FBRef_name": "Audax Italiano",
+        "liga_pais": "Chile",
+        "FBRef_id": "13b57ed6"
+    },
+    "6368": {
+        "Club_Name": "CD Huachipato",
+        "FBRef_name": "Huachipato",
+        "liga_pais": "Chile",
+        "FBRef_id": "e3816a4b"
+    },
+    "6536": {
+        "Club_Name": "CD Palestino",
+        "FBRef_name": "Palestino",
+        "liga_pais": "Chile",
+        "FBRef_id": "fccf2756"
+    },
+    "7020": {
+        "Club_Name": "CD Everton",
+        "FBRef_name": "Everton",
+        "liga_pais": "Chile",
+        "FBRef_id": "81a74688"
+    },
+    "10090": {
+        "Club_Name": "Asociaci\u00f3n Deportivo Pasto",
+        "FBRef_name": "Pasto",
+        "liga_pais": "Colombia",
+        "FBRef_id": "72f9f06e"
+    },
+    "10093": {
+        "Club_Name": "Independiente Medell\u00edn",
+        "FBRef_name": "Independiente",
+        "liga_pais": "Colombia",
+        "FBRef_id": "70068101"
+    },
+    "10503": {
+        "Club_Name": "Deportes Tolima",
+        "FBRef_name": "Tolima",
+        "liga_pais": "Colombia",
+        "FBRef_id": "9c4c0cc1"
+    },
+    "11648": {
+        "Club_Name": "Independiente Santa Fe",
+        "FBRef_name": "Santa Fe",
+        "liga_pais": "Colombia",
+        "FBRef_id": "a7854d10"
+    },
+    "11854": {
+        "Club_Name": "Junior de Barranquilla",
+        "FBRef_name": "Junior",
+        "liga_pais": "Colombia",
+        "FBRef_id": "b281fa3b"
+    },
+    "17467": {
+        "Club_Name": "Internacional de Palmira",
+        "FBRef_name": "Cortulu\u00e1",
+        "liga_pais": "Colombia",
+        "FBRef_id": "1eeaaa61"
+    },
+    "2350": {
+        "Club_Name": "Millonarios FC",
+        "FBRef_name": "Millonarios",
+        "liga_pais": "Colombia",
+        "FBRef_id": "4c319052"
+    },
+    "2352": {
+        "Club_Name": "CD Am\u00e9rica de Cali",
+        "FBRef_name": "CD Am\u00e9rica",
+        "liga_pais": "Colombia",
+        "FBRef_id": "c6f65a93"
+    },
+    "6984": {
+        "Club_Name": "Once Caldas",
+        "FBRef_name": "Once Caldas",
+        "liga_pais": "Colombia",
+        "FBRef_id": "af8be55a"
+    },
+    "7136": {
+        "Club_Name": "Envigado FC",
+        "FBRef_name": "Envigado",
+        "liga_pais": "Colombia",
+        "FBRef_id": "67cdee3a"
+    },
+    "8172": {
+        "Club_Name": "Atl\u00e9tico Nacional",
+        "FBRef_name": "Nacional",
+        "liga_pais": "Colombia",
+        "FBRef_id": "e0b973a6"
+    },
+    "9811": {
+        "Club_Name": "Deportivo Pereira",
+        "FBRef_name": "Pereira",
+        "liga_pais": "Colombia",
+        "FBRef_id": "6045b728"
+    },
+    "9961": {
+        "Club_Name": "Deportivo Cali",
+        "FBRef_name": "AD Cali",
+        "liga_pais": "Colombia",
+        "FBRef_id": "47538775"
+    },
+    "17584": {
+        "Club_Name": "CD Universidad Cat\u00f3lica",
+        "FBRef_name": "Univ Cat\u00f3lica",
+        "liga_pais": "Chile",
+        "FBRef_id": "3e3fbf36"
+    },
+    "19304": {
+        "Club_Name": "Delf\u00edn SC",
+        "FBRef_name": "Delf\u00edn",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "66db845c"
+    },
+    "19309": {
+        "Club_Name": "Independiente del Valle",
+        "FBRef_name": "Independiente",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "990519b8"
+    },
+    "3523": {
+        "Club_Name": "Barcelona SC Guayaquil",
+        "FBRef_name": "Barcelona",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "8c71aef1"
+    },
+    "4561": {
+        "Club_Name": "CS Emelec",
+        "FBRef_name": "CS Emelec",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "c1f8ae36"
+    },
+    "6362": {
+        "Club_Name": "SD Aucas",
+        "FBRef_name": "SD Aucas",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "c0cc20c3"
+    },
+    "8781": {
+        "Club_Name": "Deportivo Cuenca",
+        "FBRef_name": "Deportivo Cuenca",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "99a46175"
+    },
+    "9855": {
+        "Club_Name": "LDU Quito",
+        "FBRef_name": "LDU de Quito",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "1284d3f9"
+    },
+    "1049": {
+        "Club_Name": "Valencia CF",
+        "FBRef_name": "Valencia",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "dcc91a7b"
+    },
+    "1084": {
+        "Club_Name": "M\u00e1laga CF",
+        "FBRef_name": "M\u00e1laga",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "1c896955"
+    },
+    "1108": {
+        "Club_Name": "Deportivo Alav\u00e9s",
+        "FBRef_name": "Alav\u00e9s",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "8d6fd021"
+    },
+    "150": {
+        "Club_Name": "Real Betis Balompi\u00e9",
+        "FBRef_name": "Betis",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "fc536746"
+    },
+    "1531": {
+        "Club_Name": "Elche CF",
+        "FBRef_name": "Elche",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "6c8b07df"
+    },
+    "237": {
+        "Club_Name": "RCD Mallorca",
+        "FBRef_name": "Mallorca",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "2aa12281"
+    },
+    "2448": {
+        "Club_Name": "Real Sporting de Gij\u00f3n",
+        "FBRef_name": "Sporting Gij\u00f3n",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "bb9efd50"
+    },
+    "3368": {
+        "Club_Name": "Levante UD",
+        "FBRef_name": "Levante",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "9800b6a1"
+    },
+    "366": {
+        "Club_Name": "Real Valladolid CF",
+        "FBRef_name": "Valladolid",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "17859612"
+    },
+    "367": {
+        "Club_Name": "Rayo Vallecano",
+        "FBRef_name": "Rayo Vallecano",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "98e8af82"
+    },
+    "368": {
+        "Club_Name": "Sevilla FC",
+        "FBRef_name": "Sevilla",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "ad2be733"
+    },
+    "472": {
+        "Club_Name": "UD Las Palmas",
+        "FBRef_name": "Las Palmas",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "0049d422"
+    },
+    "5358": {
+        "Club_Name": "SD Huesca",
+        "FBRef_name": "Huesca",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "c6c493e6"
+    },
+    "621": {
+        "Club_Name": "Athletic Club",
+        "FBRef_name": "Athletic Club",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "2b390eca"
+    },
+    "7077": {
+        "Club_Name": "FC Cartagena",
+        "FBRef_name": "Cartagena",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "bbd9ac49"
+    },
+    "940": {
+        "Club_Name": "RC Celta de Vigo",
+        "FBRef_name": "Celta Vigo",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "f25da7fb"
+    },
+    "218": {
+        "Club_Name": "San Jos\u00e9 Earthquakes",
+        "FBRef_name": "SJ Earthquakes",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "ca460650"
+    },
+    "40058": {
+        "Club_Name": "New York City FC",
+        "FBRef_name": "NYCFC",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "64e81410"
+    },
+    "4291": {
+        "Club_Name": "Portland Timbers",
+        "FBRef_name": "Portland Timbers",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "d076914e"
+    },
+    "51663": {
+        "Club_Name": "Atlanta United FC",
+        "FBRef_name": "Atlanta Utd",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "1ebc1a5b"
+    },
+    "626": {
+        "Club_Name": "New England Revolution",
+        "FBRef_name": "NE Revolution",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "3c079def"
+    },
+    "72309": {
+        "Club_Name": "Austin FC",
+        "FBRef_name": "Austin",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "b918956d"
+    },
+    "78435": {
+        "Club_Name": "Charlotte FC",
+        "FBRef_name": "Charlotte",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "eb57545a"
+    },
+    "8816": {
+        "Club_Name": "FC Dallas",
+        "FBRef_name": "FC Dallas",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "15cf8f40"
+    },
+    "244": {
+        "Club_Name": "Olympique de Marsella",
+        "FBRef_name": "Marseille",
+        "liga_pais": "Francia",
+        "FBRef_id": "5725cc7b"
+    },
+    "11": {
+        "Club_Name": "Arsenal FC",
+        "FBRef_name": "Arsenal",
+        "liga_pais": "Argentina",
+        "FBRef_id": "4bee7ba3"
+    },
+    "130": {
+        "Club_Name": "Parma",
+        "FBRef_name": "Parma",
+        "liga_pais": "Italia",
+        "FBRef_id": "eab4234c"
+    },
+    "1390": {
+        "Club_Name": "Cagliari",
+        "FBRef_name": "Cagliari",
+        "liga_pais": "Italia",
+        "FBRef_id": "c4260e09"
+    },
+    "2239": {
+        "Club_Name": "US Cremonese",
+        "FBRef_name": "Cremonese",
+        "liga_pais": "Italia",
+        "FBRef_id": "9aad3a77"
+    },
+    "380": {
+        "Club_Name": "US Salernitana 1919",
+        "FBRef_name": "Salernitana",
+        "liga_pais": "Italia",
+        "FBRef_id": "c5577084"
+    },
+    "607": {
+        "Club_Name": "Venezia FC",
+        "FBRef_name": "Venezia",
+        "liga_pais": "Italia",
+        "FBRef_id": "af5d5982"
+    },
+    "1146": {
+        "Club_Name": "Club Necaxa",
+        "FBRef_name": "Necaxa",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "752db496"
+    },
+    "13353": {
+        "Club_Name": "Club Tijuana",
+        "FBRef_name": "Tijuana",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "a42ddf2f"
+    },
+    "1403": {
+        "Club_Name": "Santos Laguna",
+        "FBRef_name": "Santos",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "03b65ba9"
+    },
+    "1804": {
+        "Club_Name": "Deportivo Toluca FC",
+        "FBRef_name": "Toluca",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "44b88a4e"
+    },
+    "2407": {
+        "Club_Name": "CF Monterrey",
+        "FBRef_name": "Monterrey",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "dd5ca9bd"
+    },
+    "3631": {
+        "Club_Name": "CF Am\u00e9rica",
+        "FBRef_name": "Am\u00e9rica",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "18d3c3a3"
+    },
+    "3711": {
+        "Club_Name": "CD Cruz Azul",
+        "FBRef_name": "Cruz Azul",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "632f1838"
+    },
+    "40188": {
+        "Club_Name": "Atl\u00e9tico de San Luis",
+        "FBRef_name": "Atl\u00e9tico",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "5d274ee4"
+    },
+    "4035": {
+        "Club_Name": "CF Pachuca",
+        "FBRef_name": "Pachuca",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "1be8d2e3"
+    },
+    "49283": {
+        "Club_Name": "FC Ju\u00e1rez",
+        "FBRef_name": "FC Ju\u00e1rez",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "29bff345"
+    },
+    "4961": {
+        "Club_Name": "Quer\u00e9taro FC",
+        "FBRef_name": "Quer\u00e9taro",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "c3352ce7"
+    },
+    "5662": {
+        "Club_Name": "Club Puebla",
+        "FBRef_name": "Puebla",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "73fd2313"
+    },
+    "7633": {
+        "Club_Name": "Pumas UNAM ",
+        "FBRef_name": "UNAM",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "c9d59c6c"
+    },
+    "82696": {
+        "Club_Name": "Mazatl\u00e1n FC",
+        "FBRef_name": "Mazatl\u00e1n",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "f0297c23"
+    },
+    "8590": {
+        "Club_Name": "Atlas Guadalajara",
+        "FBRef_name": "Atlas",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "7c76bc53"
+    },
+    "28218": {
+        "Club_Name": "CA Independiente",
+        "FBRef_name": "Independiente",
+        "liga_pais": "Argentina",
+        "FBRef_id": "40bb0ce9"
+    },
+    "11855": {
+        "Club_Name": "Club Guaran\u00ed",
+        "FBRef_name": "Guaran\u00ed",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "6c3c25bd"
+    },
+    "1214": {
+        "Club_Name": "Club Cerro Porte\u00f1o",
+        "FBRef_name": "Cerro Porte\u00f1o",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "e4cd6f9a"
+    },
+    "14491": {
+        "Club_Name": "Club Sol de Am\u00e9rica",
+        "FBRef_name": "Sol de Am\u00e9rica",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "e58fd7d6"
+    },
+    "629": {
+        "Club_Name": "Club Olimpia Asunci\u00f3n",
+        "FBRef_name": "Olimpia",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "4d4fc0b8"
+    },
+    "6880": {
+        "Club_Name": "Tacuary Football Club",
+        "FBRef_name": "Tacuary",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "f2769f46"
+    },
+    "7098": {
+        "Club_Name": "Club Nacional Asunci\u00f3n",
+        "FBRef_name": "Nacional",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "264fce29"
+    },
+    "7656": {
+        "Club_Name": "Sportivo Luque\u00f1o",
+        "FBRef_name": "Sport Luque\u00f1o",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "d7e6c419"
+    },
+    "95571": {
+        "Club_Name": "Sportivo Ameliano",
+        "FBRef_name": "Sportivo Ameliano",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "be1ec8eb"
+    },
+    "95573": {
+        "Club_Name": "Club General Caballero (JLM)",
+        "FBRef_name": "Club General Caballero JLM",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "789c2535"
+    },
+    "9875": {
+        "Club_Name": "Club Libertad Asunci\u00f3n",
+        "FBRef_name": "Libertad",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "ae107695"
+    },
+    "184": {
+        "Club_Name": "Club Alianza Lima",
+        "FBRef_name": "Alianza Lima",
+        "liga_pais": "Peru",
+        "FBRef_id": "cdbccdc1"
+    },
+    "19520": {
+        "Club_Name": "Carlos A. Mannucci",
+        "FBRef_name": "Mannucci",
+        "liga_pais": "Peru",
+        "FBRef_id": "0beae1a9"
+    },
+    "2729": {
+        "Club_Name": "Club Cienciano",
+        "FBRef_name": "Cienciano",
+        "liga_pais": "Peru",
+        "FBRef_id": "adf57493"
+    },
+    "1301": {
+        "Club_Name": "CS Mar\u00edtimo",
+        "FBRef_name": "Mar\u00edtimo",
+        "liga_pais": "Portugal",
+        "FBRef_id": "c1b0f61b"
+    },
+    "294": {
+        "Club_Name": "SL Benfica",
+        "FBRef_name": "Benfica",
+        "liga_pais": "Portugal",
+        "FBRef_id": "a77c513e"
+    },
+    "7179": {
+        "Club_Name": "CD Tondela",
+        "FBRef_name": "Tondela",
+        "liga_pais": "Portugal",
+        "FBRef_id": "e442fa76"
+    },
+    "8024": {
+        "Club_Name": "FC Arouca",
+        "FBRef_name": "Arouca",
+        "liga_pais": "Portugal",
+        "FBRef_id": "0d36ddd4"
+    },
+    "10632": {
+        "Club_Name": "CA Rentistas",
+        "FBRef_name": "Rentistas",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "1be8cdcb"
+    },
+    "10663": {
+        "Club_Name": "Liverpool FC Montevideo",
+        "FBRef_name": "Liverpool",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "e87167c6"
+    },
+    "1306": {
+        "Club_Name": "Danubio FC",
+        "FBRef_name": "Danubio",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "84985282"
+    },
+    "14758": {
+        "Club_Name": "Racing Club de Montevideo",
+        "FBRef_name": "Racing",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "8d694a3d"
+    },
+    "1806": {
+        "Club_Name": "IA Sud Am\u00e9rica ",
+        "FBRef_name": "Sud Am\u00e9rica",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "900e1c7e"
+    },
+    "18074": {
+        "Club_Name": "CA Boston River",
+        "FBRef_name": "Boston River",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "d10036ca"
+    },
+    "18075": {
+        "Club_Name": "Club Deportivo Maldonado",
+        "FBRef_name": "Maldonado",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "78455fe4"
+    },
+    "18077": {
+        "Club_Name": "CS Cerrito",
+        "FBRef_name": "Cerrito",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "b4354ce8"
+    },
+    "20189": {
+        "Club_Name": "Cerro Largo FC",
+        "FBRef_name": "Cerro Largo",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "7bc956f9"
+    },
+    "2403": {
+        "Club_Name": "Montevideo Wanderers",
+        "FBRef_name": "Wanderers",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "81476932"
+    },
+    "2419": {
+        "Club_Name": "CA River Plate Montevideo",
+        "FBRef_name": "River Plate",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "9ae9b58c"
+    },
+    "2619": {
+        "Club_Name": "Defensor Sporting Club",
+        "FBRef_name": "Defensor",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "563b8846"
+    },
+    "37535": {
+        "Club_Name": "Montevideo City Torque",
+        "FBRef_name": "Torque",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "03d0f9c5"
+    },
+    "3829": {
+        "Club_Name": "CA F\u00e9nix",
+        "FBRef_name": "F\u00e9nix",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "3a3a612e"
+    },
+    "6044": {
+        "Club_Name": "Club Plaza Colonia",
+        "FBRef_name": "Plaza Colonia",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "e615d0fe"
+    },
+    "861": {
+        "Club_Name": "CA Pe\u00f1arol",
+        "FBRef_name": "Pe\u00f1arol",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "e2d73ee6"
+    },
+    "866": {
+        "Club_Name": "Club Nacional",
+        "FBRef_name": "Nacional",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "26ebba72"
+    },
+    "122672": {
+        "Club_Name": "Millonarios FC",
+        "FBRef_name": "Millonarios",
+        "liga_pais": "Colombia",
+        "FBRef_id": "4c319052"
+    },
+    "14662": {
+        "Club_Name": "Club 12 de Octubre de Itaugu\u00e1",
+        "FBRef_name": "12 de Octubre",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "dc728978"
+    },
+    "18087": {
+        "Club_Name": "CA F\u00e9nix",
+        "FBRef_name": "F\u00e9nix",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "3a3a612e"
+    },
+    "2124": {
+        "Club_Name": "River Plate Asunci\u00f3n",
+        "FBRef_name": "River Plate",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "979102f4"
+    },
+    "29175": {
+        "Club_Name": "Resistencia Sport Club",
+        "FBRef_name": "Resistencia SC",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "251f9616"
+    },
+    "3858": {
+        "Club_Name": "Deportivo Villa Espa\u00f1ola",
+        "FBRef_name": "Villa Espa\u00f1ola",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "c2106ee7"
+    },
+    "63181": {
+        "Club_Name": "Guaire\u00f1a FC",
+        "FBRef_name": "Guaire\u00f1a FC",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "257cf097"
+    },
+    "64918": {
+        "Club_Name": "Athletic Club",
+        "FBRef_name": "Athletic Club",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "2b390eca"
+    },
+    "281": {
+        "Club_Name": "Manchester City",
+        "FBRef_name": "Manchester City",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "b8fd03ef",
+        "match_score": 100
+    },
+    "985": {
+        "Club_Name": "Manchester Utd.",
+        "FBRef_name": "Manchester Utd",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "19538871",
+        "match_score": 100
+    },
+    "31": {
+        "Club_Name": "Liverpool",
+        "FBRef_name": "Liverpool",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "822bd0ba",
+        "match_score": 100
+    },
+    "631": {
+        "Club_Name": "Chelsea",
+        "FBRef_name": "Chelsea",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "cff3d9bb",
+        "match_score": 100
+    },
+    "1003": {
+        "Club_Name": "Leicester City",
+        "FBRef_name": "Leicester City",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "a2d435b3",
+        "match_score": 100
+    },
+    "379": {
+        "Club_Name": "West Ham",
+        "FBRef_name": "West Ham",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "7c21e445",
+        "match_score": 100
+    },
+    "148": {
+        "Club_Name": "Tottenham",
+        "FBRef_name": "Tottenham",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "361ca564",
+        "match_score": 100
+    },
+    "399": {
+        "Club_Name": "Leeds",
+        "FBRef_name": "Leeds United",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "5bfb9659",
+        "match_score": 100
+    },
+    "29": {
+        "Club_Name": "Everton",
+        "FBRef_name": "Everton",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "d3fd31cc",
+        "match_score": 100
+    },
+    "405": {
+        "Club_Name": "Aston Villa",
+        "FBRef_name": "Aston Villa",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "8602292d",
+        "match_score": 100
+    },
+    "762": {
+        "Club_Name": "Newcastle Utd.",
+        "FBRef_name": "Newcastle Utd",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "b2b47a98",
+        "match_score": 100
+    },
+    "873": {
+        "Club_Name": "Crystal Palace",
+        "FBRef_name": "Crystal Palace",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "47c64c55",
+        "match_score": 100
+    },
+    "180": {
+        "Club_Name": "Southampton",
+        "FBRef_name": "Southampton",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "33c895d4",
+        "match_score": 100
+    },
+    "1237": {
+        "Club_Name": "Brighton",
+        "FBRef_name": "Brighton",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "d07537b9",
+        "match_score": 100
+    },
+    "1132": {
+        "Club_Name": "Burnley",
+        "FBRef_name": "Burnley",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "943e8050",
+        "match_score": 100
+    },
+    "931": {
+        "Club_Name": "Fulham",
+        "FBRef_name": "Fulham",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "fd962109",
+        "match_score": 100
+    },
+    "984": {
+        "Club_Name": "West Brom",
+        "FBRef_name": "West Brom",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "60c6b05f",
+        "match_score": 100
+    },
+    "1148": {
+        "Club_Name": "Brentford",
+        "FBRef_name": "Brentford",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "cd051869",
+        "match_score": 100
+    },
+    "1010": {
+        "Club_Name": "Watford",
+        "FBRef_name": "Watford",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "2abfe087",
+        "match_score": 100
+    },
+    "1123": {
+        "Club_Name": "Norwich",
+        "FBRef_name": "Norwich City",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "1c781004",
+        "match_score": 100
+    },
+    "989": {
+        "Club_Name": "Bournemouth",
+        "FBRef_name": "Bournemouth",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "4ba7cbea",
+        "match_score": 100
+    },
+    "1031": {
+        "Club_Name": "Luton",
+        "FBRef_name": "Luton Town",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "e297cd13",
+        "match_score": 100
+    },
+    "350": {
+        "Club_Name": "Sheff Utd",
+        "FBRef_name": "Sheffield Utd",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "1df6b87e",
+        "match_score": 82
+    },
+    "703": {
+        "Club_Name": "Nottm Forest",
+        "FBRef_name": "Nott'ham Forest",
+        "liga_pais": "Inglaterra",
+        "FBRef_id": "e4a775cb",
+        "match_score": 81
+    },
+    "12179": {
+        "Club_Name": "Ind. Rivadavia",
+        "FBRef_name": "Independiente Rivadavia",
+        "liga_pais": "Argentina",
+        "FBRef_id": "8a9d5afa",
+        "match_score": 82
+    },
+    "131": {
+        "Club_Name": "FC Barcelona",
+        "FBRef_name": "Barcelona",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "206d90db",
+        "match_score": 100
+    },
+    "418": {
+        "Club_Name": "Real Madrid",
+        "FBRef_name": "Real Madrid",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "53a2f082",
+        "match_score": 100
+    },
+    "13": {
+        "Club_Name": "Atl\u00e9tico Madrid",
+        "FBRef_name": "Atl\u00e9tico Madrid",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "db3b9613",
+        "match_score": 100
+    },
+    "681": {
+        "Club_Name": "Real Sociedad",
+        "FBRef_name": "Real Sociedad",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "e31d1cd9",
+        "match_score": 100
+    },
+    "1050": {
+        "Club_Name": "Villarreal CF",
+        "FBRef_name": "Villarreal",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "2a8183b3",
+        "match_score": 100
+    },
+    "331": {
+        "Club_Name": "CA Osasuna",
+        "FBRef_name": "Osasuna",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "03c57e2b",
+        "match_score": 100
+    },
+    "12321": {
+        "Club_Name": "Girona FC",
+        "FBRef_name": "Girona",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "9024a00a",
+        "match_score": 100
+    },
+    "3709": {
+        "Club_Name": "Getafe CF",
+        "FBRef_name": "Getafe",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "7848bd64",
+        "match_score": 100
+    },
+    "2687": {
+        "Club_Name": "C\u00e1diz CF",
+        "FBRef_name": "C\u00e1diz",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "ee7c297c",
+        "match_score": 100
+    },
+    "3302": {
+        "Club_Name": "UD Almer\u00eda",
+        "FBRef_name": "Almer\u00eda",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "78ecf4bb",
+        "match_score": 100
+    },
+    "714": {
+        "Club_Name": "RCD Espanyol",
+        "FBRef_name": "Espanyol",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "a8661628",
+        "match_score": 100
+    },
+    "1244": {
+        "Club_Name": "CD Legan\u00e9s",
+        "FBRef_name": "Legan\u00e9s",
+        "liga_pais": "Espa\u00f1a",
+        "FBRef_id": "7c6f2c78",
+        "match_score": 100
+    },
+    "46": {
+        "Club_Name": "Inter",
+        "FBRef_name": "Inter",
+        "liga_pais": "Italia",
+        "FBRef_id": "d609edc0",
+        "match_score": 100
+    },
+    "5": {
+        "Club_Name": "AC Milan",
+        "FBRef_name": "Milan",
+        "liga_pais": "Italia",
+        "FBRef_id": "dc56fe14",
+        "match_score": 100
+    },
+    "800": {
+        "Club_Name": "Atalanta",
+        "FBRef_name": "Atalanta",
+        "liga_pais": "Italia",
+        "FBRef_id": "922493f3",
+        "match_score": 100
+    },
+    "506": {
+        "Club_Name": "Juventus",
+        "FBRef_name": "Juventus",
+        "liga_pais": "Italia",
+        "FBRef_id": "e0652b02",
+        "match_score": 100
+    },
+    "6195": {
+        "Club_Name": "Napoli",
+        "FBRef_name": "Napoli",
+        "liga_pais": "Italia",
+        "FBRef_id": "d48ad4ff",
+        "match_score": 100
+    },
+    "398": {
+        "Club_Name": "Lazio",
+        "FBRef_name": "Lazio",
+        "liga_pais": "Italia",
+        "FBRef_id": "7213da33",
+        "match_score": 100
+    },
+    "12": {
+        "Club_Name": "AS Roma",
+        "FBRef_name": "Roma",
+        "liga_pais": "Italia",
+        "FBRef_id": "cf74a709",
+        "match_score": 100
+    },
+    "6574": {
+        "Club_Name": "Sassuolo",
+        "FBRef_name": "Sassuolo",
+        "liga_pais": "Italia",
+        "FBRef_id": "e2befd26",
+        "match_score": 100
+    },
+    "1038": {
+        "Club_Name": "Sampdoria",
+        "FBRef_name": "Sampdoria",
+        "liga_pais": "Italia",
+        "FBRef_id": "8ff9e3b3",
+        "match_score": 100
+    },
+    "276": {
+        "Club_Name": "Hellas Verona",
+        "FBRef_name": "Hellas Verona",
+        "liga_pais": "Italia",
+        "FBRef_id": "0e72edf2",
+        "match_score": 100
+    },
+    "252": {
+        "Club_Name": "G\u00e9nova",
+        "FBRef_name": "Genoa",
+        "liga_pais": "Italia",
+        "FBRef_id": "658bf2de",
+        "match_score": 80
+    },
+    "1025": {
+        "Club_Name": "Bolonia",
+        "FBRef_name": "Bologna",
+        "liga_pais": "Italia",
+        "FBRef_id": "1d8099f8",
+        "match_score": 86
+    },
+    "430": {
+        "Club_Name": "Fiorentina",
+        "FBRef_name": "Fiorentina",
+        "liga_pais": "Italia",
+        "FBRef_id": "421387cf",
+        "match_score": 100
+    },
+    "410": {
+        "Club_Name": "Udinese",
+        "FBRef_name": "Udinese",
+        "liga_pais": "Italia",
+        "FBRef_id": "04eea015",
+        "match_score": 100
+    },
+    "3522": {
+        "Club_Name": "Spezia",
+        "FBRef_name": "Spezia",
+        "liga_pais": "Italia",
+        "FBRef_id": "68449f6d",
+        "match_score": 100
+    },
+    "416": {
+        "Club_Name": "Torino",
+        "FBRef_name": "Torino",
+        "liga_pais": "Italia",
+        "FBRef_id": "105360fe",
+        "match_score": 100
+    },
+    "4171": {
+        "Club_Name": "Benevento",
+        "FBRef_name": "Benevento",
+        "liga_pais": "Italia",
+        "FBRef_id": "4fcb34fd",
+        "match_score": 100
+    },
+    "4083": {
+        "Club_Name": "Crotone",
+        "FBRef_name": "Crotone",
+        "liga_pais": "Italia",
+        "FBRef_id": "3074d7b1",
+        "match_score": 100
+    },
+    "749": {
+        "Club_Name": "Empoli",
+        "FBRef_name": "Empoli",
+        "liga_pais": "Italia",
+        "FBRef_id": "a3d88bd8",
+        "match_score": 100
+    },
+    "2919": {
+        "Club_Name": "Monza",
+        "FBRef_name": "Monza",
+        "liga_pais": "Italia",
+        "FBRef_id": "21680aa4",
+        "match_score": 100
+    },
+    "1005": {
+        "Club_Name": "Lecce",
+        "FBRef_name": "Lecce",
+        "liga_pais": "Italia",
+        "FBRef_id": "ffcbe334",
+        "match_score": 100
+    },
+    "8970": {
+        "Club_Name": "Frosinone",
+        "FBRef_name": "Frosinone",
+        "liga_pais": "Italia",
+        "FBRef_id": "6a7ad59d",
+        "match_score": 100
+    },
+    "1047": {
+        "Club_Name": "Como",
+        "FBRef_name": "Como",
+        "liga_pais": "Italia",
+        "FBRef_id": "28c9c3cd",
+        "match_score": 100
+    },
+    "17222": {
+        "Club_Name": "Antofagasta",
+        "FBRef_name": "Antofagasta",
+        "liga_pais": "Chile",
+        "FBRef_id": "fb8c42a7",
+        "match_score": 100
+    },
+    "17482": {
+        "Club_Name": "Cobresal",
+        "FBRef_name": "Cobresal",
+        "liga_pais": "Chile",
+        "FBRef_id": "ed392b02",
+        "match_score": 100
+    },
+    "5622": {
+        "Club_Name": "U. Concepci\u00f3n",
+        "FBRef_name": "U Concepci\u00f3n",
+        "liga_pais": "Chile",
+        "FBRef_id": "01b96636",
+        "match_score": 100
+    },
+    "18076": {
+        "Club_Name": "Iquique",
+        "FBRef_name": "Iquique",
+        "liga_pais": "Chile",
+        "FBRef_id": "c1d9f388",
+        "match_score": 100
+    },
+    "11004": {
+        "Club_Name": "Coquimbo",
+        "FBRef_name": "Coquimbo Unido",
+        "liga_pais": "Chile",
+        "FBRef_id": "85c3a70f",
+        "match_score": 100
+    },
+    "12949": {
+        "Club_Name": "Melipilla",
+        "FBRef_name": "Deportes Melipilla",
+        "liga_pais": "Chile",
+        "FBRef_id": "d124af3f",
+        "match_score": 100
+    },
+    "20694": {
+        "Club_Name": "Copiap\u00f3",
+        "FBRef_name": "Deportes Copiap\u00f3",
+        "liga_pais": "Chile",
+        "FBRef_id": "40d7a591",
+        "match_score": 100
+    },
+    "9103": {
+        "Club_Name": "Cobreloa",
+        "FBRef_name": "Cobreloa",
+        "liga_pais": "Chile",
+        "FBRef_id": "69a3f4b2",
+        "match_score": 100
+    },
+    "614": {
+        "Club_Name": "Flamengo",
+        "FBRef_name": "Flamengo",
+        "liga_pais": "Brasil",
+        "FBRef_id": "639950ae",
+        "match_score": 100
+    },
+    "330": {
+        "Club_Name": "Atl. Mineiro",
+        "FBRef_name": "Atl\u00e9tico Mineiro",
+        "liga_pais": "Brasil",
+        "FBRef_id": "422bb734",
+        "match_score": 85
+    },
+    "8793": {
+        "Club_Name": "RB Bragantino",
+        "FBRef_name": "Red Bull Bragantino",
+        "liga_pais": "Brasil",
+        "FBRef_id": "f98930d1",
+        "match_score": 87
+    },
+    "2029": {
+        "Club_Name": "Cear\u00e1 SC",
+        "FBRef_name": "Cear\u00e1",
+        "liga_pais": "Brasil",
+        "FBRef_id": "2f335e17",
+        "match_score": 100
+    },
+    "15172": {
+        "Club_Name": "Atl\u00e9tico-GO",
+        "FBRef_name": "Atl\u00e9tico Mineiro",
+        "liga_pais": "Brasil",
+        "FBRef_id": "422bb734",
+        "match_score": 82
+    },
+    "8718": {
+        "Club_Name": "Sport Recife",
+        "FBRef_name": "Sport Recife",
+        "liga_pais": "Brasil",
+        "FBRef_id": "ece66b78",
+        "match_score": 100
+    },
+    "3197": {
+        "Club_Name": "Goi\u00e1s",
+        "FBRef_name": "Goi\u00e1s",
+        "liga_pais": "Brasil",
+        "FBRef_id": "78c617cc",
+        "match_score": 100
+    },
+    "537": {
+        "Club_Name": "Botafogo",
+        "FBRef_name": "Botafogo (RJ)",
+        "liga_pais": "Brasil",
+        "FBRef_id": "d9fdd9d9",
+        "match_score": 100
+    },
+    "28022": {
+        "Club_Name": "Cuiab\u00e1-MT",
+        "FBRef_name": "Cuiab\u00e1",
+        "liga_pais": "Brasil",
+        "FBRef_id": "f0e6fb14",
+        "match_score": 100
+    },
+    "10492": {
+        "Club_Name": "Juventude",
+        "FBRef_name": "Juventude",
+        "liga_pais": "Brasil",
+        "FBRef_id": "d081b697",
+        "match_score": 100
+    },
+    "17776": {
+        "Club_Name": "Chapecoense",
+        "FBRef_name": "Chapecoense",
+        "liga_pais": "Brasil",
+        "FBRef_id": "baa296ad",
+        "match_score": 100
+    },
+    "2125": {
+        "Club_Name": "EC Vit\u00f3ria",
+        "FBRef_name": "Vit\u00f3ria",
+        "liga_pais": "Brasil",
+        "FBRef_id": "33f95fe0",
+        "match_score": 100
+    },
+    "7178": {
+        "Club_Name": "Crici\u00fama EC",
+        "FBRef_name": "Crici\u00fama",
+        "liga_pais": "Brasil",
+        "FBRef_id": "3f7595bb",
+        "match_score": 100
+    },
+    "17426": {
+        "Club_Name": "CD Macar\u00e1",
+        "FBRef_name": "Macar\u00e1",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "8e8ff33e",
+        "match_score": 100
+    },
+    "19104": {
+        "Club_Name": "T\u00e9cnico U.",
+        "FBRef_name": "T\u00e9cnico Univ.",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "3af5df16",
+        "match_score": 86
+    },
+    "25569": {
+        "Club_Name": "Guayaquil City",
+        "FBRef_name": "Guayaquil City",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "9c3c38e4",
+        "match_score": 100
+    },
+    "25576": {
+        "Club_Name": "Mushuc Runa SC",
+        "FBRef_name": "Mushuc Runa",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "bbbdfd99",
+        "match_score": 100
+    },
+    "9854": {
+        "Club_Name": "CD Olmedo",
+        "FBRef_name": "Olmedo",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "40339a93",
+        "match_score": 100
+    },
+    "1143": {
+        "Club_Name": "CD El Nacional",
+        "FBRef_name": "El Nacional",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "0a14831e",
+        "match_score": 100
+    },
+    "19310": {
+        "Club_Name": "LDU Portoviejo",
+        "FBRef_name": "LDU Portoviejo",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "82bb8427",
+        "match_score": 100
+    },
+    "36020": {
+        "Club_Name": "Orense SC",
+        "FBRef_name": "Orense",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "98637027",
+        "match_score": 100
+    },
+    "19101": {
+        "Club_Name": "AD 9 de Octubre",
+        "FBRef_name": "Club 9 de Octubre",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "f7dac7a4",
+        "match_score": 89
+    },
+    "25698": {
+        "Club_Name": "Gualaceo SC",
+        "FBRef_name": "Gualaceo Sporting Club",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "a085e151",
+        "match_score": 84
+    },
+    "41301": {
+        "Club_Name": "Cumbay\u00e1 FC",
+        "FBRef_name": "Cumbay\u00e1 FC",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "e3086cf4",
+        "match_score": 100
+    },
+    "87068": {
+        "Club_Name": "Libertad FC",
+        "FBRef_name": "Libertad FC",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "c33d7826",
+        "match_score": 100
+    },
+    "17476": {
+        "Club_Name": "Imbabura SC",
+        "FBRef_name": "Imbabura Sporting Club",
+        "liga_pais": "Ecuador",
+        "FBRef_id": "f9c314af",
+        "match_score": 84
+    },
+    "17595": {
+        "Club_Name": "Progreso",
+        "FBRef_name": "Progreso",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "24c7f1a7",
+        "match_score": 100
+    },
+    "14806": {
+        "Club_Name": "CA Cerro",
+        "FBRef_name": "Cerro",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "ee73b6b7",
+        "match_score": 100
+    },
+    "42149": {
+        "Club_Name": "Albion FC",
+        "FBRef_name": "Albion FC",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "1bec899e",
+        "match_score": 100
+    },
+    "20762": {
+        "Club_Name": "La Luz",
+        "FBRef_name": "La Luz FC",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "d7fb2120",
+        "match_score": 100
+    },
+    "14598": {
+        "Club_Name": "Rampla Jrs",
+        "FBRef_name": "Rampla Juniors",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "a7c60f68",
+        "match_score": 83
+    },
+    "7477": {
+        "Club_Name": "Miramar",
+        "FBRef_name": "Miramar Misiones",
+        "liga_pais": "Uruguay",
+        "FBRef_id": "1d0880a6",
+        "match_score": 100
+    },
+    "6495": {
+        "Club_Name": "A. Bucaramanga",
+        "FBRef_name": "CA Bucaramanga",
+        "liga_pais": "Colombia",
+        "FBRef_id": "9b9a8c22",
+        "match_score": 96
+    },
+    "17425": {
+        "Club_Name": "CD La Equidad",
+        "FBRef_name": "La Equidad",
+        "liga_pais": "Colombia",
+        "FBRef_id": "16b2606a",
+        "match_score": 100
+    },
+    "22902": {
+        "Club_Name": "Alianza FC",
+        "FBRef_name": "Alianza",
+        "liga_pais": "Colombia",
+        "FBRef_id": "ffc8a1d6",
+        "match_score": 100
+    },
+    "39252": {
+        "Club_Name": "Jaguares FC",
+        "FBRef_name": "Jaguares",
+        "liga_pais": "Colombia",
+        "FBRef_id": "024b201d",
+        "match_score": 100
+    },
+    "14649": {
+        "Club_Name": "Boyac\u00e1 Chic\u00f3",
+        "FBRef_name": "Boyac\u00e1 Chic\u00f3",
+        "liga_pais": "Colombia",
+        "FBRef_id": "f46a80fc",
+        "match_score": 100
+    },
+    "2351": {
+        "Club_Name": "Quind\u00edo",
+        "FBRef_name": "Deportes Quind\u00edo",
+        "liga_pais": "Colombia",
+        "FBRef_id": "7301864f",
+        "match_score": 100
+    },
+    "14583": {
+        "Club_Name": "Atl\u00e9tico Huila",
+        "FBRef_name": "Atl\u00e9tico Huila",
+        "liga_pais": "Colombia",
+        "FBRef_id": "5d3835bb",
+        "match_score": 100
+    },
+    "14680": {
+        "Club_Name": "Union Magdalena",
+        "FBRef_name": "Uni\u00f3n Magdalena",
+        "liga_pais": "Colombia",
+        "FBRef_id": "418eab1a",
+        "match_score": 97
+    },
+    "32041": {
+        "Club_Name": "Fortaleza CEIF",
+        "FBRef_name": "Fortaleza FC",
+        "liga_pais": "Colombia",
+        "FBRef_id": "e1d2289f",
+        "match_score": 86
+    },
+    "19124": {
+        "Club_Name": "CS San Lorenzo",
+        "FBRef_name": "San Lorenzo",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "3a980b79",
+        "match_score": 100
+    },
+    "17483": {
+        "Club_Name": "General Diaz",
+        "FBRef_name": "General D\u00edaz",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "352504c0",
+        "match_score": 96
+    },
+    "17427": {
+        "Club_Name": "Trinidense",
+        "FBRef_name": "Sportivo Trinidense",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "350ce469",
+        "match_score": 100
+    },
+    "17484": {
+        "Club_Name": "2 de Mayo",
+        "FBRef_name": "2 de Mayo",
+        "liga_pais": "Paraguay",
+        "FBRef_id": "ebdc0225",
+        "match_score": 100
+    },
+    "4941": {
+        "Club_Name": "Le\u00f3n",
+        "FBRef_name": "Le\u00f3n",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "fd7dad55",
+        "match_score": 100
+    },
+    "7055": {
+        "Club_Name": "Tigres UANL",
+        "FBRef_name": "UANL",
+        "liga_pais": "M\u00e9xico",
+        "FBRef_id": "d9e1bd51",
+        "match_score": 100
+    },
+    "610": {
+        "Club_Name": "Ajax",
+        "FBRef_name": "Ajax",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "19c3f8c4",
+        "match_score": 100
+    },
+    "383": {
+        "Club_Name": "PSV",
+        "FBRef_name": "PSV Eindhoven",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "e334d850",
+        "match_score": 100
+    },
+    "1090": {
+        "Club_Name": "AZ Alkmaar",
+        "FBRef_name": "AZ Alkmaar",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "3986b791",
+        "match_score": 100
+    },
+    "499": {
+        "Club_Name": "Vitesse",
+        "FBRef_name": "Vitesse",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "209d7fa2",
+        "match_score": 100
+    },
+    "234": {
+        "Club_Name": "Feyenoord",
+        "FBRef_name": "Feyenoord",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "fb4ca611",
+        "match_score": 100
+    },
+    "200": {
+        "Club_Name": "FC Utrecht",
+        "FBRef_name": "Utrecht",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "2a428619",
+        "match_score": 100
+    },
+    "202": {
+        "Club_Name": "FC Groningen",
+        "FBRef_name": "Groningen",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "bec05adb",
+        "match_score": 100
+    },
+    "468": {
+        "Club_Name": "Sparta R.",
+        "FBRef_name": "Sparta R'dam",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "146a68ce",
+        "match_score": 100
+    },
+    "1304": {
+        "Club_Name": "Heracles Almelo",
+        "FBRef_name": "Heracles Almelo",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "c882b88e",
+        "match_score": 100
+    },
+    "317": {
+        "Club_Name": "FC Twente",
+        "FBRef_name": "Twente",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "a1f721d3",
+        "match_score": 100
+    },
+    "385": {
+        "Club_Name": "Fortuna Sittard",
+        "FBRef_name": "Fortuna Sittard",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "bd08295c",
+        "match_score": 100
+    },
+    "306": {
+        "Club_Name": "Heerenveen",
+        "FBRef_name": "Heerenveen",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "193ff7aa",
+        "match_score": 100
+    },
+    "1269": {
+        "Club_Name": "PEC Zwolle",
+        "FBRef_name": "Zwolle",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "e3db180b",
+        "match_score": 100
+    },
+    "403": {
+        "Club_Name": "Willem II",
+        "FBRef_name": "Willem II",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "f0479d7b",
+        "match_score": 100
+    },
+    "235": {
+        "Club_Name": "RKC Waalwijk",
+        "FBRef_name": "RKC Waalwijk",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "bb14adb3",
+        "match_score": 100
+    },
+    "1283": {
+        "Club_Name": "FC Emmen",
+        "FBRef_name": "Emmen",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "01888db1",
+        "match_score": 100
+    },
+    "1426": {
+        "Club_Name": "VVV-Venlo",
+        "FBRef_name": "VVV-Venlo",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "534ac6d0",
+        "match_score": 100
+    },
+    "1268": {
+        "Club_Name": "ADO Den Haag",
+        "FBRef_name": "ADO Den Haag",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "4e7459b7",
+        "match_score": 100
+    },
+    "133": {
+        "Club_Name": "SC Cambuur",
+        "FBRef_name": "Cambuur",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "5c9e307a",
+        "match_score": 100
+    },
+    "467": {
+        "Club_Name": "NEC Nijmegen",
+        "FBRef_name": "NEC Nijmegen",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "fc629994",
+        "match_score": 100
+    },
+    "1435": {
+        "Club_Name": "Go Ahead Eagles",
+        "FBRef_name": "Go Ahead Eag",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "e33d6108",
+        "match_score": 89
+    },
+    "724": {
+        "Club_Name": "FC Volendam",
+        "FBRef_name": "Volendam",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "8783f4ee",
+        "match_score": 100
+    },
+    "798": {
+        "Club_Name": "Excelsior",
+        "FBRef_name": "Excelsior",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "740cb7d4",
+        "match_score": 100
+    },
+    "723": {
+        "Club_Name": "Almere City",
+        "FBRef_name": "Almere City",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "2b41acb5",
+        "match_score": 100
+    },
+    "132": {
+        "Club_Name": "NAC Breda",
+        "FBRef_name": "NAC Breda",
+        "liga_pais": "Pa\u00edses Bajos",
+        "FBRef_id": "8ed04be8",
+        "match_score": 100
+    },
+    "63966": {
+        "Club_Name": "Nashville",
+        "FBRef_name": "Nashville SC",
+        "liga_pais": "Estados Unidos",
+        "FBRef_id": "35f1b818",
+        "match_score": 100
+    },
+    "1082": {
+        "Club_Name": "LOSC Lille",
+        "FBRef_name": "Lille",
+        "liga_pais": "Francia",
+        "FBRef_id": "cb188c0c",
+        "match_score": 100
+    },
+    "162": {
+        "Club_Name": "M\u00f3naco",
+        "FBRef_name": "Monaco",
+        "liga_pais": "Francia",
+        "FBRef_id": "fd6114db",
+        "match_score": 91
+    },
+    "1041": {
+        "Club_Name": "Lyon",
+        "FBRef_name": "Lyon",
+        "liga_pais": "Francia",
+        "FBRef_id": "d53c0b06",
+        "match_score": 100
+    },
+    "273": {
+        "Club_Name": "Stade Rennes",
+        "FBRef_name": "Rennes",
+        "liga_pais": "Francia",
+        "FBRef_id": "b3072e00",
+        "match_score": 100
+    },
+    "826": {
+        "Club_Name": "Lens",
+        "FBRef_name": "Lens",
+        "liga_pais": "Francia",
+        "FBRef_id": "fd4e0f7d",
+        "match_score": 100
+    },
+    "969": {
+        "Club_Name": "Montpellier",
+        "FBRef_name": "Montpellier",
+        "liga_pais": "Francia",
+        "FBRef_id": "281b0e73",
+        "match_score": 100
+    },
+    "347": {
+        "Club_Name": "FC Metz",
+        "FBRef_name": "Metz",
+        "liga_pais": "Francia",
+        "FBRef_id": "f83960ae",
+        "match_score": 100
+    },
+    "618": {
+        "Club_Name": "St-\u00c9tienne",
+        "FBRef_name": "Saint-\u00c9tienne",
+        "liga_pais": "Francia",
+        "FBRef_id": "d298ef2c",
+        "match_score": 86
+    },
+    "1420": {
+        "Club_Name": "Angers SCO",
+        "FBRef_name": "Angers",
+        "liga_pais": "Francia",
+        "FBRef_id": "69236f98",
+        "match_score": 100
+    },
+    "1421": {
+        "Club_Name": "Stade Reims",
+        "FBRef_name": "Reims",
+        "liga_pais": "Francia",
+        "FBRef_id": "7fdd64e0",
+        "match_score": 100
+    },
+    "667": {
+        "Club_Name": "Estrasburgo",
+        "FBRef_name": "Strasbourg",
+        "liga_pais": "Francia",
+        "FBRef_id": "c0d3eab4",
+        "match_score": 86
+    },
+    "1158": {
+        "Club_Name": "FC Lorient",
+        "FBRef_name": "Lorient",
+        "liga_pais": "Francia",
+        "FBRef_id": "d2c87802",
+        "match_score": 100
+    },
+    "995": {
+        "Club_Name": "FC Nantes",
+        "FBRef_name": "Nantes",
+        "liga_pais": "Francia",
+        "FBRef_id": "d7a486cd",
+        "match_score": 100
+    },
+    "1160": {
+        "Club_Name": "N\u00eemes",
+        "FBRef_name": "N\u00eemes",
+        "liga_pais": "Francia",
+        "FBRef_id": "1cbf5f9e",
+        "match_score": 100
+    },
+    "2969": {
+        "Club_Name": "Dijon",
+        "FBRef_name": "Dijon",
+        "liga_pais": "Francia",
+        "FBRef_id": "8dfb7350",
+        "match_score": 100
+    },
+    "1095": {
+        "Club_Name": "Troyes",
+        "FBRef_name": "Troyes",
+        "liga_pais": "Francia",
+        "FBRef_id": "54195385",
+        "match_score": 100
+    },
+    "3524": {
+        "Club_Name": "Clermont Foot",
+        "FBRef_name": "Clermont Foot",
+        "liga_pais": "Francia",
+        "FBRef_id": "d9676424",
+        "match_score": 100
+    },
+    "415": {
+        "Club_Name": "Toulouse",
+        "FBRef_name": "Toulouse",
+        "liga_pais": "Francia",
+        "FBRef_id": "3f8c4b5f",
+        "match_score": 100
+    },
+    "290": {
+        "Club_Name": "AJ Auxerre",
+        "FBRef_name": "Auxerre",
+        "liga_pais": "Francia",
+        "FBRef_id": "5ae09109",
+        "match_score": 100
+    },
+    "1147": {
+        "Club_Name": "AC Ajaccio",
+        "FBRef_name": "Ajaccio",
+        "liga_pais": "Francia",
+        "FBRef_id": "7a54bb4f",
+        "match_score": 100
+    },
+    "738": {
+        "Club_Name": "Le Havre AC",
+        "FBRef_name": "Le Havre",
+        "liga_pais": "Francia",
+        "FBRef_id": "5c2737db",
+        "match_score": 100
+    },
+    "27": {
+        "Club_Name": "Bayern M\u00fanich",
+        "FBRef_name": "Bayern Munich",
+        "liga_pais": "Alemania",
+        "FBRef_id": "054efa67",
+        "match_score": 96
+    },
+    "23826": {
+        "Club_Name": "RB Leipzig",
+        "FBRef_name": "RB Leipzig",
+        "liga_pais": "Alemania",
+        "FBRef_id": "acbb6a5b",
+        "match_score": 100
+    },
+    "16": {
+        "Club_Name": "Bor. Dortmund",
+        "FBRef_name": "Dortmund",
+        "liga_pais": "Alemania",
+        "FBRef_id": "add600ae",
+        "match_score": 100
+    },
+    "15": {
+        "Club_Name": "B. Leverkusen",
+        "FBRef_name": "Leverkusen",
+        "liga_pais": "Alemania",
+        "FBRef_id": "c7a9f859",
+        "match_score": 100
+    },
+    "89": {
+        "Club_Name": "Uni\u00f3n Berl\u00edn",
+        "FBRef_name": "Union Berlin",
+        "liga_pais": "Alemania",
+        "FBRef_id": "7a41008f",
+        "match_score": 91
+    },
+    "18": {
+        "Club_Name": "Bor. M'gladbach",
+        "FBRef_name": "Gladbach",
+        "liga_pais": "Alemania",
+        "FBRef_id": "32f3ee20",
+        "match_score": 100
+    },
+    "79": {
+        "Club_Name": "VfB Stuttgart",
+        "FBRef_name": "Stuttgart",
+        "liga_pais": "Alemania",
+        "FBRef_id": "598bc722",
+        "match_score": 100
+    },
+    "533": {
+        "Club_Name": "Hoffenheim",
+        "FBRef_name": "Hoffenheim",
+        "liga_pais": "Alemania",
+        "FBRef_id": "033ea6b8",
+        "match_score": 100
+    },
+    "39": {
+        "Club_Name": "Mainz",
+        "FBRef_name": "Mainz 05",
+        "liga_pais": "Alemania",
+        "FBRef_id": "a224b06a",
+        "match_score": 100
+    },
+    "167": {
+        "Club_Name": "FC Augsburgo",
+        "FBRef_name": "Augsburg",
+        "liga_pais": "Alemania",
+        "FBRef_id": "0cdc4311",
+        "match_score": 80
+    },
+    "86": {
+        "Club_Name": "Werder Bremen",
+        "FBRef_name": "Werder Bremen",
+        "liga_pais": "Alemania",
+        "FBRef_id": "62add3bf",
+        "match_score": 100
+    },
+    "33": {
+        "Club_Name": "FC Schalke 04",
+        "FBRef_name": "Schalke 04",
+        "liga_pais": "Alemania",
+        "FBRef_id": "c539e393",
+        "match_score": 100
+    },
+    "80": {
+        "Club_Name": "VfL Bochum",
+        "FBRef_name": "Bochum",
+        "liga_pais": "Alemania",
+        "FBRef_id": "b42c6323",
+        "match_score": 100
+    },
+    "65": {
+        "Club_Name": "Greuther F\u00fcrth",
+        "FBRef_name": "Greuther F\u00fcrth",
+        "liga_pais": "Alemania",
+        "FBRef_id": "12192a4c",
+        "match_score": 100
+    },
+    "2036": {
+        "Club_Name": "Heidenheim",
+        "FBRef_name": "Heidenheim",
+        "liga_pais": "Alemania",
+        "FBRef_id": "18d9d2a7",
+        "match_score": 100
+    },
+    "105": {
+        "Club_Name": "Darmstadt 98",
+        "FBRef_name": "Darmstadt 98",
+        "liga_pais": "Alemania",
+        "FBRef_id": "6a6967fc",
+        "match_score": 100
+    },
+    "35": {
+        "Club_Name": "FC St. Pauli",
+        "FBRef_name": "St. Pauli",
+        "liga_pais": "Alemania",
+        "FBRef_id": "54864664",
+        "match_score": 100
+    },
+    "269": {
+        "Club_Name": "Holstein Kiel",
+        "FBRef_name": "Holstein Kiel",
+        "liga_pais": "Alemania",
+        "FBRef_id": "2ac661d9",
+        "match_score": 100
+    }
+}
