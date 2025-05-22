@@ -1,10 +1,13 @@
-Transfermarkt + FBRef Scraper & Matcher
-Este repositorio implementa un pipeline completo de scraping, limpieza, emparejamiento y análisis de datos de transferencias y rendimiento de jugadores a partir de fuentes como Transfermarkt y FBRef.
+# 🧠 Transfermarkt + FBRef Scraper & Matcher
 
-📁 Estructura del Proyecto
-txt
-Copiar
-Editar
+Este repositorio implementa un pipeline completo de scraping, limpieza, emparejamiento y análisis de datos de transferencias y rendimiento de jugadores a partir de fuentes como **Transfermarkt** y **FBRef**.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+.
 .
 ├── Bases_generadas/
 │   └── *.csv                      # Bases limpias y combinadas desde notebooks
@@ -30,72 +33,69 @@ Editar
 ├── analisis_t.ipynb             # Exploración de Transfermarkt
 ├── merge_t2_and_fbref-by_id.ipynb # Unión final por jugador_id entre bases
 ├── Correct_season_and_concat_t-2.ipynb # Unión de temporadas y ajuste por fechas
-🧪 Componentes Clave
-🔎 Scrapper Transfermarkt (/scrapper)
-Extrae jugadores transferidos, valores, rendimiento (actual y anterior), características y vencimiento de contrato.
+```
 
-Soporta múltiples temporadas y ventanas (verano, invierno).
+---
 
-Ajustes inteligentes por:
+## 🧪 Componentes Clave
 
-Fecha de transferencia
+### 🔎 Scrapper Transfermarkt (`/scrapper`)
+- Extrae jugadores transferidos, valores, rendimiento (actual y anterior), características y vencimiento de contrato.
+- Soporta múltiples temporadas y ventanas (`verano`, `invierno`).
+- Ajustes inteligentes por:
+  - Fecha de transferencia
+  - Liga hemisférica (verano/invierno)
+  - Temporadas largas (`long_season`)
+  - Códigos de clubes
+  - Scraping de páginas archivadas si el dato contractual está perdido.
 
-Liga hemisférica (verano/invierno)
+### 🔁 Matching jerárquico fuzzy
+- `fuzzy_clubes/`: Matcheo entre clubes por similitud textual desde ligas equivalentes.
+- `fuzzy_jugadores/`: Emparejamiento de jugadores basado en club, posición, edad y nombre.
+- Algoritmo en cascada que minimiza falsos positivos usando criterios jerárquicos.
 
-Temporadas largas (long_season)
+### 📊 Análisis y Fusión
+- `Analisis_tfmkt-fbref.ipynb`: Validación cruzada de métricas y detección de outliers.
+- `merge_t2_and_fbref-by_id.ipynb`: Unión final basada en IDs matcheados, con posibilidad de analizar rendimiento pre y post transferencia.
 
-Códigos de clubes
+---
 
-Scraping de páginas archivadas si el dato contractual está perdido.
+## ▶️ Ejecución del Pipeline
 
-🔁 Matching jerárquico fuzzy
-fuzzy_clubes/: Matcheo entre clubes por similitud textual desde ligas equivalentes.
+1. **Scrapear Transfermarkt**  
+   Desde `scrapper/scrapper.py`:
 
-fuzzy_jugadores/: Emparejamiento de jugadores basado en club, posición, edad y nombre.
+   ```bash
+   python scrapper.py
+   ```
 
-Algoritmo en cascada que minimiza falsos positivos usando criterios jerárquicos.
+2. **Scrapear FBRef (externo)**  
+   Asegúrate de tener `df_fbref.csv` correctamente generado.
 
-📊 Análisis y Fusión
-Analisis_tfmkt-fbref.ipynb: Validación cruzada de métricas y detección de outliers.
+3. **Emparejar clubes y jugadores**  
+   Ejecutar los notebooks de fuzzy matching en orden:
 
-merge_t2_and_fbref-by_id.ipynb: Unión final basada en IDs matcheados, con posibilidad de analizar rendimiento pre y post transferencia.
+   - `fuzzy_clubes/fuzzy_match_clubes.ipynb`
+   - `fuzzy_jugadores/fuzzy_match_jugadores.ipynb`
 
-▶️ Ejecución del Pipeline
-Scrapear Transfermarkt
-Desde scrapper/scrapper.py:
+4. **Analizar y unir bases**  
+   Con las notebooks:
+   - `merge_t2_and_fbref-by_id.ipynb`
+   - `Analisis_tfmkt-fbref.ipynb`
 
-bash
-Copiar
-Editar
-python scrapper.py
-Scrapear FBRef (externo)
-Asegúrate de tener df_fbref.csv correctamente generado.
+---
 
-Emparejar clubes y jugadores
-Ejecutar los notebooks de fuzzy matching en orden:
+## 📦 Output Esperado
 
-fuzzy_clubes/fuzzy_match_clubes.ipynb
+- CSV/Excel con rendimiento antes y después de la transferencia
+- Valor de mercado, fees, edad, contrato, etc.
+- Datasets para modelado de regresión, clasificación o clustering
 
-fuzzy_jugadores/fuzzy_match_jugadores.ipynb
+---
 
-Analizar y unir bases
-Con las notebooks:
+## ⚙️ Requisitos
 
-merge_t2_and_fbref-by_id.ipynb
-
-Analisis_tfmkt-fbref.ipynb
-
-📦 Output Esperado
-CSV/Excel con rendimiento antes y después de la transferencia
-
-Valor de mercado, fees, edad, contrato, etc.
-
-Datasets para modelado de regresión, clasificación o clustering
-
-⚙️ Requisitos
-txt
-Copiar
-Editar
+```txt
 pandas
 numpy
 beautifulsoup4
@@ -104,5 +104,10 @@ waybackpy
 scikit-learn
 fuzzywuzzy
 unidecode
-🧠 Autoría y Uso
+```
+
+---
+
+## 🧠 Autoría y Uso
+
 Este código está diseñado para fines académicos y analíticos. Si lo reutilizas, por favor cita el proyecto o contacta con el autor.
