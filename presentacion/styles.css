@@ -1,0 +1,207 @@
+/* Agregar padding al section para que el recuadro tenga espacio */
+.centrar-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+#title-slide {
+  padding: 100px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Clase para diapositivas con texto pequeño */
+.letra-chica {
+  font-size: 0.6em !important; /* Ajusta el tamaño aquí */
+}
+
+/* Clase para diapositivas con texto gigante */
+.letra-grande {
+  font-size: 1.5em !important;
+}
+
+/* Crear un pseudo-elemento como recuadro detrás del contenido */
+#title-slide::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  width: 90% !important;
+  height: 100% !important;
+  min-height: 60% !important;
+  z-index: 0 !important;
+}
+
+/* Asegurar que el texto esté por encima del recuadro */
+#title-slide h1.title,
+#title-slide p.subtitle,
+#title-slide .quarto-title-authors {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.reveal .title {
+  font-size: 3em !important;
+  text-shadow: 0px 4px 10px rgba(0,0,0,0.8) !important;
+  margin-bottom: 30px !important;
+}
+
+.reveal .subtitle {
+  font-size: 1.8em !important;
+}
+
+.reveal .quarto-title-author-name {
+  font-size: 1.5em !important;
+  color: #bdc3c7 !important;
+  margin-top: 30px !important;
+}
+
+.reveal .slides section:not(#title-slide) {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  padding: 2.5% !important;
+  
+  /* MANTENEMOS TU 110% PERO SIN TRANSFORM */
+  width: 110% !important; 
+  height: 100% !important;
+  
+  /* Truco para centrar sin usar translate */
+  position: absolute !important;
+  left: -5% !important; /* Movemos a la izquierda la mitad del exceso (10% / 2) */
+  top: 0 !important;
+  margin: 0 !important;
+  transform: none !important; /* Esto es lo que arregla el salto */
+
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important; 
+  align-items: stretch !important;
+}
+
+.reveal .slides section:not(#title-slide).box-ancha {
+  width: 110% !important; 
+  left: -5% !important; /* (100 - 130) / 2 = -15 */
+  
+  /* Aseguramos que no se rompa el centrado */
+  margin: 0 !important;
+  transform: none !important;
+  top: 0 !important;
+}
+
+/* NUEVA CLASE PARA FORZAR ALINEACIÓN SUPERIOR */
+.reveal .slides section:not(#title-slide).top {
+  justify-content: flex-start !important;
+  padding-top: 40px !important; /* Un poco de aire arriba */
+}
+
+/* .reveal .slides section:not(#title-slide) {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  padding: 2.5% !important;
+  width: 110% !important; Ancho de la caja negra 
+  height: 100% !important;
+
+  /* Centrado horizontal si el ancho en mayor a 100% 
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto !important;
+  box-sizing: border-box !important;
+
+
+/* Distribuir contenido verticalmente 
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: stretch !important;
+} */
+
+/* AJUSTE GLOBAL PARA ESTAS SLIDES: Maximizar espacio texto */
+.reveal .slides section[data-auto-animate] {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important; /* Pega todo arriba */
+    padding-top: 10px !important;
+}
+
+/* CONTENEDOR DE 3 COLUMNAS */
+.w-container { 
+    display: flex; 
+    gap: 30px; 
+    justify-content: center; 
+    align-items: flex-end; /* Alineados al piso del contenedor */
+    height: 300px; /* Altura reducida para dejar más espacio abajo */
+    margin-bottom: 20px;
+    margin-top: -50px;
+}
+
+/* COLUMNAS / TORRES */
+.tower-main { 
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 3px; 
+    width: 160px; 
+    align-content: end; 
+}
+
+.tower-sec { 
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 3px; 
+    width: 160px;
+    align-content: end; 
+    padding-left: 30px;
+}
+
+.tower-trash {
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 3px; 
+    width: 160px;
+    align-content: end; 
+    opacity: 0.7;
+    border-left: 1px dashed rgba(255,255,255,0.3);
+    padding-left: 80px;
+}
+
+/* PUNTOS */
+.d { 
+    width: 16px; 
+    height: 16px; 
+    border-radius: 50%; 
+    transition: all 1s ease-in-out;
+}
+
+/* ESTADOS */
+.g { background-color: #bdc3c7; } /* Gris */
+.r { background-color: #e74c3c; opacity: 0.5; } /* Rojo Basura */
+.ok-price { background-color: #2ecc71; box-shadow: 0 0 6px #2ecc71; } /* Verde */
+.ok-noprice { background-color: #9b59b6; box-shadow: 0 0 6px #9b59b6; } /* Violeta */
+
+/* TEXTO EXPLICATIVO (Ahora tiene mucho más espacio) */
+.txt-ref { 
+    margin-top: 0; 
+    font-size: 0.9em; 
+    color: #eee; 
+    text-align: left;
+    border-top: 1px solid #555;
+    padding-top: 15px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}

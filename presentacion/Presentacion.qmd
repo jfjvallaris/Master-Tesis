@@ -1,0 +1,1902 @@
+---
+title: "La Otra Competencia"
+subtitle: "Análisis Económico del Mercado de Pases del Fútbol Argentino <br> en el periodo 2021-2024"
+author: "Joel G. Vallaris <br> Director: Martin Trombetta"
+format:
+  revealjs: 
+    theme: night
+    css: styles.css
+    transition: slide
+    slide-number: true
+    width: 1600
+    height: 900
+    title-slide-attributes:
+      data-background-image: "fondo.png"
+      data-background-size: cover
+      data-background-opacity: "0.6"
+    parallax-background-image: "cesped_river_hoy.jpg"
+    parallax-background-size: "2400px 900px"
+    parallax-background-horizontal: 40
+    parallax-background-vertical: 0
+    # parallax-background-position: "top"
+    chalkboard: true # Incompatible con embed-resources
+    mathjax: true # Ecuaciones de LaTeX
+
+# embed-resources: true # Activar para guardar el html completo
+
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+---
+
+## Problema de investigacion
+
+::: {.fragment}
+<div style="border-left: 5px solid #e74c3c; padding-left: 15px;"> <!--color: #e74c3c;   -->
+¿Cuáles son los atributos o características que determinan los precios de transferencia? ¿Cuál es su incidencia?
+</div>
+:::
+
+::: {.fragment .fade-in}
+<div style="border-left: 5px solid #e74c3c; padding-left: 15px;">
+¿Tienen los clubes de fútbol poder de mercado y/o poder de negociación en las transferencias de futbolistas?
+</div>
+:::
+
+::: {.notes}
+Speaker notes go here.
+:::
+
+
+
+```{python}
+#| label: setup
+#| include: false
+
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import plotly.io as pio
+
+# --- 1. CONFIGURACIÓN ESTÉTICA ---
+pio.templates.default = "plotly_dark"
+# Paleta de colores consistente para toda la tesis
+COLORES = {
+    'mco': '#7f8c8d',       # Gris (Sesgado)
+    'tobit': '#e74c3c',     # Rojo (Corregido)
+    'probit': '#3498db',    # Azul (Probabilidad)
+    'positivo': '#2ecc71',  # Verde
+    'negativo': '#c0392b',  # Rojo oscuro
+    'neutro': '#bdc3c7'     # Gris claro
+}
+
+# --- 2. CARGA DE DATOS CRUDOS (OPCIONAL) ---
+# Intentamos cargar el excel. Si no está, creamos un df vacío para que no rompa.
+try:
+    df_raw = pd.read_excel("_transferencias_21-24.xlsx")
+    # Limpieza básica si fuera necesaria en el futuro
+    # df_raw['fecha'] = pd.to_datetime(df_raw['fecha'])
+except FileNotFoundError:
+    df_raw = pd.DataFrame()
+    print("Aviso: No se encontró el archivo Excel. Se usarán solo los coeficientes cargados.")
+
+# --- 3. CARGA DE RESULTADOS (TABLAS DE LA TESIS) ---
+
+# A. TABLA 9: MODELOS MCO (1 a 4)
+# Cargamos los coeficientes (b) y errores estándar (se)
+datos_mco = {
+    'Variable': [
+        'Edad', 'Edad^2', 'Altura', 'Comunitario', 'Extranjero', 
+        'Delantero', 'Mediocampista', 'Portero', 
+        'Partidos Jugados', 'Goles', 'Asistencias', 
+        'Ventanas Restantes', 'Temp. (Inflación)', 'Valor Plantel Comp.', 'Valor Plantel Vend.'
+    ],
+    # Modelo 1: Solo características jugador
+    'MCO1_b': [-0.449, 0.006, 0.008, 0.337, -0.155, 0.106, 0.199, -0.467, 0.016, 0.032, 0.019, 0.202, 0.048, None, None],
+    'MCO1_se': [0.176, 0.003, 0.008, 0.120, 0.121, 0.154, 0.137, 0.546, 0.006, 0.017, 0.026, 0.027, 0.059, None, None],
+    
+    # Modelo 2: Incorpora Clubes (Edad^2 pierde signif)
+    'MCO2_b': [-0.169, 0.001, None, 0.146, None, 0.258, 0.241, -0.127, 0.010, 0.033, 0.002, 0.143, 0.181, 0.531, 0.307],
+    'MCO2_se': [0.117, 0.002, None, 0.089, None, 0.113, 0.101, 0.449, 0.004, 0.014, 0.019, 0.021, 0.044, 0.045, 0.040],
+
+    # Modelo 3: EL ELEGIDO (Sin edad^2, variables depuradas)
+    'MCO3_b': [-0.108, None, None, None, None, 0.263, 0.243, 0.257, 0.012, 0.028, None, 0.138, 0.164, 0.542, 0.307],
+    'MCO3_se': [0.022, None, None, None, None, 0.105, 0.098, 0.205, 0.003, 0.013, None, 0.021, 0.040, 0.044, 0.040],
+    
+    # Modelo 4: Efectos Fijos (Saturado)
+    'MCO4_b': [-0.092, None, None, None, None, 0.117, 0.034, 0.419, 0.005, 0.040, None, 0.092, 0.016, None, None],
+    'MCO4_se': [0.000, None, None, None, None, 0.170, 0.169, 0.292, 0.006, 0.020, None, 0.034, 0.057, None, None]
+}
+df_mco = pd.DataFrame(datos_mco)
+
+# B. TABLA 11: EFECTOS MARGINALES (MCO vs TOBIT)
+# Usamos los Efectos Marginales del Tobit para que sean comparables con MCO
+datos_tobit = {
+    'Variable': [
+        'Edad', 'Delantero', 'Mediocampista', 'Portero', 
+        'Partidos Jugados', 'Goles', 
+        'Valor Plantel Comp.', 'Valor Plantel Vend.', 
+        'Ventanas Restantes', 'Temp. (Inflación)'
+    ],
+    # MCO Truncado (Modelo 3) - Repetimos para graficar comparaciones
+    'MCO_b': [-0.108, 0.263, 0.243, 0.257, 0.012, 0.028, 0.542, 0.307, 0.138, 0.164],
+    'MCO_se': [0.022, 0.105, 0.098, 0.205, 0.003, 0.013, 0.044, 0.040, 0.021, 0.040],
+    
+    # MCO Censurado (Con ceros, sin corrección)
+    'Cens_b': [-0.657, -0.262, 0.167, 1.847, 0.064, 0.275, 2.442, -0.008, 0.553, 0.228],
+    'Cens_se': [0.044, 0.452, 0.768, 0.016, 0.058, 0.172, 0.179, 0.114, 0.170, 0.000], # SE approx o faltantes en texto
+    
+    # Tobit (Efectos Marginales)
+    'Tobit_b': [-0.181, -0.011, 0.084, 0.606, 0.019, 0.069, 0.660, 0.112, 0.136, 0.074],
+    'Tobit_se': [0.011, 0.112, 0.105, 0.218, 0.004, 0.013, 0.041, 0.024, 0.040, 0.202]
+}
+df_tobit = pd.DataFrame(datos_tobit)
+
+# C. TABLA 13: MODELO PROBIT (Probabilidad de tener precio)
+# Variables ligeramente distintas (lvalor_plantel_to = Comprador)
+datos_probit = {
+    'Variable': [
+        'Edad', 'Delantero', 'Mediocampista', 'Portero', 
+        'Partidos Jugados', 'Goles', 
+        'Valor Plantel Comp.', 'Valor Plantel Vend.', 
+        'Ventanas Restantes', 'Temp. (Inflación)'
+    ],
+    'Probit_b': [0.220, 0.220, 0.330, 0.701, 0.160, 0.122, 0.830, 0.270, 0.168, 0.310],
+    'Probit_p_signif': [0.01, 0.1, 0.1, 0.05, 0.05, 0.01, 0.01, 0.1, 0.01, 0.1] # Basado en asteriscos
+}
+df_probit = pd.DataFrame(datos_probit)
+
+# Función auxiliar para dibujar intervalos de confianza
+def add_confidence_interval(fig, x_vals, y_val, color):
+    fig.add_trace(go.Scatter(
+        x=x_vals, y=[y_val, y_val],
+        mode='lines', line=dict(color=color, width=3),
+        showlegend=False, hoverinfo='skip'
+    ))
+```
+
+```{python}
+#| label: setup2
+#| include: false 
+
+# 1. Configuración Estética Global
+# Hace que Plotly use el tema oscuro, esencial para el look and feel.
+pio.templates.default = "plotly_dark"
+COLOR_TOBIT = '#e74c3c'
+COLOR_MCO = '#7f8c8d'
+COLOR_POSICION = '#9b59b6'
+COLOR_NEGOCIO = '#2ecc71'
+COLOR_RENDIMIENTO = '#3498db'
+COLOR_EDAD = '#c0392b'
+
+
+# 2. Datos Centralizados (Coeficientes y SE)
+# **MODELO 3 (Base para Forest Plot y MCO en Dumbbell)**
+df_mco_data = {
+    'Variable': ['Medio', 'Delantero', 'Ventanas Restantes', 'Goles (Temp. Ant)', 'Partidos Jugados', 'Edad'],
+    'Coef': [0.243, 0.263, 0.138, 0.028, 0.012, -0.108],
+    'SE': [0.098, 0.105, 0.021, 0.013, 0.003, 0.022],
+    'Color': [COLOR_POSICION, COLOR_POSICION, COLOR_NEGOCIO, COLOR_RENDIMIENTO, COLOR_RENDIMIENTO, COLOR_EDAD]
+}
+```
+
+
+---
+
+## Justificación del problema {auto-animate=true}
+
+::: {.fragment}
+::: {data-id="caja-texto"}
+- Ausencia de literatura para el mercado argentino
+:::
+:::
+
+::: {style="visibility: hidden; opacity: 0;"}
+- Importancia económica
+    - VBP U$S 5.000 millones (2013) 
+- Interés social
+    - Rating televisivo...
+- Particularidades
+:::
+
+## Justificación del problema {auto-animate=true}
+
+::: {.columns}
+
+::: {.column width="45%"}
+::: {data-id="caja-texto"}
+- Ausencia de literatura para el mercado argentino
+:::
+:::
+
+::: {.column}
+![](/ausencia_arg.jpg){width="800" height="650"}
+
+::: {style="font-size: 0.5em;"}
+Fuente: Franceschi, Brocard, Follert & Gouguet (2024). *Determinants of football players’ valuation: A systematic review*.
+:::
+:::
+:::
+
+## Justificación del problema {auto-animate=true}
+
+::: {data-id="caja-texto"}
+- Ausencia de literatura para el mercado argentino
+:::
+
+::: {.fragment}
+- Importancia económica
+    - VBP U$S 5.000 millones (2013) 
+:::
+
+::: {.fragment}
+- Interés social
+    - Rating televisivo: Final WC-2022 (63pp) vs Debate 2023 (45pp)
+    - Función social: Formación de jugadores
+:::
+
+::: {.fragment}
+- Particularidades del mercado
+:::
+
+
+::: {.notes }
+::: {style="font-size: 0.8em;"}
+
+Los 5mM representan aprox U$S 7.000 millones actuales
+
+El mercado de futbolistas es uno de los pocos mercados, en el cuál las firmas pagan una tarifa por el derecho a contratar un trabajador con formación especializada, que está prestando sus servicios en otra firma
+:::
+:::
+
+
+## Objetivos de la Investigación
+
+::: {.fragment .fade-in}
+### Objetivo General
+::: {.callout-note appearance="minimal" icon=false}
+::: {style="font-size: 1.4em; text-align: center;"}
+Estimar los **precios implícitos** de las características de los jugadores y cuantificar el impacto del **poder de negociación** de los clubes en el mercado argentino (2021-2024).
+:::
+:::
+:::
+
+
+::: {.fragment .fade-up}
+### Objetivos Especificos
+:::
+
+::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;"}
+
+::: {.fragment .fade-up}
+::: {.callout-important appearance="simple" icon=false title="1. Validación Teórica"}
+::: {style="font-size: 1.1em;"}
+Verificar aplicabilidad de literatura internacional al contexto local.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-important appearance="simple" icon=false title="2. Estrategia Empírica"}
+::: {style="font-size: 1.1em;"}
+Desarrollar un modelo econométrico para la determinación de precios.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-important appearance="simple" icon=false title="3. Estimación"}
+::: {style="font-size: 1.1em;"}
+Medir impacto de atributos y testear asimetrías de negociación.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-important appearance="simple" icon=false title="4. Discusión"}
+::: {style="font-size: 1.1em;"}
+Contrastar resultados con la evidencia de mercados europeos.
+:::
+:::
+:::
+
+:::
+
+
+
+
+---
+
+## Hipótesis de Investigación
+
+::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;"}
+
+::: {.fragment .fade-up}
+::: {.callout-tip appearance="simple" icon=false title="1. Diferenciación Vertical"}
+::: {style="font-size: 1.1em;"}
+Las estadísticas históricas (**Goles y Asistencias**) impactan positivamente en el precio.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-tip appearance="simple" icon=false title="2. Señal de Calidad"}
+::: {style="font-size: 1.1em;"}
+La cantidad de **Partidos Jugados** (última temporada) revela el estado físico y aumenta la disposición a pagar.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-warning appearance="simple" icon=false title="3. Efecto Edad (Ambiguo)"}
+::: {style="font-size: 1.1em;"}
+Dos fuerzas contrapuestas:
+<br>
+🟢 **Positivo:** Experiencia (menor costo de búsqueda).
+<br>
+🔴 **Negativo:** Menor vida útil y valor de reventa.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-warning appearance="simple" icon=false title="4. Poder de Negociación"}
+::: {style="font-size: 1.1em;"}
+El tamaño del club genera asimetrías: presiona el precio a la baja al comprar y al alza al vender.
+:::
+:::
+:::
+::: {.notes }
+::: {style="font-size: 0.9em;"}
+
+Existe una discrepancia en el concepto del ***tamaño*** de los clubes. En la investigación se sintetizan las dos ultimas hipótesis en una sola ***tamaño economico*** = Valor del plantel. Pero no necesariamente un club entendido como ***grande*** es el que tiene el plantel mas caro
+
+:::
+:::
+
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+::: {.callout-tip appearance="simple" icon=false title="5. Efecto ingreso"}
+::: {style="font-size: 1.1em;"}
+El crecimiento de los ingresos de los clubes de fútbol produce mayores precios
+de transferencia<br>
+(Descartada por falta de proxy directa para ingresos de clubes)
+:::
+:::
+::: {.notes }
+::: {style="font-size: 0.9em;"}
+
+Pero ¿Es esto realmente un problema?<br>
+"La diferencia de ingresos es en sí misma una característica del poder de negociación."
+
+:::
+:::
+:::
+
+::: {.fragment}
+:::
+
+
+
+
+
+## Antecedentes (Deporte)
+
+::: {.columns style="display: flex; align-items: center;"}
+
+::: {.column width="20%"}
+[1956]{.fragment .fade-in-then-semi-out fragment-index=1}<br><br>
+[1964]{.fragment .fade-in-then-semi-out fragment-index=2}<br><br>
+[1974]{.fragment .fade-in-then-semi-out fragment-index=3}
+:::
+
+::: {.column}
+::: {.r-stack}
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+**Rottenberg: 11 Anclas de la Economía del Deporte**
+
+- Los **propietarios** son maximizadores racionales de ganancias.
+- Incertidumbre de resultado $\rightarrow$ Producto exitoso (Balance competitivo).
+- El principio de invariancia.
+- El mercado laboral es monopsonista
+- El mercado de productos es monopolístico (o casi)
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+**Neale: Peculiaridades de la Economía del Deporte**
+
+- Paradoja de Louis-Schmelling.
+- Producto conjunto invertido.
+- Max B $\rightarrow$ 
+  $$\begin{cases} +\Delta \text{ Competencia deportiva} \\ -\Delta \text{ Competencia económica} \end{cases}$$
+- La firma no es el club, es la Liga. (Monopolio natural).
+:::
+
+::: {.fragment .fade-in fragment-index=3}
+**Di Marco: Primer trabajo argentino**
+
+- **Manifestación directa**: Impacto en producto bruto (comercialización e inversión).
+- **Manifestación indirecta**: Aumento en calidad de vida y productividad laboral.
+:::
+:::
+:::
+:::
+::: {.notes }
+::: {style="font-size: 0.6em;"}
+**1. ROTTENBERG (1956)** <br>
+**Principio de invarianza:** El mercado libre es tan eficiente como la cláusula de reserva en términos de asignación de recursos
+
+**Cláusula de reserva:** impedir la movilidad de los jugadores, otorgando al club apoderado, pleno poder para disponer del futuro del jugador. Los jugadores, solo podían abandonar el club si la entidad deportiva los dejaba en libertad de acción. Se requería de dicho consentimiento, aun con el contrato vencido.
+
+**El mercado laboral es monopsonista**. Para la época, los jugadores de béisbol, y los futbolistas también, eran propiedad de los equipos de por vida.
+
+**El mercado de productos es monopolístico**. Esta es una característica específica para el caso específico del béisbol norteamericano, donde existen derechos de exclusividad en las ciudades para cada equipo. Esta exclusividad deriva en el ***ancla 3***: Hay clubes ricos y pobres, basados en asistencias en relación con el tamaño de la población. 
+:::
+:::
+
+
+
+## Antecedentes (Fútbol)
+
+```{mermaid}
+%%| fig-align: center
+%%{init: { 'theme': 'dark', 'themeVariables': { 'fontSize': '22px' } } }%%
+timeline
+    1971 : Sloane <br>-<br> Los clubes maximizan utilidad
+    1993 : Carmichel & Thomas <br>-<br> Primer estudio empírico (NBS)
+    1997 : Szymanski & Smith <br>-<br> Mercado competitivo
+    1999 : Carmichel, Forest & Simmons <br>-<br> Primera utilización HPM
+         : Dobson y Gerard <br>-<br> Segmentación del mercado
+    %% 2015 : Ruijg & van Ophem <br>-<br> Categorización de equipos
+    2021-24: Poli, Besson, y Ravene <br>-<br> Predictibilidad de los precios (85%)
+
+```
+::: {.notes }
+::: {style="font-size: 0.7em;"}
+**Dobson y Gerard (2000)** <br>
+- La segmentación del mercado tuvo como referencia tres tipos de transferencia (horizontal, ascenso, descenso)
+:::
+:::
+
+
+## El mercado de transferencias
+
+::: {style="font-size: 1.2em;"}
+::: {.callout-note appearance="minimal" icon=false}
+**¿Por qué se venden y se compran jugadores de fútbol como si fuese un activo más en propiedad de la firma?**
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {style="font-size: 0.75em; margin-left: 1em;"}
+El derecho de exclusividad sobre el uso de su fuerza de trabajo (registro de inscripción) mientras el contrato se encuentre en su período de vigencia es una mercancía comerciable (Davenport, 1969).
+:::
+:::
+
+
+::: {style="font-size: 1.2em;"}
+::: {.callout-note appearance="minimal" icon=false}
+**¿Para qué se venden y se compran jugadores de fútbol?**
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {style="font-size: 0.75em; margin-left: 1em;"}
+Según Carmichel & Thomas (1993)
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {style="font-size: 0.75em; margin-left: 2em;"}
+1. Clubes $\rightarrow$ Facilitar y organizar la adquisición e intercambio de jugadores por los clubes lo que permite mejorar el rendimiento.
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {style="font-size: 0.75em; margin-left: 2em;"}
+2. Jugadores $\rightarrow$ Búsqueda de mejores oportunidades, mayores ingresos o mayor satisfacción laboral.
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {style="font-size: 0.75em; margin-left: 2em;"}
+<!-- ::: {.notes }
+::: {style="font-size: 0.6em;"} -->
+- Incrementar el patrimonio del club (solo para España).
+:::
+:::
+
+::: {.notes }
+::: {style="font-size: 0.6em;"}
+**Por qué**: Se puede comentar como lo resuelve el baseball finalmente
+:::
+:::
+
+
+## Enfoque de Negociación de Nash (NBS)
+
+::: {style="text-align: center; margin-bottom: 40px;"}
+Estudia la distribución del excedente conjunto entre dos agentes.
+$$\max [S(P)-s]\,[B(P)-b]$$
+:::
+
+::: {.columns}
+
+::: {.column width="50%"}
+::: {.fragment .fade-up}
+::: {.callout-note appearance="minimal" icon=false}
+## Heterogeneidad y Escasez
+La negociación entre pocos clubes es relevante porque ni los clubes ni los jugadores son homogéneos. Los agentes son escasos y poseen poder de mercado.
+<br>*(Carmichel & Thomas, 2000)*
+:::
+:::
+:::
+
+::: {.column width="50%"}
+::: {.fragment .fade-up}
+::: {.callout-note appearance="minimal" icon=false}
+## Fallo de Competencia
+El mercado de transferencias no es verdaderamente competitivo: la negociación es bilateral y la identidad de las partes afecta el precio.
+<br>*(Carmichel, 2006)*
+:::
+:::
+:::
+
+:::
+
+## Modelo de Precios Hedónicos (HPM)
+
+::: {style="text-align: center; margin-bottom: 30px;"}
+El precio de equilibrio es una función de los atributos del bien.
+$$P(Z)=P(z_1, z_2, \dots, z_n)$$
+:::
+
+::: {.columns}
+
+::: {.column width="50%"}
+::: {.fragment .fade-up}
+::: {.callout-tip appearance="minimal" icon=false}
+## Mercado Consolidado
+Disminución del poder monopsónico. Mercado de muchos compradores y vendedores donde la información del rendimiento es observable.
+<br>*(Szymanski & Smith, 1997)*
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-tip appearance="minimal" icon=false}
+## Información Perfecta
+Existe un gran número de compradores y vendedores con amplia información sobre la calidad de los jugadores.
+<br>*(Kuper & Szymanski, 2012)*
+:::
+:::
+:::
+
+::: {.column width="50%"}
+::: {.fragment .fade-up}
+::: {.callout-important appearance="minimal" icon=false}
+## Ineficiencia y Marketing
+Hay razones para sospechar que el mercado es ineficiente para traducir dinero en resultados.
+
+Los clubes compran jugadores para abrir mercados o ***vender camisetas***.
+<br>*(Altman, 2013)*
+:::
+:::
+:::
+
+:::
+
+
+
+## Modelo de Precios Hedónicos con poder de negociación
+
+::: {.columns style="display: flex; align-items: center;"}
+
+<!-- ========================= -->
+<!-- COLUMNA IZQUIERDA (TEXTO) -->
+<!-- ========================= -->
+::: {.column width="35%" style="position: relative;"}
+
+::: {.r-stack}
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+::: {style="font-size: 0.8em;"}
+El modelo de precios hedónicos propone que los precios de equilibrio en un mercado con productos diferenciados puede expresarse como una función de los atributos del bien.
+
+$$
+P(Z)=P(z_1, z_2, \dots, z_n)
+$$
+
+::: {style="visibility: hidden; opacity: 0;"}
+Cuando:
+
+- los mercados son débiles (pocos agentes)
+
+- hay pocos sustitutos para el bien heterogéneo
+
+:::
+
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+::: {style="font-size: 0.8em;"}
+El modelo de precios hedónicos propone que los precios de equilibrio en un mercado con productos diferenciados puede expresarse como una función de los atributos del bien.
+
+$$
+P(Z)=P(z_1, z_2, \dots, z_n)
+$$
+
+Cuando:
+
+- los mercados son débiles (pocos agentes)
+
+- hay pocos sustitutos para el bien heterogéneo
+
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=3}
+
+::: {style="font-size: 0.8em;"}
+El excedente no se reduce a cero por la ausencia de entrada de nuevos compradores y vendedores, y su distribución depende del poder de negociación.
+:::
+::: {style="font-size: 0.6em;"}
+(Harding, Rosenthal y Sirmans, 2003)
+:::
+
+<br> <br>
+
+::: {style="font-size: 0.8em;"}
+Empricamente ambos enfoques (NBS y HPM) son difciles de distinguir.
+:::
+::: {style="font-size: 0.6em;"}
+(Szimansky & Smith, 1997)
+:::
+
+
+:::
+
+:::
+:::
+
+<!-- ========================= -->
+<!-- COLUMNA DERECHA (GRÁFICOS) -->
+<!-- ========================= -->
+::: {.column style="position: relative;"}
+
+::: {.r-stack}
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+::: {style="width:100%; height:100%;"}
+```{python}
+#| echo: false
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(1.015, 9.5, 500)
+p = np.log(15 * (x - 1)) / np.log(3) + 1.55
+
+x1 = np.linspace(1.25, 5, 200)
+x2 = np.linspace(0.001, 2.8, 200)
+x3 = np.linspace(4.75, 9, 200)
+x4 = np.linspace(4, 8.2, 200)
+
+plt.figure(figsize=(10, 6))
+
+ax = plt.gca()
+
+# ocultar todos los spines
+for spine in ["top", "right", "left", "bottom"]:
+    ax.spines[spine].set_visible(False)
+
+# eliminar ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+# límites (IMPORTANTE: antes de las flechas)
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 9)
+
+# flecha eje X
+ax.annotate(
+    "", xy=(12, 0), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# flecha eje Y
+ax.annotate(
+    "", xy=(0, 9), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# etiquetas de ejes
+ax.text(12.1, -0.15, r"$z_1$", ha="left", va="top")
+ax.text(-0.2, 9.1, "P(z)", ha="right", va="bottom")
+
+
+# quitar ejes superior y derecho
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# eliminar numeración de ejes
+ax.set_yticks([])
+ax.set_xticks([2, 6.5])
+ax.set_xticklabels([r"$z_1^*$", r"$z_2^*$"])
+
+plt.plot(x, p, color="black", linewidth=2)
+plt.axvline(2, linestyle="--", color="gray")
+plt.axvline(6.5, linestyle="--", color="gray")
+
+plt.plot(x1, -1/(x1-1)+5, color="black", linewidth=1)
+plt.plot(x2, -1/(x2-3)+3, color="black", linewidth=1)
+plt.plot(x3, -1/(x3-4.5)+6.05, color="black", linewidth=1)
+plt.plot(x4, -1/(x4-8.5)+5.1, color="black", linewidth=1)
+
+plt.scatter([2, 6.5], [4, 5.55], color="black", zorder=5)
+
+plt.text(10, 6, r"$p(z_1;z_2,\dots,z_n)$")
+plt.text(1.5, 1.5, r"$\theta^1(\cdot)$" " Max WTP")
+plt.text(5, 2.5, r"$\theta^2(\cdot)$" " Max WTP")
+plt.text(3, 6.5, r"$\phi^1(\cdot)$" " Min WTA")
+plt.text(8.5, 7.5, r"$\phi^2(\cdot)$" " Min WTA")
+
+plt.xlabel(r"$z_1$")
+plt.ylabel("P(z)")
+plt.xlim(0, 12)
+plt.ylim(0, 9)
+
+
+plt.show()
+
+```
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+::: {style="width:100%; height:100%;"}
+```{python}
+#| echo: false
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(1.015, 9.5, 500)
+p = np.log(15 * (x - 1)) / np.log(3) + 1.55
+
+x1 = np.linspace(1.25, 5, 200)
+x2 = np.linspace(0.001, 2.8, 200)
+x3 = np.linspace(4.75, 9, 200)
+x4 = np.linspace(4, 8.2, 200)
+
+plt.figure(figsize=(10, 6))
+
+ax = plt.gca()
+
+# ocultar todos los spines
+for spine in ["top", "right", "left", "bottom"]:
+    ax.spines[spine].set_visible(False)
+
+# eliminar ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+# límites (IMPORTANTE: antes de las flechas)
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 9)
+
+# flecha eje X
+ax.annotate(
+    "", xy=(12, 0), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# flecha eje Y
+ax.annotate(
+    "", xy=(0, 9), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# Flechas anchas HACIA ABAJO debajo de phi
+ax.annotate(
+    "", xy=(3.2, 5.8), xytext=(3.2, 6.4),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+ax.annotate(
+    "", xy=(8.7, 6.8), xytext=(8.7, 7.4),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+# Flechas anchas HACIA ARRIBA arriba de theta
+ax.annotate(
+    "", xy=(1.7, 2.5), xytext=(1.7, 1.9),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+ax.annotate(
+    "", xy=(5.2, 3.6), xytext=(5.2, 3),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+# etiquetas de ejes
+ax.text(12.1, -0.15, r"$z_1$", ha="left", va="top")
+ax.text(-0.2, 9.1, "P(z)", ha="right", va="bottom")
+
+
+# quitar ejes superior y derecho
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# eliminar numeración de ejes
+ax.set_yticks([])
+ax.set_xticks([2, 6.5])
+ax.set_xticklabels([r"$z_1^*$", r"$z_2^*$"])
+
+plt.plot(x, p, color="black", linewidth=2)
+plt.axvline(2, linestyle="--", color="gray")
+plt.axvline(6.5, linestyle="--", color="gray")
+
+plt.plot(x1, -1/(x1-1)+5, color="black", linewidth=1)
+plt.plot(x2, -1/(x2-3)+3, color="black", linewidth=1)
+plt.plot(x3, -1/(x3-4.5)+6.05, color="black", linewidth=1)
+plt.plot(x4, -1/(x4-8.5)+5.1, color="black", linewidth=1)
+
+plt.scatter([2, 6.5], [4, 5.55], color="black", zorder=5)
+
+plt.text(10, 6, r"$p(z_1;z_2,\dots,z_n)$")
+plt.text(1.5, 1.5, r"$\theta^1(\cdot)$"" Max WTP")
+plt.text(5, 2.5, r"$\theta^2(\cdot)$"" Max WTP")
+plt.text(3, 6.5, r"$\phi^1(\cdot)$" " Min WTA")
+plt.text(8.5, 7.5, r"$\phi^2(\cdot)$" " Min WTA")
+
+
+plt.xlabel(r"$z_1$")
+plt.ylabel("P(z)")
+plt.xlim(0, 12)
+plt.ylim(0, 9)
+
+
+plt.show()
+
+```
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=3}
+::: {style="width:100%; height:100%;"}
+```{python}
+#| echo: false
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(1.015, 9.5, 500)
+p = np.log(15 * (x - 1)) / np.log(3) + 1.55
+
+x1 = np.linspace(1.25, 5, 200)
+x2 = np.linspace(0.001, 2.8, 200)
+x3 = np.linspace(4.75, 9, 200)
+x4 = np.linspace(4, 8.2, 200)
+
+plt.figure(figsize=(10, 6))
+
+ax = plt.gca()
+
+# ocultar todos los spines
+for spine in ["top", "right", "left", "bottom"]:
+    ax.spines[spine].set_visible(False)
+
+# eliminar ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+# límites (IMPORTANTE: antes de las flechas)
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 9)
+
+# flecha eje X
+ax.annotate(
+    "", xy=(12, 0), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# flecha eje Y
+ax.annotate(
+    "", xy=(0, 9), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# etiquetas de ejes
+ax.text(12.1, -0.15, r"$z_1$", ha="left", va="top")
+ax.text(-0.2, 9.1, "P(z)", ha="right", va="bottom")
+
+
+# quitar ejes superior y derecho
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# ticks como en el TikZ original
+ax.set_yticks([])
+ax.set_xticks([2, 6.5])
+ax.set_xticklabels([r"$z_1^*$", r"$z_2^*$"])
+
+plt.plot(x, p, color="black", linewidth=2)
+plt.axvline(2, linestyle="--", color="gray")
+plt.axvline(6.5, linestyle="--", color="gray")
+
+plt.plot(x1, -1/(x1-1)+5.5, color="black", linewidth=1)
+plt.plot(x2, -1/(x2-3)+2.5, color="black", linewidth=1)
+plt.plot(x3, -1/(x3-4.5)+6.5, color="black", linewidth=1)
+plt.plot(x4, -1/(x4-8.5)+4.6, color="black", linewidth=1)
+
+plt.plot([2, 2], [3.5, 4.5], color="black", linewidth=2)
+plt.plot([6.5, 6.5], [5, 6], color="black", linewidth=2)
+
+plt.annotate("Excedente", xy=(1.8, 4), xytext=(1, 6),
+             arrowprops=dict(arrowstyle="->"), ha="center")
+plt.annotate("Excedente", xy=(6.3, 5.55), xytext=(5, 7),
+             arrowprops=dict(arrowstyle="->"), ha="center")
+
+plt.text(9.5, 6, r"$p(z_1;z_2,\dots,z_n)$")
+plt.text(2.5, 3.75, "Min WTA")
+plt.text(7, 5, "Min WTA")
+plt.text(3, 5.5, "Max WTP")
+plt.text(8.5, 6.5, "Max WTP")
+
+plt.xlabel(r"$z_1$")
+plt.ylabel("P(z)")
+plt.xlim(0, 12)
+plt.ylim(0, 9)
+
+plt.show()
+
+```
+
+:::
+:::
+
+:::
+:::
+
+:::
+
+
+## Supuestos del modelo
+::: {style="font-size: 0.85em;"}
+::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.fragment .fade-up}
+::: {.callout-important appearance="minimal" icon=false}
+## Poder de Mercado Explícito
+Se descarta la modelización explícita del poder de mercado asociado al número de compradores y vendedores.  
+<br>*(Harding et al., 2003; Cotteleer et al., 2008)*
+:::
+::: {.notes}
+::: {style="font-size: 0.8em;"}
+Harding et al. no modelan explícitamente el poder de mercado a partir del número de compradores o vendedores, sino que capturan la negociación mediante características individuales.
+Cotteleer et al. muestran que esta es una limitación del enfoque original, pero acá se mantiene esta exclusión para conservar comparabilidad y simplicidad del modelo.
+La negociación se interpreta como resultado de atributos de los agentes, no de la estructura del mercado.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-important appearance="minimal" icon=false}
+## Simetría en la Negociación
+Se descarta el supuesto de simetría en los efectos de las características de compradores y vendedores sobre el resultado de la negociación.  
+<br>*(Harding et al., 2003)*
+:::
+::: {.notes}
+::: {style="font-size: 0.8em;"}
+Harding et al. imponen simetría como restricción identificadora.
+Sin embargo, en mercados laborales y de transferencias esta simetría resulta poco realista.
+Eliminar esta restricción permite capturar diferencias estructurales entre compradores y vendedores.
+:::
+:::
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment .fade-up}
+::: {.callout-tip appearance="minimal" icon=false}
+## Asimetría Comprador–Vendedor
+Se permite que las características de compradores y vendedores tengan efectos asimétricos sobre el resultado de la negociación, reflejando roles estructuralmente distintos en el proceso de transferencia.  
+<br>*(Cotteleer et al., 2008; Carmichael & Thomas, 1993)*
+:::
+::: {.notes}
+::: {style="font-size: 0.8em;"}
+Cotteleer et al. relajan explícitamente el supuesto de simetría y permiten coeficientes distintos para compradores y vendedores.
+Carmichael y Thomas muestran que en negociaciones laborales los roles no son intercambiables.
+En el mercado de transferencias de futbolistas, clubes vendedores y compradores enfrentan restricciones y objetivos distintos, por lo que la asimetría es conceptualmente más adecuada.
+:::
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-warning appearance="minimal" icon=false}
+## Independencia Observados–No Observados
+Se asume independencia entre las características observadas y los atributos no observados, como condición necesaria para la identificación del modelo y la interpretación de los coeficientes de negociación.  
+<br>*(Cotteleer et al., 2008)*
+:::
+
+::: {.notes }
+::: {style="font-size: 0.8em;"}
+Este es un supuesto estándar de exogeneidad utilizado para identificar el modelo.
+No implica que se elimine todo posible sesgo, sino que bajo este supuesto los coeficientes pueden interpretarse como efectos de negociación.
+Cotteleer et al. adoptan este supuesto como alternativa a imponer simetría, privilegiando interpretabilidad.
+:::
+:::
+
+:::
+:::
+
+:::
+
+::: {.fragment .fade-up}
+::: {.callout-note appearance="minimal" icon=false}
+**Formalmente:**  
+$$ P_j(Z_j, B_j) = P(Z_j) + B_j $$ 
+donde $B_j$ representa las características de negociación del comprador y del vendedor.
+:::
+:::
+
+:::
+
+## Especificación empírica
+
+:::: {style="display: grid; grid-template-rows: min-content 1fr; gap: 30px; height: 90%;"}
+
+::: {style="width: 100%; text-align: center;"}
+::: {.r-stack}
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+$$
+\ln{\left(P_{it}\right)}=\alpha+\beta^TZ_{it}+B_{it}+\epsilon_{it}
+$$
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+$$
+\ln{\left(P_{it}\right)}=\alpha
++\beta_j^tJ_{it}
++\beta_R^tR_{it-1}
++\beta_L^tL_{it}
++\beta_S^tS_{it}
++B_{it}+\epsilon_{it}
+$$
+:::
+
+::: {.fragment .fade-in fragment-index=3}
+$$
+\ln{\left(P_{it}\right)}=\alpha
++\beta^TZ_{it}
++\lambda_v\ln{\left(B_{it-1}^v\right)}+\lambda_c\ln{\left(B_{it-1}^c\right)}
++\varepsilon_{it}
+$$
+:::
+
+:::
+:::
+
+
+::: {style="width: 100%; display: flex; align-items: flex-start;"}
+::: {.r-stack width="100%"}
+
+::: {.fragment .fade-in-then-out fragment-index=1 style="font-size: 1em; width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false}
+## Modelo Base
+* El precio depende de un vector de características $Z$ y un componente de negociación agregado $B_{it}$.
+* Se aplica la transformación logarítmica a la variable dependiente:
+    - Precios implícitos como cambios porcentuales.
+    - Consistente con distribución log-normal (no negatividad).
+    - Criterio del rango: mayor a 1 OoM (Weisberg, 2005).
+:::
+<!-- ![](/clasif_variables.jpg){width="1200" height="250" fig-align="center"} -->
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false}
+## Descomposición de los atributos $(Z_{it})$
+
+* $J_{it}$: Características del Jugador (Edad, altura, comunitario, extranjero y posición)
+* $R_{it-1}$: Rendimiento en la temporada anterior (pj, goles, asistencias, amonestaciones, expulsiones, gc y vallas invictas)
+* $L_{it}$: Características del contrato (vencimiento del contrato)
+* $S_{it}$: Características del tiempo (temporada, estación)
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=3 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false}
+## Descomposición de la Negociación $(B_{it})$
+* El término $B_{it}$ se descompone en el poder de negociación del **vendedor** ($B^v$) y del **comprador** ($B^c$).
+* La variable proxy utilizada es la transformación logarítmica del **valor del plantel en la temporada anterior**. Se interpreta como elasticidad.
+:::
+:::
+
+:::
+:::
+
+::::
+
+
+
+## Información Muestral {auto-animate=true .top}
+
+:::: {.w-container}
+::: {.tower-main}
+<div class="d g" data-id="0"></div><div class="d g" data-id="1"></div><div class="d g" data-id="2"></div><div class="d g" data-id="3"></div><div class="d g" data-id="4"></div><div class="d g" data-id="5"></div><div class="d g" data-id="6"></div><div class="d g" data-id="7"></div><div class="d g" data-id="8"></div><div class="d g" data-id="9"></div>
+<div class="d g" data-id="10"></div><div class="d g" data-id="11"></div><div class="d g" data-id="12"></div><div class="d g" data-id="13"></div><div class="d g" data-id="14"></div><div class="d g" data-id="15"></div><div class="d g" data-id="16"></div><div class="d g" data-id="17"></div><div class="d g" data-id="18"></div><div class="d g" data-id="19"></div>
+<div class="d g" data-id="20"></div><div class="d g" data-id="21"></div><div class="d g" data-id="22"></div><div class="d g" data-id="23"></div><div class="d g" data-id="24"></div><div class="d g" data-id="25"></div><div class="d g" data-id="26"></div><div class="d g" data-id="27"></div><div class="d g" data-id="28"></div><div class="d g" data-id="29"></div>
+<div class="d g" data-id="30"></div><div class="d g" data-id="31"></div><div class="d g" data-id="32"></div><div class="d g" data-id="33"></div><div class="d g" data-id="34"></div><div class="d g" data-id="35"></div><div class="d g" data-id="36"></div><div class="d g" data-id="37"></div><div class="d g" data-id="38"></div><div class="d g" data-id="39"></div>
+<div class="d g" data-id="40"></div><div class="d g" data-id="41"></div><div class="d g" data-id="42"></div><div class="d g" data-id="43"></div><div class="d g" data-id="44"></div><div class="d g" data-id="45"></div><div class="d g" data-id="46"></div><div class="d g" data-id="47"></div><div class="d g" data-id="48"></div><div class="d g" data-id="49"></div>
+<div class="d g" data-id="50"></div><div class="d g" data-id="51"></div><div class="d g" data-id="52"></div><div class="d g" data-id="53"></div><div class="d g" data-id="54"></div><div class="d g" data-id="55"></div><div class="d g" data-id="56"></div><div class="d g" data-id="57"></div><div class="d g" data-id="58"></div><div class="d g" data-id="59"></div>
+<div class="d g" data-id="60"></div><div class="d g" data-id="61"></div><div class="d g" data-id="62"></div><div class="d g" data-id="63"></div><div class="d g" data-id="64"></div><div class="d g" data-id="65"></div><div class="d g" data-id="66"></div><div class="d g" data-id="67"></div><div class="d g" data-id="68"></div><div class="d g" data-id="69"></div>
+<div class="d g" data-id="70"></div><div class="d g" data-id="71"></div><div class="d g" data-id="72"></div><div class="d g" data-id="73"></div><div class="d g" data-id="74"></div><div class="d g" data-id="75"></div><div class="d g" data-id="76"></div><div class="d g" data-id="77"></div><div class="d g" data-id="78"></div><div class="d g" data-id="79"></div>
+<div class="d g" data-id="80"></div><div class="d g" data-id="81"></div><div class="d g" data-id="82"></div><div class="d g" data-id="83"></div><div class="d g" data-id="84"></div><div class="d g" data-id="85"></div><div class="d g" data-id="86"></div><div class="d g" data-id="87"></div><div class="d g" data-id="88"></div><div class="d g" data-id="89"></div>
+<div class="d g" data-id="90"></div><div class="d g" data-id="91"></div><div class="d g" data-id="92"></div><div class="d g" data-id="93"></div><div class="d g" data-id="94"></div><div class="d g" data-id="95"></div><div class="d g" data-id="96"></div><div class="d g" data-id="97"></div><div class="d g" data-id="98"></div><div class="d g" data-id="99"></div>
+:::
+
+::: {.tower-sec}
+
+<div class="d g" data-id="100"></div><div class="d g" data-id="101"></div><div class="d g" data-id="102"></div><div class="d g" data-id="103"></div><div class="d g" data-id="104"></div><div class="d g" data-id="105"></div><div class="d g" data-id="106"></div><div class="d g" data-id="107"></div><div class="d g" data-id="108"></div><div class="d g" data-id="109"></div>
+<div class="d g" data-id="110"></div><div class="d g" data-id="111"></div><div class="d g" data-id="112"></div><div class="d g" data-id="113"></div><div class="d g" data-id="114"></div><div class="d g" data-id="115"></div><div class="d g" data-id="116"></div><div class="d g" data-id="117"></div><div class="d g" data-id="118"></div><div class="d g" data-id="119"></div>
+<div class="d g" data-id="120"></div><div class="d g" data-id="121"></div><div class="d g" data-id="122"></div><div class="d g" data-id="123"></div><div class="d g" data-id="124"></div><div class="d g" data-id="125"></div><div class="d g" data-id="126"></div><div class="d g" data-id="127"></div><div class="d g" data-id="128"></div><div class="d g" data-id="129"></div>
+<div class="d g" data-id="130"></div><div class="d g" data-id="131"></div><div class="d g" data-id="132"></div><div class="d g" data-id="133"></div><div class="d g" data-id="134"></div><div class="d g" data-id="135"></div><div class="d g" data-id="136"></div><div class="d g" data-id="137"></div><div class="d g" data-id="138"></div><div class="d g" data-id="139"></div>
+<div class="d g" data-id="140"></div><div class="d g" data-id="141"></div><div class="d g" data-id="142"></div><div class="d g" data-id="143"></div><div class="d g" data-id="144"></div><div class="d g" data-id="145"></div><div class="d g" data-id="146"></div><div class="d g" data-id="147"></div>
+:::
+
+::: {.tower-trash}
+:::
+::::
+
+::: {.txt-ref}
+**Paso 1: Muestra Inicial (1484 obs)**<br>
+* Se encontraron 1484 traspasos de jugadores en el sitio web *transfermarkt* para el periodo que va desde el verano europeo (mayo a diciembre) de 2021 al verano europeo de 2024.
+
+* Todas las variables se obtuvieron de *transfermarkt*.
+
+* La información contractual se complementó con capturas del sitio web en *archive.org* e información de *mercadodepases.ar* y diversos medios periodísticos.
+:::
+
+## Información Muestral {auto-animate=true .top}
+
+:::: {.w-container}
+::: {.tower-main}
+<div class="d g" data-id="0"></div><div class="d g" data-id="1"></div><div class="d g" data-id="2"></div><div class="d g" data-id="3"></div><div class="d g" data-id="4"></div><div class="d g" data-id="5"></div><div class="d g" data-id="6"></div><div class="d g" data-id="7"></div><div class="d g" data-id="8"></div><div class="d g" data-id="9"></div>
+<div class="d g" data-id="10"></div><div class="d g" data-id="11"></div><div class="d g" data-id="12"></div><div class="d g" data-id="13"></div><div class="d g" data-id="14"></div><div class="d g" data-id="15"></div><div class="d g" data-id="16"></div><div class="d g" data-id="17"></div><div class="d g" data-id="18"></div><div class="d g" data-id="19"></div>
+<div class="d g" data-id="20"></div><div class="d g" data-id="21"></div><div class="d g" data-id="22"></div><div class="d g" data-id="23"></div><div class="d g" data-id="24"></div><div class="d g" data-id="25"></div><div class="d g" data-id="26"></div><div class="d g" data-id="27"></div><div class="d g" data-id="28"></div><div class="d g" data-id="29"></div>
+<div class="d g" data-id="30"></div><div class="d g" data-id="31"></div><div class="d g" data-id="32"></div><div class="d g" data-id="33"></div><div class="d g" data-id="34"></div><div class="d g" data-id="35"></div><div class="d g" data-id="36"></div><div class="d g" data-id="37"></div><div class="d g" data-id="38"></div><div class="d g" data-id="39"></div>
+<div class="d g" data-id="40"></div><div class="d g" data-id="41"></div><div class="d g" data-id="42"></div><div class="d g" data-id="43"></div><div class="d g" data-id="44"></div><div class="d g" data-id="45"></div><div class="d g" data-id="46"></div><div class="d g" data-id="47"></div><div class="d g" data-id="48"></div><div class="d g" data-id="49"></div>
+<div class="d g" data-id="50"></div><div class="d g" data-id="51"></div><div class="d g" data-id="52"></div><div class="d g" data-id="53"></div><div class="d g" data-id="54"></div><div class="d g" data-id="55"></div><div class="d g" data-id="56"></div><div class="d g" data-id="57"></div><div class="d g" data-id="58"></div><div class="d g" data-id="59"></div>
+<div class="d g" data-id="60"></div><div class="d g" data-id="61"></div><div class="d g" data-id="62"></div><div class="d g" data-id="63"></div><div class="d g" data-id="64"></div><div class="d g" data-id="65"></div><div class="d g" data-id="66"></div><div class="d g" data-id="67"></div><div class="d g" data-id="68"></div><div class="d g" data-id="69"></div>
+<div class="d g" data-id="70"></div><div class="d g" data-id="71"></div><div class="d g" data-id="72"></div><div class="d g" data-id="73"></div><div class="d g" data-id="74"></div><div class="d g" data-id="75"></div><div class="d g" data-id="76"></div><div class="d g" data-id="77"></div><div class="d g" data-id="78"></div><div class="d g" data-id="79"></div><div class="d g" data-id="80"></div><div class="d g" data-id="81"></div><div class="d g" data-id="82"></div><div class="d g" data-id="83"></div><div class="d g" data-id="84"></div><div class="d g" data-id="85"></div><div class="d g" data-id="86"></div><div class="d g" data-id="87"></div><div class="d g" data-id="88"></div><div class="d g" data-id="89"></div>
+<div class="d g" data-id="90"></div><div class="d g" data-id="91"></div><div class="d g" data-id="92"></div><div class="d g" data-id="93"></div><div class="d g" data-id="94"></div><div class="d g" data-id="95"></div><div class="d g" data-id="96"></div><div class="d g" data-id="97"></div><div class="d g" data-id="98"></div><div class="d g" data-id="99"></div>
+:::
+
+::: {.tower-sec}
+
+<div class="d g" data-id="100"></div><div class="d g" data-id="101"></div><div class="d g" data-id="102"></div><div class="d g" data-id="103"></div><div class="d g" data-id="104"></div><div class="d g" data-id="105"></div><div class="d g" data-id="106"></div><div class="d g" data-id="107"></div><div class="d g" data-id="108"></div><div class="d g" data-id="109"></div>
+<div class="d g" data-id="110"></div>
+:::
+
+::: {.tower-trash}
+<div class="d r" data-id="111"></div><div class="d r" data-id="112"></div><div class="d r" data-id="113"></div><div class="d r" data-id="114"></div><div class="d r" data-id="115"></div><div class="d r" data-id="116"></div><div class="d r" data-id="117"></div><div class="d r" data-id="118"></div><div class="d r" data-id="119"></div><div class="d r" data-id="120"></div><div class="d r" data-id="121"></div><div class="d r" data-id="122"></div><div class="d r" data-id="123"></div><div class="d r" data-id="124"></div><div class="d r" data-id="125"></div><div class="d r" data-id="126"></div><div class="d r" data-id="127"></div><div class="d r" data-id="128"></div><div class="d r" data-id="129"></div><div class="d r" data-id="130"></div><div class="d r" data-id="131"></div><div class="d r" data-id="132"></div><div class="d r" data-id="133"></div><div class="d r" data-id="134"></div><div class="d r" data-id="135"></div><div class="d r" data-id="136"></div><div class="d r" data-id="137"></div><div class="d r" data-id="138"></div><div class="d r" data-id="139"></div><div class="d r" data-id="140"></div><div class="d r" data-id="141"></div><div class="d r" data-id="142"></div><div class="d r" data-id="143"></div><div class="d r" data-id="144"></div><div class="d r" data-id="145"></div><div class="d r" data-id="146"></div><div class="d r" data-id="147"></div>
+:::
+::::
+
+::: {.txt-ref}
+**Contratos Vencidos** <br>
+
+* Se descartaron 368 transferencias que correspondían a jugadores con contrato vencido.
+
+* Contrato vencido $\rightarrow$ perdida de derechos para el equipo vendedor.
+
+
+
+
+:::
+
+## Información Muestral {auto-animate=true .top}
+
+:::: {.w-container}
+::: {.tower-main}
+<div class="d g" data-id="0"></div><div class="d g" data-id="1"></div><div class="d g" data-id="2"></div><div class="d g" data-id="3"></div><div class="d g" data-id="4"></div><div class="d g" data-id="5"></div><div class="d g" data-id="6"></div><div class="d g" data-id="7"></div><div class="d g" data-id="8"></div><div class="d g" data-id="9"></div>
+<div class="d g" data-id="10"></div><div class="d g" data-id="11"></div><div class="d g" data-id="12"></div><div class="d g" data-id="13"></div><div class="d g" data-id="14"></div><div class="d g" data-id="15"></div><div class="d g" data-id="16"></div><div class="d g" data-id="17"></div><div class="d g" data-id="18"></div><div class="d g" data-id="19"></div>
+<div class="d g" data-id="20"></div><div class="d g" data-id="21"></div><div class="d g" data-id="22"></div><div class="d g" data-id="23"></div><div class="d g" data-id="24"></div><div class="d g" data-id="25"></div><div class="d g" data-id="26"></div><div class="d g" data-id="27"></div><div class="d g" data-id="28"></div><div class="d g" data-id="29"></div>
+<div class="d g" data-id="30"></div><div class="d g" data-id="31"></div><div class="d g" data-id="32"></div><div class="d g" data-id="33"></div><div class="d g" data-id="34"></div><div class="d g" data-id="35"></div><div class="d g" data-id="36"></div><div class="d g" data-id="37"></div><div class="d g" data-id="38"></div><div class="d g" data-id="39"></div>
+<div class="d g" data-id="40"></div><div class="d g" data-id="41"></div><div class="d g" data-id="42"></div><div class="d g" data-id="43"></div><div class="d g" data-id="44"></div><div class="d g" data-id="45"></div><div class="d g" data-id="46"></div><div class="d g" data-id="47"></div><div class="d g" data-id="48"></div><div class="d g" data-id="49"></div>
+<div class="d g" data-id="50"></div><div class="d g" data-id="51"></div><div class="d g" data-id="52"></div><div class="d g" data-id="53"></div><div class="d g" data-id="54"></div><div class="d g" data-id="55"></div><div class="d g" data-id="56"></div><div class="d g" data-id="57"></div><div class="d g" data-id="58"></div><div class="d g" data-id="59"></div>
+<div class="d g" data-id="60"></div><div class="d g" data-id="61"></div><div class="d g" data-id="62"></div><div class="d g" data-id="63"></div><div class="d g" data-id="64"></div><div class="d g" data-id="65"></div><div class="d g" data-id="66"></div><div class="d g" data-id="67"></div><div class="d g" data-id="68"></div><div class="d g" data-id="69"></div>
+<div class="d g" data-id="70"></div><div class="d g" data-id="71"></div><div class="d g" data-id="72"></div><div class="d g" data-id="73"></div><div class="d g" data-id="74"></div><div class="d g" data-id="75"></div><div class="d g" data-id="76"></div><div class="d g" data-id="77"></div><div class="d g" data-id="78"></div><div class="d g" data-id="79"></div><div class="d g" data-id="80"></div><div class="d g" data-id="81"></div><div class="d g" data-id="82"></div>
+:::
+
+::: {.tower-sec}
+:::
+
+::: {.tower-trash}
+<div class="d r" data-id="83"></div><div class="d r" data-id="84"></div><div class="d r" data-id="85"></div><div class="d r" data-id="86"></div><div class="d r" data-id="87"></div><div class="d r" data-id="88"></div><div class="d r" data-id="89"></div>
+<div class="d r" data-id="90"></div><div class="d r" data-id="91"></div><div class="d r" data-id="92"></div>
+<div class="d r" data-id="93"></div><div class="d r" data-id="94"></div><div class="d r" data-id="95"></div><div class="d r" data-id="96"></div><div class="d r" data-id="97"></div><div class="d r" data-id="98"></div><div class="d r" data-id="99"></div><div class="d r" data-id="100"></div><div class="d r" data-id="101"></div><div class="d r" data-id="102"></div><div class="d r" data-id="103"></div><div class="d r" data-id="104"></div><div class="d r" data-id="105"></div><div class="d r" data-id="106"></div><div class="d r" data-id="107"></div><div class="d r" data-id="108"></div><div class="d r" data-id="109"></div><div class="d r" data-id="110"></div>
+<div class="d r" data-id="111"></div><div class="d r" data-id="112"></div><div class="d r" data-id="113"></div><div class="d r" data-id="114"></div><div class="d r" data-id="115"></div><div class="d r" data-id="116"></div><div class="d r" data-id="117"></div><div class="d r" data-id="118"></div><div class="d r" data-id="119"></div><div class="d r" data-id="120"></div><div class="d r" data-id="121"></div><div class="d r" data-id="122"></div><div class="d r" data-id="123"></div><div class="d r" data-id="124"></div><div class="d r" data-id="125"></div><div class="d r" data-id="126"></div><div class="d r" data-id="127"></div><div class="d r" data-id="128"></div><div class="d r" data-id="129"></div><div class="d r" data-id="130"></div><div class="d r" data-id="131"></div><div class="d r" data-id="132"></div><div class="d r" data-id="133"></div><div class="d r" data-id="134"></div><div class="d r" data-id="135"></div><div class="d r" data-id="136"></div><div class="d r" data-id="137"></div><div class="d r" data-id="138"></div><div class="d r" data-id="139"></div><div class="d r" data-id="140"></div><div class="d r" data-id="141"></div><div class="d r" data-id="142"></div><div class="d r" data-id="143"></div><div class="d r" data-id="144"></div><div class="d r" data-id="145"></div><div class="d r" data-id="146"></div><div class="d r" data-id="147"></div>
+:::
+::::
+
+::: {.txt-ref}
+**Contratos Faltantes**<br><br>
+
+* Se eliminan 284 observaciones por ausencia de información contractual 
+
+* 44 con precio de transferencia. $\frac{\bar{x_p}}{\mu_p} = 0.6$
+
+* Potencial sesgo de poca popularidad (jugador o equipo vendedor)
+:::
+
+
+
+## Información Muestral {auto-animate=true .top}
+
+:::: {.w-container}
+::: {.tower-main}
+<div class="d g" data-id="0"></div><div class="d g" data-id="1"></div><div class="d g" data-id="2"></div><div class="d g" data-id="3"></div><div class="d g" data-id="4"></div><div class="d g" data-id="5"></div><div class="d g" data-id="6"></div><div class="d g" data-id="7"></div><div class="d g" data-id="8"></div><div class="d g" data-id="9"></div>
+<div class="d g" data-id="10"></div><div class="d g" data-id="11"></div><div class="d g" data-id="12"></div><div class="d g" data-id="13"></div><div class="d g" data-id="14"></div><div class="d g" data-id="15"></div><div class="d g" data-id="16"></div><div class="d g" data-id="17"></div><div class="d g" data-id="18"></div><div class="d g" data-id="19"></div>
+<div class="d g" data-id="20"></div><div class="d g" data-id="21"></div><div class="d g" data-id="22"></div><div class="d g" data-id="23"></div><div class="d g" data-id="24"></div><div class="d g" data-id="25"></div><div class="d g" data-id="26"></div><div class="d g" data-id="27"></div><div class="d g" data-id="28"></div><div class="d g" data-id="29"></div>
+<div class="d g" data-id="30"></div><div class="d g" data-id="31"></div><div class="d g" data-id="32"></div><div class="d g" data-id="33"></div><div class="d g" data-id="34"></div><div class="d g" data-id="35"></div><div class="d g" data-id="36"></div><div class="d g" data-id="37"></div><div class="d g" data-id="38"></div><div class="d g" data-id="39"></div>
+<div class="d g" data-id="40"></div><div class="d g" data-id="41"></div><div class="d g" data-id="42"></div><div class="d g" data-id="43"></div><div class="d g" data-id="44"></div><div class="d g" data-id="45"></div><div class="d g" data-id="46"></div><div class="d g" data-id="47"></div><div class="d g" data-id="48"></div><div class="d g" data-id="49"></div>
+<div class="d g" data-id="50"></div><div class="d g" data-id="51"></div><div class="d g" data-id="52"></div><div class="d g" data-id="53"></div><div class="d g" data-id="54"></div><div class="d g" data-id="55"></div><div class="d g" data-id="56"></div><div class="d g" data-id="57"></div><div class="d g" data-id="58"></div><div class="d g" data-id="59"></div>
+<div class="d g" data-id="60"></div><div class="d g" data-id="61"></div><div class="d g" data-id="62"></div><div class="d g" data-id="63"></div><div class="d g" data-id="64"></div><div class="d g" data-id="65"></div><div class="d g" data-id="66"></div><div class="d g" data-id="67"></div><div class="d g" data-id="68"></div><div class="d g" data-id="69"></div>
+<div class="d g" data-id="70"></div><div class="d g" data-id="71"></div><div class="d g" data-id="72"></div><div class="d g" data-id="73"></div><div class="d g" data-id="74"></div><div class="d g" data-id="75"></div><div class="d g" data-id="76"></div>
+:::
+
+::: {.tower-sec}
+:::
+
+::: {.tower-trash}
+<div class="d r" data-id="77"></div><div class="d r" data-id="78"></div><div class="d r" data-id="79"></div><div class="d r" data-id="80"></div><div class="d r" data-id="81"></div><div class="d r" data-id="82"></div><div class="d r" data-id="83"></div><div class="d r" data-id="84"></div><div class="d r" data-id="85"></div><div class="d r" data-id="86"></div><div class="d r" data-id="87"></div><div class="d r" data-id="88"></div><div class="d r" data-id="89"></div><div class="d r" data-id="90"></div><div class="d r" data-id="91"></div><div class="d r" data-id="92"></div>
+<div class="d r" data-id="93"></div><div class="d r" data-id="94"></div><div class="d r" data-id="95"></div><div class="d r" data-id="96"></div><div class="d r" data-id="97"></div><div class="d r" data-id="98"></div><div class="d r" data-id="99"></div><div class="d r" data-id="100"></div><div class="d r" data-id="101"></div><div class="d r" data-id="102"></div><div class="d r" data-id="103"></div><div class="d r" data-id="104"></div><div class="d r" data-id="105"></div><div class="d r" data-id="106"></div><div class="d r" data-id="107"></div><div class="d r" data-id="108"></div><div class="d r" data-id="109"></div><div class="d r" data-id="110"></div><div class="d r" data-id="111"></div><div class="d r" data-id="112"></div><div class="d r" data-id="113"></div><div class="d r" data-id="114"></div><div class="d r" data-id="115"></div><div class="d r" data-id="116"></div><div class="d r" data-id="117"></div><div class="d r" data-id="118"></div><div class="d r" data-id="119"></div><div class="d r" data-id="120"></div><div class="d r" data-id="121"></div><div class="d r" data-id="122"></div><div class="d r" data-id="123"></div><div class="d r" data-id="124"></div><div class="d r" data-id="125"></div><div class="d r" data-id="126"></div><div class="d r" data-id="127"></div><div class="d r" data-id="128"></div><div class="d r" data-id="129"></div><div class="d r" data-id="130"></div><div class="d r" data-id="131"></div><div class="d r" data-id="132"></div><div class="d r" data-id="133"></div><div class="d r" data-id="134"></div><div class="d r" data-id="135"></div><div class="d r" data-id="136"></div><div class="d r" data-id="137"></div><div class="d r" data-id="138"></div><div class="d r" data-id="139"></div><div class="d r" data-id="140"></div><div class="d r" data-id="141"></div><div class="d r" data-id="142"></div><div class="d r" data-id="143"></div><div class="d r" data-id="144"></div><div class="d r" data-id="145"></div><div class="d r" data-id="146"></div><div class="d r" data-id="147"></div>
+:::
+::::
+
+::: {.txt-ref}
+**Información general faltante**<br><br>
+
+* Faltante de información de rendimiento y de la valoración de los planteles
+
+* Potencial sesgo de poca popularidad (equipo o nacionalidad del vendedor)
+
+:::
+
+## Muestra Final {auto-animate=true .top}
+
+:::: {.w-container}
+::: {.tower-main}
+<div class="d ok-price" data-id="0"></div><div class="d ok-price" data-id="1"></div><div class="d ok-price" data-id="2"></div><div class="d ok-price" data-id="3"></div><div class="d ok-price" data-id="4"></div><div class="d ok-price" data-id="5"></div><div class="d ok-price" data-id="6"></div><div class="d ok-price" data-id="7"></div><div class="d ok-price" data-id="8"></div><div class="d ok-price" data-id="9"></div>
+<div class="d ok-price" data-id="10"></div><div class="d ok-price" data-id="11"></div><div class="d ok-price" data-id="12"></div><div class="d ok-price" data-id="13"></div><div class="d ok-price" data-id="14"></div><div class="d ok-price" data-id="15"></div><div class="d ok-price" data-id="16"></div><div class="d ok-price" data-id="17"></div><div class="d ok-price" data-id="18"></div><div class="d ok-price" data-id="19"></div>
+<div class="d ok-price" data-id="20"></div><div class="d ok-price" data-id="21"></div><div class="d ok-price" data-id="22"></div><div class="d ok-price" data-id="23"></div><div class="d ok-price" data-id="24"></div><div class="d ok-price" data-id="25"></div><div class="d ok-price" data-id="26"></div><div class="d ok-price" data-id="27"></div><div class="d ok-price" data-id="28"></div><div class="d ok-price" data-id="29"></div>
+<div class="d ok-price" data-id="30"></div><div class="d ok-price" data-id="31"></div><div class="d ok-price" data-id="32"></div><div class="d ok-price" data-id="33"></div><div class="d ok-price" data-id="34"></div><div class="d ok-price" data-id="35"></div><div class="d ok-price" data-id="36"></div><div class="d ok-price" data-id="37"></div><div class="d ok-price" data-id="38"></div>
+:::
+
+::: {.tower-sec}
+<div class="d ok-noprice" data-id="39"></div>
+<div class="d ok-noprice" data-id="40"></div><div class="d ok-noprice" data-id="41"></div><div class="d ok-noprice" data-id="42"></div><div class="d ok-noprice" data-id="43"></div><div class="d ok-noprice" data-id="44"></div><div class="d ok-noprice" data-id="45"></div><div class="d ok-noprice" data-id="46"></div><div class="d ok-noprice" data-id="47"></div><div class="d ok-noprice" data-id="48"></div><div class="d ok-noprice" data-id="49"></div>
+<div class="d ok-noprice" data-id="50"></div><div class="d ok-noprice" data-id="51"></div><div class="d ok-noprice" data-id="52"></div><div class="d ok-noprice" data-id="53"></div><div class="d ok-noprice" data-id="54"></div><div class="d ok-noprice" data-id="55"></div><div class="d ok-noprice" data-id="56"></div><div class="d ok-noprice" data-id="57"></div><div class="d ok-noprice" data-id="58"></div><div class="d ok-noprice" data-id="59"></div>
+<div class="d ok-noprice" data-id="60"></div><div class="d ok-noprice" data-id="61"></div><div class="d ok-noprice" data-id="62"></div><div class="d ok-noprice" data-id="63"></div><div class="d ok-noprice" data-id="64"></div><div class="d ok-noprice" data-id="65"></div><div class="d ok-noprice" data-id="66"></div><div class="d ok-noprice" data-id="67"></div><div class="d ok-noprice" data-id="68"></div><div class="d ok-noprice" data-id="69"></div>
+<div class="d ok-noprice" data-id="70"></div><div class="d ok-noprice" data-id="71"></div><div class="d ok-noprice" data-id="72"></div><div class="d ok-noprice" data-id="73"></div><div class="d ok-noprice" data-id="74"></div><div class="d ok-noprice" data-id="75"></div><div class="d ok-noprice" data-id="76"></div>
+:::
+
+::: {.tower-trash}
+<div class="d r" data-id="77"></div><div class="d r" data-id="78"></div><div class="d r" data-id="79"></div><div class="d r" data-id="80"></div><div class="d r" data-id="81"></div><div class="d r" data-id="82"></div><div class="d r" data-id="83"></div><div class="d r" data-id="84"></div><div class="d r" data-id="85"></div><div class="d r" data-id="86"></div><div class="d r" data-id="87"></div><div class="d r" data-id="88"></div><div class="d r" data-id="89"></div><div class="d r" data-id="90"></div><div class="d r" data-id="91"></div><div class="d r" data-id="92"></div>
+<div class="d r" data-id="93"></div><div class="d r" data-id="94"></div><div class="d r" data-id="95"></div><div class="d r" data-id="96"></div><div class="d r" data-id="97"></div><div class="d r" data-id="98"></div><div class="d r" data-id="99"></div><div class="d r" data-id="100"></div><div class="d r" data-id="101"></div><div class="d r" data-id="102"></div><div class="d r" data-id="103"></div><div class="d r" data-id="104"></div><div class="d r" data-id="105"></div><div class="d r" data-id="106"></div><div class="d r" data-id="107"></div><div class="d r" data-id="108"></div><div class="d r" data-id="109"></div><div class="d r" data-id="110"></div><div class="d r" data-id="111"></div><div class="d r" data-id="112"></div><div class="d r" data-id="113"></div><div class="d r" data-id="114"></div><div class="d r" data-id="115"></div><div class="d r" data-id="116"></div><div class="d r" data-id="117"></div><div class="d r" data-id="118"></div><div class="d r" data-id="119"></div><div class="d r" data-id="120"></div><div class="d r" data-id="121"></div><div class="d r" data-id="122"></div><div class="d r" data-id="123"></div><div class="d r" data-id="124"></div><div class="d r" data-id="125"></div><div class="d r" data-id="126"></div><div class="d r" data-id="127"></div><div class="d r" data-id="128"></div><div class="d r" data-id="129"></div><div class="d r" data-id="130"></div><div class="d r" data-id="131"></div><div class="d r" data-id="132"></div><div class="d r" data-id="133"></div><div class="d r" data-id="134"></div><div class="d r" data-id="135"></div><div class="d r" data-id="136"></div><div class="d r" data-id="137"></div><div class="d r" data-id="138"></div><div class="d r" data-id="139"></div><div class="d r" data-id="140"></div><div class="d r" data-id="141"></div><div class="d r" data-id="142"></div><div class="d r" data-id="143"></div><div class="d r" data-id="144"></div><div class="d r" data-id="145"></div><div class="d r" data-id="146"></div><div class="d r" data-id="147"></div>
+:::
+::::
+
+::: {.txt-ref}
+**Muestra Final**<br><br>
+
+* Se recopilaron 769 transferencias con información relevante completa:<br> <span style="color:#2ecc71">**Con Precio (388)**</span> y <span style="color:#9b59b6">**Sin Precio (381)**</span>.
+
+* La incorporación de las transferencias sin precio a la muestra se modela usando *Tobit*
+:::
+
+
+## Precio y Valor {style="font-size: 0.8em;"}
+
+![](/tm_logo_rebrush.svg){.absolute top=0 right=0 width="400"}
+
+:::: {.columns style="display: flex; gap: 30px; margin-top: 50px;"}
+
+::: {.column width="50%"}
+### [Precio (Transfer Fee)]{style="color: #2ecc71;"}
+
+Definición de Transfermarkt: Representa la cantidad de dinero (en euros) declarada en el sitio web por la cual los equipos efectivamente realizan la transferencia.
+
+> El dato siempre se normaliza al equivalente del **100% del pase** negociado.
+
+::: {.fragment .fade-in style="margin-top: 30px; padding: 15px; border-left: 4px solid #2ecc71; background: rgba(46, 204, 113, 0.1); font-size: 0.8em;"}
+**Ejemplo:**
+Si un club vende el 70% del pase por 7 millones...
+el precio informado es **10 millones**.
+:::
+:::
+
+::: {.column width="50%"}
+### [Valor (Market Value)]{style="color: #3498db;"}
+
+Los valores se calculan mediante el criterio de la comunidad de Transfermarkt, no mediante algoritmos.
+
+* No busca predecir un precio exacto.
+* Es el **valor esperado** en el mercado.
+* Depende del contexto y modalidades de fichaje (Transfermarket, 2024).
+
+::: {.fragment .fade-in style="margin-top: 30px; padding: 15px; border-left: 4px solid #3498db; background: rgba(52, 152, 219, 0.1); font-size: 0.8em;"}
+**Valor del Plantel:**
+Es la **sumatoria** de los valores de mercado individuales de todos los jugadores del equipo.
+:::
+:::
+
+::::
+
+
+
+## Aclaraciones sobre el Scrapping {auto-animate=true}
+
+<style>
+/* --- ESTILOS VISUALES (Iguales) --- */
+.tm-container { font-family: Arial, sans-serif; font-size: 0.6em; background: white; color: #333; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.tm-header { background-color: #1a3151; color: white; padding: 8px 10px; font-weight: bold; text-transform: uppercase; border-bottom: 3px solid #00a9e0; }
+.tm-table { width: 100%; border-collapse: collapse; }
+.tm-table th { background: #f2f2f2; color: #666; font-weight: normal; text-align: left; padding: 6px; border-bottom: 1px solid #ccc; }
+.tm-table td { padding: 6px; border-bottom: 1px solid #eee; vertical-align: middle; }
+.tm-cost { font-weight: bold; color: #1a3151; }
+.tm-out { font-weight: bold; color: #2ecc71; }
+.tm-bad { font-weight: bold; color: #e74c3c; }
+
+/* --- CORRECCIÓN DE VISIBILIDAD --- */
+/* 1. Forzamos que las filas sean visibles SIEMPRE, aunque sean fragments */
+.tm-table tr.fragment {
+    opacity: 1 !important;
+    visibility: visible !important;
+    will-change: background-color;
+    transition: background-color 0.3s ease;
+}
+
+/* 2. Definimos el color SOLO cuando la fila está activa (current-fragment) */
+.tm-table tr.current-fragment {
+    background-color: #fff59d !important; /* Amarillo resaltador */
+    color: #000 !important;
+}
+
+/* Contenedor del código */
+.code-wrapper {
+    margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    border-radius: 5px;
+    overflow: hidden;
+}
+</style>
+
+#### Procesamiento de los precios del sitio
+
+:::: {.columns}
+
+::: {.column width="55%"}
+<div class="tm-container">
+<div class="tm-header">Listado de Fichajes</div>
+<table class="tm-table">
+<thead>
+    <tr><th>Jugador</th><th>Coste (Raw)</th><th>Output</th></tr>
+</thead>
+<tbody>
+    <tr class="fragment" data-fragment-index="3">
+        <td><b>S. Villa</b></td><td class="tm-cost">2,39 mill. €</td><td class="tm-out">2.390.000</td>
+    </tr>
+    <tr class="fragment" data-fragment-index="3">
+        <td><b>F. Romero</b></td><td class="tm-cost">596 mil €</td><td class="tm-out">596.000</td>
+    </tr>
+
+    <tr class="fragment" data-fragment-index="1">
+        <td><b>L. Costa</b></td>
+        <td><span style="background:#1a3151; color:white; padding:2px 4px; border-radius:3px; font-size:0.9em;">Libre</span></td>
+        <td class="tm-out">0</td>
+    </tr>
+
+    <tr class="fragment" data-fragment-index="2">
+        <td><b>M. Peinipil</b></td><td class="tm-bad">?</td><td class="tm-bad">NaN</td>
+    </tr>
+    <tr class="fragment" data-fragment-index="2">
+        <td><b>J. Arzura</b></td><td class="tm-bad">-</td><td class="tm-bad">NaN</td>
+    </tr>
+</tbody>
+</table>
+</div>
+:::
+
+::: {.column width="45%"}
+
+::: {.r-stack .code-wrapper}
+
+::: {.fragment .fade-out data-fragment-index="1"}
+```{.python}
+def clean_value(value):
+    val = value.replace(',', '.')
+
+    if val == "Libre":
+        return 0
+
+    elif val in ["?", "-"]:
+        return np.nan
+
+    elif 'mil €' in val:
+        return float(...) * 1000
+    elif 'mill €' in val:
+        return float(...) * 1000000
+```
+:::
+
+::: {.fragment .fade-in-then-out data-fragment-index="1"}
+```{.python code-line-numbers="4-5"}
+def clean_value(value):
+    val = value.replace(',', '.')
+
+    if val == "Libre":
+        return 0
+
+    elif val in ["?", "-"]:
+        return np.nan
+
+    elif 'mil €' in val:
+        return float(...) * 1000
+    elif 'mill €' in val:
+        return float(...) * 1000000
+```
+:::
+
+::: {.fragment .fade-in-then-out data-fragment-index="2"}
+```{.python code-line-numbers="7-8"}
+def clean_value(value):
+    val = value.replace(',', '.')
+
+    if val == "Libre":
+        return 0
+
+    elif val in ["?", "-"]:
+        return np.nan
+
+    elif 'mil €' in val:
+        return float(...) * 1000
+    elif 'mill €' in val:
+        return float(...) * 1000000
+```
+:::
+
+::: {.fragment .fade-in-then-out data-fragment-index="3"}
+```{.python code-line-numbers="10-13"}
+def clean_value(value):
+    val = value.replace(',', '.')
+
+    if val == "Libre":
+        return 0
+
+    elif val in ["?", "-"]:
+        return np.nan
+
+    elif 'mil €' in val:
+        return float(...) * 1000
+    elif 'mill €' in val:
+        return float(...) * 1000000
+```
+:::
+
+:::
+
+:::
+
+::::
+
+
+
+
+## Temporalidad de la muestra {.box-ancha}
+
+```{python}
+import pandas as pd
+import plotly.graph_objects as go
+
+# Ruta del archivo
+file_path = '_transferencias_21-24_ppt.xlsx'
+
+try:
+    # 1. Cargar datos
+    df = pd.read_excel(file_path)
+    
+    # --- LIMPIEZA ---
+    df = df[df['n_transfer_window'] != 7]
+    df = df[(df['rest_transfer_window'] != 0) & (df['rest_transfer_window'].notna())]
+    df = df.dropna(subset=['valor_plantel_from', 'valor_plantel_to'])
+    df = df.dropna(subset=['Internacional_pj_ant', 'Local_pj_ant'], how='any')
+    df = df.dropna(subset=['Internacional_Goals_ant', 'Local_Goals_ant'], how='any')
+
+    # Convertir fecha
+    df['transfer_date'] = pd.to_datetime(df['transfer_date'])
+
+    # --- FILTRO TEMPORAL AMPLIADO ---
+    start_date = pd.to_datetime('2021-05-01')
+    end_date = pd.to_datetime('2024-11-15')
+    df = df[(df['transfer_date'] >= start_date) & (df['transfer_date'] <= end_date)]
+
+    # --- DATAFRAMES AUXILIARES ---
+    if 'transfer_fee' not in df.columns and 'transfer_fee_amnt' in df.columns:
+        df['transfer_fee'] = df['transfer_fee_amnt']
+
+    df_price = df[df['transfer_fee'] > 0].copy()
+    df_noprice = df[(df['transfer_fee'] == 0) | (df['transfer_fee'].isna())].copy()
+
+    # --- CONTEOS TOTALES PARA EL TÍTULO ---
+    count_total = df.shape[0]
+    count_price = df_price.shape[0]
+    count_noprice = df_noprice.shape[0]
+
+    # --- SERIES TEMPORALES ---
+    full_date_range = pd.date_range(start=start_date, end=end_date, freq='D')
+    def get_time_series(data):
+        return data.groupby('transfer_date').size().reindex(full_date_range, fill_value=0).reset_index(name='count')
+
+    ts_total = get_time_series(df)
+    ts_price = get_time_series(df_price)
+    ts_noprice = get_time_series(df_noprice)
+
+    # --- MERCADOS ---
+    arg_markets = [
+        ('2021-01-20', '2021-02-18'), ('2021-06-04', '2021-07-29'),
+        ('2021-12-14', '2022-02-10'), ('2022-05-22', '2022-07-11'),
+        ('2022-11-10', '2023-02-02'), ('2023-06-09', '2023-09-01'),
+        ('2024-01-01', '2024-02-02'), ('2024-06-01', '2024-08-30'),
+    ]
+    sorted_arg = sorted([(pd.to_datetime(s), pd.to_datetime(e)) for s, e in arg_markets], key=lambda x: x[0])
+    
+    int_markets = [
+        ('2021-06-09', '2021-08-31'), ('2022-01-01', '2022-01-31'),
+        ('2022-07-01', '2022-09-01'), ('2023-01-01', '2023-01-31'),
+        ('2023-06-14', '2023-09-01'), ('2024-01-01', '2024-02-01'),
+        ('2024-07-01', '2024-08-30'),
+    ]
+
+    # --- ANOTACIONES ---
+    def generate_annotations(dataset, color_text):
+        anns = []
+        # Ventanas
+        for start, end in sorted_arg:
+            eff_start, eff_end = max(start, start_date), min(end, end_date)
+            if eff_end < eff_start: continue
+            count = dataset[(dataset['transfer_date'] >= eff_start) & (dataset['transfer_date'] <= eff_end)].shape[0]
+            mid = eff_start + (eff_end - eff_start)/2
+            anns.append(dict(x=mid, y=1.02, yref="paper", text=f"<b>N={count}</b>", showarrow=False, font=dict(size=9, color=color_text)))
+        
+        # Huecos
+        for i in range(len(sorted_arg) - 1):
+            gap_start, gap_end = sorted_arg[i][1], sorted_arg[i+1][0]
+            eff_start, eff_end = max(gap_start, start_date), min(gap_end, end_date)
+            if eff_end > eff_start:
+                count = dataset[(dataset['transfer_date'] > gap_start) & (dataset['transfer_date'] < gap_end)].shape[0]
+                mid = gap_start + (gap_end - gap_start)/2
+                if mid >= start_date and mid <= end_date:
+                    anns.append(dict(x=mid, y=1.02, yref="paper", text=f"N={count}", showarrow=False, font=dict(size=9, color="#555")))
+        
+        # Último tramo
+        last_close = sorted_arg[-1][1]
+        if end_date > last_close:
+            count = dataset[(dataset['transfer_date'] > last_close) & (dataset['transfer_date'] <= end_date)].shape[0]
+            mid = last_close + (end_date - last_close)/2
+            anns.append(dict(x=mid, y=1.02, yref="paper", text=f"N={count}", showarrow=False, font=dict(size=9, color="#555")))
+        return anns
+
+    anns_total = generate_annotations(df, "#2c3e50")
+    anns_price = generate_annotations(df_price, "#27ae60")
+    anns_noprice = generate_annotations(df_noprice, "#8e44ad")
+
+    # --- GRÁFICO ---
+    fig = go.Figure()
+
+    # TRACES
+    fig.add_trace(go.Scatter(x=ts_total['index'], y=ts_total['count'], mode='lines', 
+                             name='Total', line=dict(color='#34495e', width=1.5), 
+                             fill='tozeroy', fillcolor='rgba(52, 73, 94, 0.1)', visible=True))
+    
+    fig.add_trace(go.Scatter(x=ts_price['index'], y=ts_price['count'], mode='lines', 
+                             name='Con Precio', line=dict(color='#2ecc71', width=2), 
+                             fill='tozeroy', fillcolor='rgba(46, 204, 113, 0.2)', visible=False))
+    
+    fig.add_trace(go.Scatter(x=ts_noprice['index'], y=ts_noprice['count'], mode='lines', 
+                             name='Sin Precio', line=dict(color='#9b59b6', width=2), 
+                             fill='tozeroy', fillcolor='rgba(155, 89, 182, 0.2)', visible=False))
+
+    # --- FONDOS ---
+    shapes = []
+    for start, end in sorted_arg:
+        eff_start, eff_end = max(start, start_date), min(end, end_date)
+        if eff_end < eff_start: continue
+        shapes.append(dict(type="rect", xref="x", yref="paper", x0=eff_start, x1=eff_end, y0=0, y1=1, fillcolor="#3498db", opacity=0.15, layer="below", line_width=0))
+    for s_str, e_str in int_markets:
+        start, end = pd.to_datetime(s_str), pd.to_datetime(e_str)
+        eff_start, eff_end = max(start, start_date), min(end, end_date)
+        if eff_end < eff_start: continue
+        shapes.append(dict(type="rect", xref="x", yref="paper", x0=eff_start, x1=eff_end, y0=0, y1=1, fillcolor="#e67e22", opacity=0.1, layer="below", line_width=0))
+
+    # --- BOTONES DE ACTUALIZACIÓN ---
+    # Actualizamos: 'visible', 'title.text', 'yaxis.range', 'annotations'
+    
+    # Rangos fijos sugeridos
+    range_total = [0, 45]
+    range_partial = [0, 25]
+
+    updatemenus = [
+        dict(
+            type="buttons",
+            direction="left",
+            x=0.01, xanchor="left", y=1.15, yanchor="top",
+            active=0,
+            buttons=[
+                dict(label="Total", method="update",
+                     args=[{"visible": [True, False, False]}, 
+                           {"title.text": f"Dinámica del Mercado de Transferencias (Total: {count_total})",
+                            "yaxis.range": range_total,
+                            "annotations": anns_total}]),
+                
+                dict(label="Con Precio", method="update",
+                     args=[{"visible": [False, True, False]}, 
+                           {"title.text": f"Dinámica - Con Precio (Total: {count_price})",
+                            "yaxis.range": range_partial,
+                            "annotations": anns_price}]),
+                
+                dict(label="Sin Precio", method="update",
+                     args=[{"visible": [False, False, True]}, 
+                           {"title.text": f"Dinámica - Sin Precio (Total: {count_noprice})",
+                            "yaxis.range": range_partial,
+                            "annotations": anns_noprice}]),
+            ],
+        )
+    ]
+
+    # Layout Inicial
+    fig.update_layout(
+        title=dict(text=f'Dinámica del Mercado de Transferencias (Total: {count_total})', y=0.98),
+        yaxis_title='Transferencias por día',
+        template='plotly_white',
+        hovermode="x unified",
+        xaxis=dict(range=[start_date, end_date], showgrid=False),
+        yaxis=dict(showgrid=True, gridcolor='#eee', range=range_total), # Rango inicial total
+        shapes=shapes,
+        annotations=anns_total,
+        updatemenus=updatemenus,
+        showlegend=False,
+        margin=dict(t=120)
+    )
+
+    fig.show()
+
+except FileNotFoundError:
+    print("⚠️ Sube el archivo excel.")
+except Exception as e:
+    print(f"⚠️ Error: {e}")
+```
+* Importancia de las ventanas de transferencias
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Resumen y Planteamiento de la Investigación <!-- {.scrollable} -->
+
+::: {.columns}
+
+::: {.column width="49%" style="font-size: 0.8em"}
+### Contexto y Motivación
+* **Antecedentes:** La literatura sobre Economía del Deporte se ha concentrado predominantemente en el mercado europeo, existiendo una vacancia empírica respecto al mercado de pases argentino.
+* **Propósito:** El estudio busca identificar los determinantes del precio de transferencia mediante la estimación de modelos de precios hedónicos.
+* **Enfoque Teórico:** Se contrasta la hipótesis de mercado competitivo frente a enfoques de negociación, incorporando variables estructurales de los clubes.
+:::
+
+::: {.column  style="font-size: 0.8em"}
+### Estrategia Metodológica
+* **Fuente de Datos:** Base construida (*scraping*) a partir de *Transfermarkt*.
+    * *Periodo:* 2021-2024 (7 ventanas de transferencia).
+    * *Muestra:* $N=1484$ observaciones totales.
+* **Modelización:**
+    * **Estimación MCO:** Para observaciones con precio explícito.
+    * **Modelo Tobit:** Para corregir la censura en los datos (transferencias sin costo o con contrato vigente), capturando la variable latente del precio.
+:::
+
+:::
+
+
+## Introducción y Metodología <!-- {background-color="#2c3e50"} -->
+
+::: {.columns}
+
+::: {.column width="49%"}
+### La Hipótesis: Censura de Datos
+El problema fundamental es la **censura**: ignorar a los jugadores que no alcanzan el precio de reserva.
+
+::: {.callout-note appearance="simple"}
+Esto genera un **sesgo** en la estimación MCO, subestimando la influencia de ciertos determinantes.
+:::
+:::
+
+::: {.column width="51%"}
+### Solución
+Utilizamos el **Modelo Tobit** para estimar los efectos marginales, corrigiendo la censura en el punto de corte (precio mínimo de transferencia).
+:::
+
+:::
+
+---
+
+## Resultados Clave: Forest Plot Interactivo
+
+<div style="font-size: 0.7em; color: #aaa; margin-bottom: 20px;">
+Pasa el mouse sobre el punto para ver el rango completo del Intervalo de Confianza (95%).
+</div>
+
+```{python}
+#| fig-align: center
+
+df_forest = pd.DataFrame(df_mco_data)
+# Calculo de Intervalos de Confianza (para el doodling!)
+df_forest['Lower'] = df_forest['Coef'] - 1.96 * df_forest['SE']
+df_forest['Upper'] = df_forest['Coef'] + 1.96 * df_forest['SE']
+
+fig = go.Figure()
+
+# Línea vertical de nulidad
+fig.add_vline(x=0, line_width=1, line_dash="dash", line_color="#bdc3c7")
+
+for i, row in df_forest.iterrows():
+    # 1. Intervalo de confianza (Línea)
+    fig.add_trace(go.Scatter(
+        x=[row['Lower'], row['Upper']], 
+        y=[row['Variable'], row['Variable']],
+        mode='lines', line=dict(color=row['Color'], width=4),
+        hoverinfo='skip', showlegend=False
+    ))
+    # 2. Coeficiente (Punto)
+    fig.add_trace(go.Scatter(
+        x=[row['Coef']], y=[row['Variable']], mode='markers',
+        marker=dict(color=row['Color'], size=18, line=dict(width=2, color='white')),
+        text=f"<b>{row['Variable']}</b><br>Coef: {row['Coef']}<br>IC 95%: [{row['Lower']:.3f}, {row['Upper']:.3f}]",
+        hoverinfo='text', showlegend=False
+    ))
+
+fig.update_layout(
+    title=dict(text="Efecto porcentual en el precio (Modelo MCO - Log-Level)", x=0.5),
+    margin=dict(l=20, r=20, t=60, b=20),
+    height=600,
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(zeroline=False, gridcolor='#444', title="Valor del Coeficiente"),
+    font=dict(size=16)
+)
+fig.show()
+```
+
+---
+
+## MCO vs Tobit: Corrección del Sesgo (Dumbbell Plot)
+
+::: {.fragment}
+<div style="color: #e74c3c; border-left: 5px solid #e74c3c; padding-left: 15px;">
+La corrección Tobit **aísla** el verdadero efecto del poder de mercado y la edad, que MCO no veía.
+</div>
+:::
+
+```{python}
+#| fig-align: center
+
+# 3. Datos de Comparación MCO vs TOBIT (Efectos Marginales)
+df_comparacion = pd.DataFrame({
+    'Variable': ['Valor Plantel Comprador', 'Valor Plantel Vendedor', 'Goles', 'Edad'],
+    'MCO': [0.542, 0.307, 0.028, -0.108], # Coefs MCO
+    'Tobit': [0.660, 0.112, 0.069, -0.181] # Efectos Marginales Tobit
+})
+
+fig2 = go.Figure()
+
+for i, row in df_comparacion.iterrows():
+    # Conector gris
+    fig2.add_trace(go.Scatter(
+        x=[row['MCO'], row['Tobit']], y=[row['Variable'], row['Variable']],
+        mode='lines', line=dict(color=COLOR_MCO, width=2), showlegend=False, hoverinfo='skip'
+    ))
+    
+    # Punto MCO (Gris)
+    fig2.add_trace(go.Scatter(
+        x=[row['MCO']], y=[row['Variable']], mode='markers',
+        marker=dict(color=COLOR_MCO, size=14),
+        name='MCO (Sesgado)' if i==0 else None,
+        text=f"MCO: {row['MCO']}", hoverinfo='text', showlegend=(i==0)
+    ))
+    
+    # Punto Tobit (Rojo)
+    fig2.add_trace(go.Scatter(
+        x=[row['Tobit']], y=[row['Variable']], mode='markers',
+        marker=dict(color=COLOR_TOBIT, size=18, line=dict(width=2, color='white')),
+        name='Tobit (Corregido)' if i==0 else None,
+        text=f"Tobit: {row['Tobit']}<br>Diferencia: {row['Tobit']-row['MCO']:.3f}",
+        hoverinfo='text', showlegend=(i==0)
+    ))
+
+# Anotación manual para el punto clave: Vendedor
+fig2.add_annotation(
+    x=0.21, y=1, xref="x", yref="y",
+    text="Sobreestimación MCO",
+    showarrow=True, arrowhead=2, arrowsize=1, arrowwidth=2, arrowcolor="#f1c40f",
+    ax=0, ay=-40, font=dict(color="#f1c40f", size=14)
+)
+
+fig2.update_layout(
+    title=dict(text="Desplazamiento de Coeficientes al Corregir Censura", x=0.5),
+    margin=dict(l=20, r=20, t=60, b=20),
+    height=550,
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center"),
+    xaxis=dict(gridcolor='#444', title="Elasticidad / Coeficiente"),
+    font=dict(size=16)
+)
+fig2.show()
+```
+
+---
+
+## Conclusión: Asimetría de Mercado
+
+::: {.r-stack}
+::: {.fragment .fade-out}
+<h3 style="color: #3498db;">El poder de mercado no es simétrico.</h3>
+:::
+::: {.fragment .fade-in}
+<h2 style="color: #e74c3c;">Elasticidad del Comprador es 6x Mayor.</h2>
+:::
+:::
+
+```{python}
+#| fig-align: center
+
+# 4. Datos de Asimetría (para Bar Plot)
+df_asimetria = pd.DataFrame({
+    'Poder': ['Poder Vendedor', 'Poder Comprador'],
+    'Elasticidad': [0.112, 0.660]
+})
+
+fig3 = go.Figure(data=[go.Bar(
+    x=df_asimetria['Elasticidad'], y=df_asimetria['Poder'], orientation='h',
+    marker=dict(color=[COLOR_MCO, COLOR_TOBIT]), # Gris para bajo, Rojo para alto
+    text=[f"{v:.3f}" for v in df_asimetria['Elasticidad']],
+    textposition='auto',
+)])
+
+fig3.update_layout(
+    margin=dict(l=20, r=20, t=20, b=20),
+    height=300,
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(showgrid=False, showticklabels=False),
+    yaxis=dict(tickfont=dict(size=18)),
+    font=dict(size=16)
+)
+fig3.show()
+```

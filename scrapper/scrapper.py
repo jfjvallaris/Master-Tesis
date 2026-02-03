@@ -1,108 +1,104 @@
-import pandas as pd
+# -*- coding: utf-8 -*-
+
+# file: transferencias_scraper.py
+
 from obtener_transferidos import leer_transferidos
+import pandas as pd
 import time
-import os
-from tqdm import tqdm  # Para barras de progreso
+from typing import List, Tuple
 
-def descargar_transferencias(ligas=['Argentina'], años=range(2021, 2025), guardar_excel=True):
+def obtener_transferencias(
+    ligas: List[str],
+    anios: List[int],
+    temporadas: List[str] = ['verano', 'invierno'],
+    excluir: List[Tuple[int, str]] = [(2024, 'invierno')],
+    incluir_caracteristicas: bool = True,
+    incluir_valor: bool = True,
+    incluir_rendimiento: bool = True,
+    rendimiento_actual: bool = True,
+    incluir_info_club: bool = True,
+    incluir_contract_expiration: bool = True,
+    guardar_excel: bool = False,
+    nombre_excel: str = "transferencias.xlsx",
+    mostrar_logs: bool = True,
+) -> pd.DataFrame:
     """
-    Versión mejorada del scraper de Transfermarkt con:
-    - Barra de progreso
-    - Manejo de errores robusto
-    - Opción de guardado o retorno de DataFrame
-    - Validación de resultados
-    """
-    
-    # Configuración
-    TEMPORADAS = ['verano', 'invierno']
-    DATOS = []
-    ARCHIVO_EXCEL = 'transferencias.xlsx'
-    
-    try:
-        print("🔍 Iniciando descarga de datos de Transfermarkt...")
-        inicio = time.time()
-        
-        # Barra de progreso general
-        with tqdm(total=len(ligas)*len(años)*len(TEMPORADAS), desc="Progreso total") as pbar:
-            
-            for liga in ligas:
-                for año in años:
-                    for temp in TEMPORADAS:
-                        
-                        # Saltar temporada de invierno del año actual
-                        if año == 2024 and temp == 'invierno':
-                            pbar.update(1)
-                            continue
-                        
-                        try:
-                            # Descarga con barra de progreso individual
-                            with tqdm(desc=f"{liga} {año} {temp}", leave=False) as pbar_temp:
-                                df = leer_transferidos(
-                                    season=año,
-                                    seas_w=temp,
-                                    incluir_caracteristicas=True,
-                                    incluir_valor=True,
-                                    incluir_rendimiento=True,
-                                    liga=liga
-                                )
-                                pbar_temp.update(1)
-                                time.sleep(0.5)  # Espera corta
-                                
-                                if not df.empty:
-                                    DATOS.append(df)
-                                    pbar_temp.set_postfix(registros=len(df))
-                                    
-                        except Exception as e:
-                            print(f"\n⚠️ Error en {liga} {año} {temp}: {str(e)}")
-                            continue
-                            
-                        pbar.update(1)
-        
-        # Procesamiento final
-        if not DATOS:
-            print("\n❌ No se obtuvieron datos válidos")
-            return None
-            
-        df_final = pd.concat(DATOS)
-        
-        # Limpieza de datos
-        df_final = df_final.drop_duplicates(
-            ['player_id', 'code_from', 'code_to', 'season', 'season_part']
-        ).query("code_from != 515 and code_to != 515")
-        
-        # Guardado opcional en Excel
-        if guardar_excel:
-            try:
-                df_final.to_excel(ARCHIVO_EXCEL, index=False)
-                print(f"\n💾 Datos guardados en: {os.path.abspath(ARCHIVO_EXCEL)}")
-            except Exception as e:
-                print(f"\n❌ Error al guardar Excel: {str(e)}")
-                # Intento alternativo
-                try:
-                    alt_path = os.path.expanduser('~/Desktop/transferencias.xlsx')
-                    df_final.to_excel(alt_path, index=False)
-                    print(f"💾 Guardado alternativo en el Escritorio: {alt_path}")
-                except:
-                    print("⚠️ No se pudo guardar en ninguna ubicación")
-        
-        print(f"\n✅ Descarga completada en {time.time()-inicio:.1f} segundos")
-        print(f"📊 Registros obtenidos: {len(df_final)}")
-        print(f"👥 Jugadores únicos: {df_final['player_id'].nunique()}")
-        
-        return df_final
-        
-    except Exception as e:
-        print(f"\n❌ Error crítico: {str(e)}")
-        return None
+    Descarga transferencias de fútbol de múltiples ligas, años y temporadas.
 
-if __name__ == "__main__":
-    # Ejecución con opciones
-    datos = descargar_transferencias(
-        ligas=['Argentina'],  # Puedes agregar más ligas
-        años=range(2024, 2025),
-        guardar_excel=True
+    Devuelve un DataFrame limpio y opcionalmente guarda en un archivo Excel.
+    """
+
+    def _log(msg: str):
+        if mostrar_logs:
+            print(msg)
+
+    start_time = time.time()
+    transferencias = []
+
+    for liga in ligas:
+        for anio in anios:
+            for temporada in temporadas:
+                if (anio, temporada) in excluir:
+                    continue
+
+                _log(f"Procesando: {liga} - {anio} {temporada}")
+
+                df = leer_transferidos(
+                    anio,
+                    seas_w=temporada,
+                    incluir_caracteristicas=incluir_caracteristicas,
+                    incluir_valor=incluir_valor,
+                    incluir_rendimiento=incluir_rendimiento,
+                    rendimiento_actual=rendimiento_actual,
+                    incluir_info_club=incluir_info_club,
+                    incluir_contract_expiration=incluir_contract_expiration,
+                    liga=liga,
+                )
+
+                transferencias.append(df)
+                time.sleep(2)
+
+    df_final = pd.concat(transferencias, ignore_index=True)
+
+    df_final = df_final.drop_duplicates(
+        subset=['player_id', 'code_from', 'code_to', 'season', 'season_part']
     )
-    
-    if datos is not None:
-        print("\n🔍 Vista previa de los datos:")
-        print(datos[['nombre', 'edad', 'valor_mercado', 'club_destino']].head())
+
+    df_final = df_final[
+        ~((df_final['code_from'] == 515) | (df_final['code_to'] == 515))
+    ]
+
+    if guardar_excel:
+        df_final.to_excel(nombre_excel, index=False)
+        _log(f"Archivo guardado en: {nombre_excel}")
+
+    tiempo_total = time.time() - start_time
+    _log(f"Tiempo total: {tiempo_total // 60:.0f} min {tiempo_total % 60:.2f} seg")
+
+    return df_final
+
+
+# file: ejemplo_uso_transferencias.py
+
+from transferencias_scraper import obtener_transferencias
+
+# Definimos parámetros
+ligas = ['Argentina', 'Brasil']
+anios = list(range(2021, 2024))  # De 2021 a 2023
+temporadas = ['verano', 'invierno']
+excluir = [(2023, 'invierno')]  # Opcional
+
+# Ejecutamos el scraping
+df = obtener_transferencias(
+    ligas=ligas,
+    anios=anios,
+    temporadas=temporadas,
+    excluir=excluir,
+    guardar_excel=True,
+    nombre_excel="transferencias_filtradas.xlsx",
+    mostrar_logs=True
+)
+
+# Mostramos un resumen
+print(df.groupby(['liga', 'season']).size().reset_index(name='transferencias'))
+
