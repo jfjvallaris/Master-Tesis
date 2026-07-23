@@ -1,0 +1,411 @@
+﻿quarto : 
+En línea: 1 Carácter: 1
++ quarto render Presentacion.qmd > 
+render_log.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpe 
+   cified: (:String) [], RemoteExce  
+  ption
+    + FullyQualifiedErrorId : Native 
+   CommandError
+ 
+Starting python3 kernel...Done
+
+Executing 'Presentacion.quarto_ipynb'
+  Cell 1/9: 'setup'....Done
+  Cell 2/9: 'setup2'...Done
+  Cell 3/9: ''.........Done
+  Cell 4/9: ''.........Done
+  Cell 5/9: ''.........Done
+  Cell 6/9: ''.........
+
+An error occurred while executing 
+the following cell:
+------------------
+import pandas as pd
+import plotly.graph_objects as go
+
+# Ruta del archivo
+file_path = 
+'_transferencias_21-24_ppt.xlsx'
+
+try:
+    # 1. Cargar datos
+    df = pd.read_excel(file_path)
+    
+    # --- LIMPIEZA ---
+    df = df[df['n_transfer_window'] 
+!= 7]
+    df = 
+df[(df['rest_transfer_window'] != 0) 
+& 
+(df['rest_transfer_window'].notna())]
+    df = df.dropna(subset=['valor_pla
+ntel_from', 'valor_plantel_to'])
+    df = df.dropna(subset=['Internaci
+onal_pj_ant', 'Local_pj_ant'], 
+how='any')
+    df = df.dropna(subset=['Internaci
+onal_Goals_ant', 'Local_Goals_ant'], 
+how='any')
+
+    # Convertir fecha
+    df['transfer_date'] = 
+pd.to_datetime(df['transfer_date'])
+
+    # --- FILTRO TEMPORAL AMPLIADO 
+---
+    start_date = 
+pd.to_datetime('2021-05-01')
+    end_date = 
+pd.to_datetime('2024-11-15')
+    df = df[(df['transfer_date'] >= 
+start_date) & (df['transfer_date'] 
+<= end_date)]
+
+    # --- DATAFRAMES AUXILIARES ---
+    if 'transfer_fee' not in 
+df.columns and 'transfer_fee_amnt' 
+in df.columns:
+        df['transfer_fee'] = 
+df['transfer_fee_amnt']
+
+    df_price = df[df['transfer_fee'] 
+> 0].copy()
+    df_noprice = 
+df[(df['transfer_fee'] == 0) | 
+(df['transfer_fee'].isna())].copy()
+
+    # --- CONTEOS TOTALES PARA EL 
+T´┐¢TULO ---
+    count_total = df.shape[0]
+    count_price = df_price.shape[0]
+    count_noprice = 
+df_noprice.shape[0]
+
+    # --- SERIES TEMPORALES ---
+    full_date_range = 
+pd.date_range(start=start_date, 
+end=end_date, freq='D')
+    def get_time_series(data):
+        return data.groupby('transfer
+_date').size().reindex(full_date_rang
+e, fill_value=0).reset_index(name='co
+unt')
+
+    ts_total = get_time_series(df)
+    ts_price = 
+get_time_series(df_price)
+    ts_noprice = 
+get_time_series(df_noprice)
+
+    # --- MERCADOS ---
+    arg_markets = [
+        ('2021-01-20', 
+'2021-02-18'), ('2021-06-04', 
+'2021-07-29'),
+        ('2021-12-14', 
+'2022-02-10'), ('2022-05-22', 
+'2022-07-11'),
+        ('2022-11-10', 
+'2023-02-02'), ('2023-06-09', 
+'2023-09-01'),
+        ('2024-01-01', 
+'2024-02-02'), ('2024-06-01', 
+'2024-08-30'),
+    ]
+    sorted_arg = 
+sorted([(pd.to_datetime(s), 
+pd.to_datetime(e)) for s, e in 
+arg_markets], key=lambda x: x[0])
+    
+    int_markets = [
+        ('2021-06-09', 
+'2021-08-31'), ('2022-01-01', 
+'2022-01-31'),
+        ('2022-07-01', 
+'2022-09-01'), ('2023-01-01', 
+'2023-01-31'),
+        ('2023-06-14', 
+'2023-09-01'), ('2024-01-01', 
+'2024-02-01'),
+        ('2024-07-01', '2024-08-30'),
+    ]
+
+    # --- ANOTACIONES ---
+    def 
+generate_annotations(dataset, 
+color_text):
+        anns = []
+        # Ventanas
+        for start, end in sorted_arg:
+            eff_start, eff_end = 
+max(start, start_date), min(end, 
+end_date)
+            if eff_end < eff_start: 
+continue
+            count = 
+dataset[(dataset['transfer_date'] >= 
+eff_start) & 
+(dataset['transfer_date'] <= 
+eff_end)].shape[0]
+            mid = eff_start + 
+(eff_end - eff_start)/2
+            anns.append(dict(x=mid, 
+y=1.02, yref="paper", 
+text=f"<b>N={count}</b>", 
+showarrow=False, font=dict(size=9, 
+color=color_text)))
+        
+        # Huecos
+        for i in 
+range(len(sorted_arg) - 1):
+            gap_start, gap_end = 
+sorted_arg[i][1], sorted_arg[i+1][0]
+            eff_start, eff_end = 
+max(gap_start, start_date), 
+min(gap_end, end_date)
+            if eff_end > eff_start:
+                count = 
+dataset[(dataset['transfer_date'] > 
+gap_start) & 
+(dataset['transfer_date'] < 
+gap_end)].shape[0]
+                mid = gap_start + 
+(gap_end - gap_start)/2
+                if mid >= start_date 
+and mid <= end_date:
+                    
+anns.append(dict(x=mid, y=1.02, 
+yref="paper", text=f"N={count}", 
+showarrow=False, font=dict(size=9, 
+color="#555")))
+        
+        # ´┐¢ltimo tramo
+        last_close = 
+sorted_arg[-1][1]
+        if end_date > last_close:
+            count = 
+dataset[(dataset['transfer_date'] > 
+last_close) & 
+(dataset['transfer_date'] <= 
+end_date)].shape[0]
+            mid = last_close + 
+(end_date - last_close)/2
+            anns.append(dict(x=mid, 
+y=1.02, yref="paper", 
+text=f"N={count}", showarrow=False, 
+font=dict(size=9, color="#555")))
+        return anns
+
+    anns_total = 
+generate_annotations(df, "#2c3e50")
+    anns_price = 
+generate_annotations(df_price, 
+"#27ae60")
+    anns_noprice = 
+generate_annotations(df_noprice, 
+"#8e44ad")
+
+    # --- GR´┐¢FICO ---
+    fig = go.Figure()
+
+    # TRACES
+    fig.add_trace(go.Scatter(x=ts_tot
+al['index'], y=ts_total['count'], 
+mode='lines', 
+                             
+name='Total', 
+line=dict(color='#34495e', 
+width=1.5), 
+                             
+fill='tozeroy', fillcolor='rgba(52, 
+73, 94, 0.1)', visible=True))
+    
+    fig.add_trace(go.Scatter(x=ts_pri
+ce['index'], y=ts_price['count'], 
+mode='lines', 
+                             
+name='Con Precio', 
+line=dict(color='#2ecc71', width=2), 
+                             
+fill='tozeroy', fillcolor='rgba(46, 
+204, 113, 0.2)', visible=False))
+    
+    fig.add_trace(go.Scatter(x=ts_nop
+rice['index'], 
+y=ts_noprice['count'], mode='lines', 
+                             
+name='Sin Precio', 
+line=dict(color='#9b59b6', width=2), 
+                             
+fill='tozeroy', fillcolor='rgba(155, 
+89, 182, 0.2)', visible=False))
+
+    # --- FONDOS ---
+    shapes = []
+    for start, end in sorted_arg:
+        eff_start, eff_end = 
+max(start, start_date), min(end, 
+end_date)
+        if eff_end < eff_start: 
+continue
+        
+shapes.append(dict(type="rect", 
+xref="x", yref="paper", 
+x0=eff_start, x1=eff_end, y0=0, 
+y1=1, fillcolor="#3498db", 
+opacity=0.15, layer="below", 
+line_width=0))
+    for s_str, e_str in int_markets:
+        start, end = 
+pd.to_datetime(s_str), 
+pd.to_datetime(e_str)
+        eff_start, eff_end = 
+max(start, start_date), min(end, 
+end_date)
+        if eff_end < eff_start: 
+continue
+        
+shapes.append(dict(type="rect", 
+xref="x", yref="paper", 
+x0=eff_start, x1=eff_end, y0=0, 
+y1=1, fillcolor="#e67e22", 
+opacity=0.1, layer="below", 
+line_width=0))
+
+    # --- BOTONES DE ACTUALIZACI´┐¢N 
+---
+    # Actualizamos: 'visible', 
+'title.text', 'yaxis.range', 
+'annotations'
+    
+    # Rangos fijos sugeridos
+    range_total = [0, 45]
+    range_partial = [0, 25]
+
+    updatemenus = [
+        dict(
+            type="buttons",
+            direction="left",
+            x=0.01, xanchor="left", 
+y=1.15, yanchor="top",
+            active=0,
+            buttons=[
+                dict(label="Total", 
+method="update",
+                     
+args=[{"visible": [True, False, 
+False]}, 
+                           
+{"title.text": f"Din´┐¢mica del 
+Mercado de Transferencias (Total: 
+{count_total})",
+                            
+"yaxis.range": range_total,
+                            
+"annotations": anns_total}]),
+                
+                dict(label="Con 
+Precio", method="update",
+                     
+args=[{"visible": [False, True, 
+False]}, 
+                           
+{"title.text": f"Din´┐¢mica - Con 
+Precio (Total: {count_price})",
+                            
+"yaxis.range": range_partial,
+                            
+"annotations": anns_price}]),
+                
+                dict(label="Sin 
+Precio", method="update",
+                     
+args=[{"visible": [False, False, 
+True]}, 
+                           
+{"title.text": f"Din´┐¢mica - Sin 
+Precio (Total: {count_noprice})",
+                            
+"yaxis.range": range_partial,
+                            
+"annotations": anns_noprice}]),
+            ],
+        )
+    ]
+
+    # Layout Inicial
+    fig.update_layout(
+        title=dict(text=f'Din´┐¢mica 
+del Mercado de Transferencias 
+(Total: {count_total})', y=0.98),
+        yaxis_title='Transferencias 
+por d´┐¢a',
+        template='plotly_white',
+        hovermode="x unified",
+        
+xaxis=dict(range=[start_date, 
+end_date], showgrid=False),
+        yaxis=dict(showgrid=True, 
+gridcolor='#eee', 
+range=range_total), # Rango inicial 
+total
+        shapes=shapes,
+        annotations=anns_total,
+        updatemenus=updatemenus,
+        showlegend=False,
+        margin=dict(t=120)
+    )
+
+    fig.show()
+
+except FileNotFoundError:
+    print("\u26a0\ufe0f Sube el 
+archivo excel.")
+except Exception as e:
+    print(f"\u26a0\ufe0f Error: {e}")
+
+* Importancia de las ventanas de 
+transferencias
+
+# Metodolog´┐¢a 
+{background-image="fondo.png" 
+background-opacity="0.2"}
+
+## Estrategia de Estimaci´┐¢n
+
+```{mermaid}
+%%| fig-width: 10
+flowchart LR
+    A[Modelos MCO\nPrecios 
+Positivos] -->|Problema de 
+Censura\n49.5% sin precio| 
+B(L´┐¢mite Inferior:\nln 45.000)
+    B --> C[Modelo Tobit\nPrecio 
+latente]
+    A --> D[Modelo 
+Probit\nProbabilidad \nde tener 
+precio]
+    
+    style A fill:#7f8c8d,stroke:#333,
+stroke-width:2px,color:#fff
+    style B fill:#34495e,stroke:#333,
+stroke-width:2px,color:#fff
+    style C fill:#e74c3c,stroke:#333,
+stroke-width:2px,color:#fff
+    style D fill:#3498db,stroke:#333,
+stroke-width:2px,color:#fff
+------------------
+
+
+[1;36m  Cell [1;32mIn[6], line 
+181[1;36m[0m
+[1;33m    * Importancia de las 
+ventanas de transferencias[0m
+[1;37m                  ^[0m
+[1;31mSyntaxError[0m[1;31m:[0m 
+invalid syntax
+
+

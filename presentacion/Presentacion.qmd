@@ -74,7 +74,7 @@ COLORES = {
 # --- 2. CARGA DE DATOS CRUDOS (OPCIONAL) ---
 # Intentamos cargar el excel. Si no está, creamos un df vacío para que no rompa.
 try:
-    df_raw = pd.read_excel("_transferencias_21-24.xlsx")
+    df_raw = pd.read_excel('_transferencias_21-24_ppt.xlsx')
     # Limpieza básica si fuera necesaria en el futuro
     # df_raw['fecha'] = pd.to_datetime(df_raw['fecha'])
 except FileNotFoundError:
@@ -207,6 +207,7 @@ df_mco_data = {
 ::: {.column width="45%"}
 ::: {data-id="caja-texto"}
 - Ausencia de literatura para el mercado argentino
+     - Revisión de 29 papers
 :::
 :::
 
@@ -1510,11 +1511,11 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # Ruta del archivo
-file_path = '_transferencias_21-24_ppt.xlsx'
+# file_path = '_transferencias_21-24_ppt.xlsx'
 
 try:
     # 1. Cargar datos
-    df = pd.read_excel(file_path)
+    df = df_raw
     
     # --- LIMPIEZA ---
     df = df[df['n_transfer_window'] != 7]
@@ -1686,217 +1687,89 @@ except FileNotFoundError:
 except Exception as e:
     print(f"⚠️ Error: {e}")
 ```
-* Importancia de las ventanas de transferencias
 
 
+## Definición de Variables y Signos Esperados {.smaller}
 
+> **Variable Dependiente:** `lprecio` - Logaritmo del precio declarado de la transferencia deflactado a junio de 2021 más 1 (equivalente al 100% del pase).
 
+::: {style="height: 550px;"}
+::: {.panel-tabset}
 
+### 👤 Individuales y Posición
 
-
-
-
-
-
-
-
-## Resumen y Planteamiento de la Investigación <!-- {.scrollable} -->
-
-::: {.columns}
-
-::: {.column width="49%" style="font-size: 0.8em"}
-### Contexto y Motivación
-* **Antecedentes:** La literatura sobre Economía del Deporte se ha concentrado predominantemente en el mercado europeo, existiendo una vacancia empírica respecto al mercado de pases argentino.
-* **Propósito:** El estudio busca identificar los determinantes del precio de transferencia mediante la estimación de modelos de precios hedónicos.
-* **Enfoque Teórico:** Se contrasta la hipótesis de mercado competitivo frente a enfoques de negociación, incorporando variables estructurales de los clubes.
+:::: {.columns}
+::: {.column width="25%"}
+> Características biográficas, físicas, ciudadanía y posición principal en el campo que condicionan la valoración base del jugador.
 :::
+::: {.column width="75%" style="width:70%; font-size: 90%;"}
+| Variable | Descripción | Signo |
+|:--|:-------------------------|:--:|
+| `edad` | Edad del jugador al momento de la transferencia (en años). | - |
+| `altura` | Altura del jugador (en centímetros). | + |
+| `comunitario` | Dummy: 1 si el jugador posee ciudadanía comunitaria. | + |
+| `extranjero` | Dummy: 1 si el jugador no es argentino. | ? |
+| `delantero` | Dummy: 1 si la posición principal del jugador es delantero. | ? |
+| `mediocampista` | Dummy: 1 si la posición principal del jugador es mediocampista. | ? |
+| `portero` | Dummy: 1 si la posición principal del jugador es arquero. | ? |
 
-::: {.column  style="font-size: 0.8em"}
-### Estrategia Metodológica
-* **Fuente de Datos:** Base construida (*scraping*) a partir de *Transfermarkt*.
-    * *Periodo:* 2021-2024 (7 ventanas de transferencia).
-    * *Muestra:* $N=1484$ observaciones totales.
-* **Modelización:**
-    * **Estimación MCO:** Para observaciones con precio explícito.
-    * **Modelo Tobit:** Para corregir la censura en los datos (transferencias sin costo o con contrato vigente), capturando la variable latente del precio.
+: {tbl-colwidths="[20,70,10]"}
 :::
+::::
 
+### ⚽ Rendimiento Deportivo
+
+:::: {.columns}
+::: {.column width="25%"}
+> Variables de flujo de rendimiento individual acumuladas durante la temporada inmediatamente anterior al fichaje.
 :::
+::: {.column width="75%" style="width:70%; font-size: 90%;"}
+| Variable | Descripción | Signo |
+|:---|:----------|:---:|
+| `pj` | Partidos jugados en la temporada anterior. | + |
+| `goles` | Goles convertidos en la temporada anterior. | + |
+| `asis` | Asistencias realizadas en la temporada anterior. | + |
+| `amonestac` | Tarjetas amarillas recibidas en la temporada anterior. | - |
+| `expuls` | Expulsiones en la temporada anterior. | - |
+| `goles_concedidos` | Goles concedidos por el equipo en la temporada anterior (relevante para arqueros). | - |
+| `vallas_inv` | Cantidad de vallas invictas logradas en la temporada anterior. | + |
 
-
-## Introducción y Metodología <!-- {background-color="#2c3e50"} -->
-
-::: {.columns}
-
-::: {.column width="49%"}
-### La Hipótesis: Censura de Datos
-El problema fundamental es la **censura**: ignorar a los jugadores que no alcanzan el precio de reserva.
-
-::: {.callout-note appearance="simple"}
-Esto genera un **sesgo** en la estimación MCO, subestimando la influencia de ciertos determinantes.
+: {tbl-colwidths="[20,70,10]"}
 :::
+::::
+
+### ⏱️ Temporales y Contractuales
+
+:::: {.columns}
+::: {.column width="25%"}
+> Factores asociados a la duración del contrato vigente, la tendencia temporal y la estacionalidad del mercado.
 :::
+::: {.column width="75%" style="width:70%; font-size: 95%;"}
+| Variable | Descripción | Signo |
+|:---|:-------------|:---:|
+| `rest_ventana_transfer` | Cantidad de ventanas de transferencia restantes hasta que venza el contrato del jugador con el club. | + |
+| `temporada` | Variable continua: indica el año de la temporada. | + |
+| `verano` | Dummy: 1 si la transferencia ocurrió en la ventana de verano europeo. | ? |
 
-::: {.column width="51%"}
-### Solución
-Utilizamos el **Modelo Tobit** para estimar los efectos marginales, corrigiendo la censura en el punto de corte (precio mínimo de transferencia).
+: {tbl-colwidths="[25,65,10]"}
 :::
+::::
 
+### 🏛️ Poder de Negociación
+
+:::: {.columns}
+::: {.column width="25%"}
+> Proxies del valor de mercado de los planteles para aproximar la capacidad económica y la fuerza de regateo bilateral.
 :::
+::: {.column width="75%" style="width:70%; font-size: 95%;"}
+| Variable | Descripción | Signo |
+|:---|:---------------------|:---:|
+| `lvalor_plantel_c` | Logaritmo del valor total del equipo comprador.                 | + |
+| `lvalor_plantel_v` | Logaritmo del valor total del equipo vendedor.                  | + |
 
----
-
-## Resultados Clave: Forest Plot Interactivo
-
-<div style="font-size: 0.7em; color: #aaa; margin-bottom: 20px;">
-Pasa el mouse sobre el punto para ver el rango completo del Intervalo de Confianza (95%).
-</div>
-
-```{python}
-#| fig-align: center
-
-df_forest = pd.DataFrame(df_mco_data)
-# Calculo de Intervalos de Confianza (para el doodling!)
-df_forest['Lower'] = df_forest['Coef'] - 1.96 * df_forest['SE']
-df_forest['Upper'] = df_forest['Coef'] + 1.96 * df_forest['SE']
-
-fig = go.Figure()
-
-# Línea vertical de nulidad
-fig.add_vline(x=0, line_width=1, line_dash="dash", line_color="#bdc3c7")
-
-for i, row in df_forest.iterrows():
-    # 1. Intervalo de confianza (Línea)
-    fig.add_trace(go.Scatter(
-        x=[row['Lower'], row['Upper']], 
-        y=[row['Variable'], row['Variable']],
-        mode='lines', line=dict(color=row['Color'], width=4),
-        hoverinfo='skip', showlegend=False
-    ))
-    # 2. Coeficiente (Punto)
-    fig.add_trace(go.Scatter(
-        x=[row['Coef']], y=[row['Variable']], mode='markers',
-        marker=dict(color=row['Color'], size=18, line=dict(width=2, color='white')),
-        text=f"<b>{row['Variable']}</b><br>Coef: {row['Coef']}<br>IC 95%: [{row['Lower']:.3f}, {row['Upper']:.3f}]",
-        hoverinfo='text', showlegend=False
-    ))
-
-fig.update_layout(
-    title=dict(text="Efecto porcentual en el precio (Modelo MCO - Log-Level)", x=0.5),
-    margin=dict(l=20, r=20, t=60, b=20),
-    height=600,
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)',
-    xaxis=dict(zeroline=False, gridcolor='#444', title="Valor del Coeficiente"),
-    font=dict(size=16)
-)
-fig.show()
-```
-
----
-
-## MCO vs Tobit: Corrección del Sesgo (Dumbbell Plot)
-
-::: {.fragment}
-<div style="color: #e74c3c; border-left: 5px solid #e74c3c; padding-left: 15px;">
-La corrección Tobit **aísla** el verdadero efecto del poder de mercado y la edad, que MCO no veía.
-</div>
+: {tbl-colwidths="[25,65,10]"}
 :::
+::::
 
-```{python}
-#| fig-align: center
-
-# 3. Datos de Comparación MCO vs TOBIT (Efectos Marginales)
-df_comparacion = pd.DataFrame({
-    'Variable': ['Valor Plantel Comprador', 'Valor Plantel Vendedor', 'Goles', 'Edad'],
-    'MCO': [0.542, 0.307, 0.028, -0.108], # Coefs MCO
-    'Tobit': [0.660, 0.112, 0.069, -0.181] # Efectos Marginales Tobit
-})
-
-fig2 = go.Figure()
-
-for i, row in df_comparacion.iterrows():
-    # Conector gris
-    fig2.add_trace(go.Scatter(
-        x=[row['MCO'], row['Tobit']], y=[row['Variable'], row['Variable']],
-        mode='lines', line=dict(color=COLOR_MCO, width=2), showlegend=False, hoverinfo='skip'
-    ))
-    
-    # Punto MCO (Gris)
-    fig2.add_trace(go.Scatter(
-        x=[row['MCO']], y=[row['Variable']], mode='markers',
-        marker=dict(color=COLOR_MCO, size=14),
-        name='MCO (Sesgado)' if i==0 else None,
-        text=f"MCO: {row['MCO']}", hoverinfo='text', showlegend=(i==0)
-    ))
-    
-    # Punto Tobit (Rojo)
-    fig2.add_trace(go.Scatter(
-        x=[row['Tobit']], y=[row['Variable']], mode='markers',
-        marker=dict(color=COLOR_TOBIT, size=18, line=dict(width=2, color='white')),
-        name='Tobit (Corregido)' if i==0 else None,
-        text=f"Tobit: {row['Tobit']}<br>Diferencia: {row['Tobit']-row['MCO']:.3f}",
-        hoverinfo='text', showlegend=(i==0)
-    ))
-
-# Anotación manual para el punto clave: Vendedor
-fig2.add_annotation(
-    x=0.21, y=1, xref="x", yref="y",
-    text="Sobreestimación MCO",
-    showarrow=True, arrowhead=2, arrowsize=1, arrowwidth=2, arrowcolor="#f1c40f",
-    ax=0, ay=-40, font=dict(color="#f1c40f", size=14)
-)
-
-fig2.update_layout(
-    title=dict(text="Desplazamiento de Coeficientes al Corregir Censura", x=0.5),
-    margin=dict(l=20, r=20, t=60, b=20),
-    height=550,
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)',
-    legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center"),
-    xaxis=dict(gridcolor='#444', title="Elasticidad / Coeficiente"),
-    font=dict(size=16)
-)
-fig2.show()
-```
-
----
-
-## Conclusión: Asimetría de Mercado
-
-::: {.r-stack}
-::: {.fragment .fade-out}
-<h3 style="color: #3498db;">El poder de mercado no es simétrico.</h3>
-:::
-::: {.fragment .fade-in}
-<h2 style="color: #e74c3c;">Elasticidad del Comprador es 6x Mayor.</h2>
 :::
 :::
-
-```{python}
-#| fig-align: center
-
-# 4. Datos de Asimetría (para Bar Plot)
-df_asimetria = pd.DataFrame({
-    'Poder': ['Poder Vendedor', 'Poder Comprador'],
-    'Elasticidad': [0.112, 0.660]
-})
-
-fig3 = go.Figure(data=[go.Bar(
-    x=df_asimetria['Elasticidad'], y=df_asimetria['Poder'], orientation='h',
-    marker=dict(color=[COLOR_MCO, COLOR_TOBIT]), # Gris para bajo, Rojo para alto
-    text=[f"{v:.3f}" for v in df_asimetria['Elasticidad']],
-    textposition='auto',
-)])
-
-fig3.update_layout(
-    margin=dict(l=20, r=20, t=20, b=20),
-    height=300,
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)',
-    xaxis=dict(showgrid=False, showticklabels=False),
-    yaxis=dict(tickfont=dict(size=18)),
-    font=dict(size=16)
-)
-fig3.show()
-```

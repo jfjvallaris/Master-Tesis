@@ -1,0 +1,379 @@
+---
+title: "La Otra Competencia"
+subtitle: "Análisis Económico del Mercado de Pases del Fútbol Argentino <br> en el periodo 2021-2024"
+author: "Joel G. Vallaris <br> Director: Martin Trombetta"
+format:
+  revealjs: 
+    theme: night
+    transition: slide
+    slide-number: true
+    width: 1600
+    height: 900
+    title-slide-attributes:
+      data-background-image: "fondo.png"
+      data-background-size: cover
+      data-background-opacity: "0.6"
+    parallax-background-image: "cesped_river_hoy.jpg"
+    parallax-background-size: "2400px 900px"
+    parallax-background-horizontal: 50
+    parallax-background-vertical: 0
+    # parallax-background-position: "top"
+    chalkboard: true # Incompatible con embed-resources
+    mathjax: true # Ecuaciones de LaTeX
+    html-math-method: mathjax
+
+# embed-resources: true # Activar para guardar el html completo
+
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+---
+
+## Problema de investigacion
+
+::: {.fragment}
+<div style="border-left: 5px solid #e74c3c; padding-left: 15px;"> <!--color: #e74c3c;   -->
+¿Cuáles son los atributos o características que determinan los precios de transferencia? ¿Cuál es su incidencia?
+</div>
+:::
+
+::: {.fragment .fade-in}
+<div style="border-left: 5px solid #e74c3c; padding-left: 15px;">
+¿Tienen los clubes de fútbol poder de mercado y/o poder de negociación en las transferencias de futbolistas?
+</div>
+:::
+
+::: {.notes}
+Speaker notes go here.
+:::
+
+
+<style>
+/* Agregar padding al section para que el recuadro tenga espacio */
+.centrar-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+#title-slide {
+  padding: 100px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Clase para diapositivas con texto pequeño */
+.letra-chica {
+  font-size: 0.6em !important; /* Ajusta el tamaño aquí */
+}
+
+/* Clase para diapositivas con texto gigante */
+.letra-grande {
+  font-size: 1.5em !important;
+}
+
+/* Crear un pseudo-elemento como recuadro detrás del contenido */
+#title-slide::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  width: 90% !important;
+  height: 100% !important;
+  min-height: 60% !important;
+  z-index: 0 !important;
+}
+
+/* Asegurar que el texto esté por encima del recuadro */
+#title-slide h1.title,
+#title-slide p.subtitle,
+#title-slide .quarto-title-authors {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.reveal .title {
+  font-size: 3em !important;
+  text-shadow: 0px 4px 10px rgba(0,0,0,0.8) !important;
+  margin-bottom: 30px !important;
+}
+
+.reveal .subtitle {
+  font-size: 1.8em !important;
+}
+
+.reveal .quarto-title-author-name {
+  font-size: 1.5em !important;
+  color: #bdc3c7 !important;
+  margin-top: 30px !important;
+}
+
+.reveal .slides section:not(#title-slide) {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  padding: 2.5% !important;
+  width: 110% !important;
+  height: 100% !important;
+
+  /* Centrado horizontal si el ancho en mayor a 100% */
+  left: 50%;
+  transform: translateX(-50%);
+  
+  margin: auto !important;
+  box-sizing: border-box !important;
+
+/* Distribuir contenido verticalmente */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: stretch !important;
+}
+
+
+
+</style>
+
+
+```{python}
+#| label: setup
+#| include: false
+
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import plotly.io as pio
+
+# --- 1. CONFIGURACIÓN ESTÉTICA ---
+pio.templates.default = "plotly_dark"
+# Paleta de colores consistente para toda la tesis
+COLORES = {
+    'mco': '#7f8c8d',       # Gris (Sesgado)
+    'tobit': '#e74c3c',     # Rojo (Corregido)
+    'probit': '#3498db',    # Azul (Probabilidad)
+    'positivo': '#2ecc71',  # Verde
+    'negativo': '#c0392b',  # Rojo oscuro
+    'neutro': '#bdc3c7'     # Gris claro
+}
+
+# --- 2. CARGA DE DATOS CRUDOS (OPCIONAL) ---
+# Intentamos cargar el excel. Si no está, creamos un df vacío para que no rompa.
+try:
+    df_raw = pd.read_excel("_transferencias_21-24.xlsx")
+    # Limpieza básica si fuera necesaria en el futuro
+    # df_raw['fecha'] = pd.to_datetime(df_raw['fecha'])
+except FileNotFoundError:
+    df_raw = pd.DataFrame()
+    print("Aviso: No se encontró el archivo Excel. Se usarán solo los coeficientes cargados.")
+
+# --- 3. CARGA DE RESULTADOS (TABLAS DE LA TESIS) ---
+
+# A. TABLA 9: MODELOS MCO (1 a 4)
+# Cargamos los coeficientes (b) y errores estándar (se)
+datos_mco = {
+    'Variable': [
+        'Edad', 'Edad^2', 'Altura', 'Comunitario', 'Extranjero', 
+        'Delantero', 'Mediocampista', 'Portero', 
+        'Partidos Jugados', 'Goles', 'Asistencias', 
+        'Ventanas Restantes', 'Temp. (Inflación)', 'Valor Plantel Comp.', 'Valor Plantel Vend.'
+    ],
+    # Modelo 1: Solo características jugador
+    'MCO1_b': [-0.449, 0.006, 0.008, 0.337, -0.155, 0.106, 0.199, -0.467, 0.016, 0.032, 0.019, 0.202, 0.048, None, None],
+    'MCO1_se': [0.176, 0.003, 0.008, 0.120, 0.121, 0.154, 0.137, 0.546, 0.006, 0.017, 0.026, 0.027, 0.059, None, None],
+    
+    # Modelo 2: Incorpora Clubes (Edad^2 pierde signif)
+    'MCO2_b': [-0.169, 0.001, None, 0.146, None, 0.258, 0.241, -0.127, 0.010, 0.033, 0.002, 0.143, 0.181, 0.531, 0.307],
+    'MCO2_se': [0.117, 0.002, None, 0.089, None, 0.113, 0.101, 0.449, 0.004, 0.014, 0.019, 0.021, 0.044, 0.045, 0.040],
+
+    # Modelo 3: EL ELEGIDO (Sin edad^2, variables depuradas)
+    'MCO3_b': [-0.108, None, None, None, None, 0.263, 0.243, 0.257, 0.012, 0.028, None, 0.138, 0.164, 0.542, 0.307],
+    'MCO3_se': [0.022, None, None, None, None, 0.105, 0.098, 0.205, 0.003, 0.013, None, 0.021, 0.040, 0.044, 0.040],
+    
+    # Modelo 4: Efectos Fijos (Saturado)
+    'MCO4_b': [-0.092, None, None, None, None, 0.117, 0.034, 0.419, 0.005, 0.040, None, 0.092, 0.016, None, None],
+    'MCO4_se': [0.000, None, None, None, None, 0.170, 0.169, 0.292, 0.006, 0.020, None, 0.034, 0.057, None, None]
+}
+df_mco = pd.DataFrame(datos_mco)
+
+# B. TABLA 11: EFECTOS MARGINALES (MCO vs TOBIT)
+# Usamos los Efectos Marginales del Tobit para que sean comparables con MCO
+datos_tobit = {
+    'Variable': [
+        'Edad', 'Delantero', 'Mediocampista', 'Portero', 
+        'Partidos Jugados', 'Goles', 
+        'Valor Plantel Comp.', 'Valor Plantel Vend.', 
+        'Ventanas Restantes', 'Temp. (Inflación)'
+    ],
+    # MCO Truncado (Modelo 3) - Repetimos para graficar comparaciones
+    'MCO_b': [-0.108, 0.263, 0.243, 0.257, 0.012, 0.028, 0.542, 0.307, 0.138, 0.164],
+    'MCO_se': [0.022, 0.105, 0.098, 0.205, 0.003, 0.013, 0.044, 0.040, 0.021, 0.040],
+    
+    # MCO Censurado (Con ceros, sin corrección)
+    'Cens_b': [-0.657, -0.262, 0.167, 1.847, 0.064, 0.275, 2.442, -0.008, 0.553, 0.228],
+    'Cens_se': [0.044, 0.452, 0.768, 0.016, 0.058, 0.172, 0.179, 0.114, 0.170, 0.000], # SE approx o faltantes en texto
+    
+    # Tobit (Efectos Marginales)
+    'Tobit_b': [-0.181, -0.011, 0.084, 0.606, 0.019, 0.069, 0.660, 0.112, 0.136, 0.074],
+    'Tobit_se': [0.011, 0.112, 0.105, 0.218, 0.004, 0.013, 0.041, 0.024, 0.040, 0.202]
+}
+df_tobit = pd.DataFrame(datos_tobit)
+
+# C. TABLA 13: MODELO PROBIT (Probabilidad de tener precio)
+# Variables ligeramente distintas (lvalor_plantel_to = Comprador)
+datos_probit = {
+    'Variable': [
+        'Edad', 'Delantero', 'Mediocampista', 'Portero', 
+        'Partidos Jugados', 'Goles', 
+        'Valor Plantel Comp.', 'Valor Plantel Vend.', 
+        'Ventanas Restantes', 'Temp. (Inflación)'
+    ],
+    'Probit_b': [0.220, 0.220, 0.330, 0.701, 0.160, 0.122, 0.830, 0.270, 0.168, 0.310],
+    'Probit_p_signif': [0.01, 0.1, 0.1, 0.05, 0.05, 0.01, 0.01, 0.1, 0.01, 0.1] # Basado en asteriscos
+}
+df_probit = pd.DataFrame(datos_probit)
+
+# Función auxiliar para dibujar intervalos de confianza
+def add_confidence_interval(fig, x_vals, y_val, color):
+    fig.add_trace(go.Scatter(
+        x=x_vals, y=[y_val, y_val],
+        mode='lines', line=dict(color=color, width=3),
+        showlegend=False, hoverinfo='skip'
+    ))
+```
+
+```{python}
+#| label: setup2
+#| include: false 
+
+# 1. Configuración Estética Global
+# Hace que Plotly use el tema oscuro, esencial para el look and feel.
+pio.templates.default = "plotly_dark"
+COLOR_TOBIT = '#e74c3c'
+COLOR_MCO = '#7f8c8d'
+COLOR_POSICION = '#9b59b6'
+COLOR_NEGOCIO = '#2ecc71'
+COLOR_RENDIMIENTO = '#3498db'
+COLOR_EDAD = '#c0392b'
+
+
+# 2. Datos Centralizados (Coeficientes y SE)
+# **MODELO 3 (Base para Forest Plot y MCO en Dumbbell)**
+df_mco_data = {
+    'Variable': ['Medio', 'Delantero', 'Ventanas Restantes', 'Goles (Temp. Ant)', 'Partidos Jugados', 'Edad'],
+    'Coef': [0.243, 0.263, 0.138, 0.028, 0.012, -0.108],
+    'SE': [0.098, 0.105, 0.021, 0.013, 0.003, 0.022],
+    'Color': [COLOR_POSICION, COLOR_POSICION, COLOR_NEGOCIO, COLOR_RENDIMIENTO, COLOR_RENDIMIENTO, COLOR_EDAD]
+}
+```
+
+
+
+## ASD
+
+
+## Modelo hedónico — curva base
+
+```{=html}
+<svg viewBox="0 0 1200 900" width="90%">
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10"
+            refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="black"/>
+    </marker>
+  </defs>
+
+  <!-- Ejes -->
+  <line x1="0" y1="900" x2="1200" y2="900"
+        stroke="black" stroke-width="3"
+        marker-end="url(#arrow)"/>
+
+  <line x1="0" y1="900" x2="0" y2="0"
+        stroke="black" stroke-width="3"
+        marker-end="url(#arrow)"/>
+
+  <!-- Líneas verticales -->
+  <line x1="200" y1="900" x2="200" y2="0"
+        stroke="gray" stroke-dasharray="8"/>
+
+  <line x1="650" y1="900" x2="650" y2="0"
+        stroke="gray" stroke-dasharray="8"/>
+
+  <!-- Curva principal -->
+  <path
+    d="M 120 820 C 350 600, 650 480, 980 430"
+    fill="none"
+    stroke="black"
+    stroke-width="4"/>
+
+  <!-- Puntos -->
+  <circle cx="200" cy="500" r="6" fill="black"/>
+  <circle cx="650" cy="350" r="6" fill="black"/>
+
+  <!-- Textos -->
+  <text x="980" y="330" font-size="28">p(z₁; z₂,…,zₙ)</text>
+  <text x="1210" y="915" font-size="28">z₁</text>
+  <text x="-40" y="-10" font-size="28">P(z)</text>
+
+  <text x="185" y="930" font-size="24">z₁*</text>
+  <text x="635" y="930" font-size="24">z₂*</text>
+
+</svg>
+:::
+
+:::
+
+
+## Modelo de Precios Hedónicos
+::: {data-auto-animate}
+
+::: {.html}
+<svg viewBox="0 0 600 400" width="90%" data-id="hedonic-svg">
+  <path
+    data-id="pcurve"
+    d="M50 300 C150 220, 300 170, 500 140"
+    stroke="black"
+    stroke-width="3"
+    fill="none"/>
+</svg>
+
+:::
+
+:::
+
+## Modelo de Precios Hedónicos
+::: {data-auto-animate}
+
+::: {.html}
+<svg viewBox="0 0 600 400" width="90%" data-id="hedonic-svg">
+  <path
+    data-id="pcurve"
+    d="M50 300 C150 240, 300 190, 500 160"
+    stroke="black"
+    stroke-width="3"
+    fill="none"/>
+
+  <rect
+    data-id="excedente"
+    x="220" y="200" width="80" height="60"
+    fill="none" stroke="black" stroke-dasharray="4"/>
+</svg>
+
+:::
+
+:::
+
+
+
+

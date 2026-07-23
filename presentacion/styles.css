@@ -205,3 +205,34 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+/* === Ajustes SOLO para la slide de Definición de Variables === */
+
+.reveal .slides section.tabla-ancha {
+  width: 100% !important;
+}
+
+.reveal .slides section.tabla-ancha > div,
+.reveal .slides section.tabla-ancha .panel-tabset,
+.reveal .slides section.tabla-ancha .tabset,
+.reveal .slides section.tabla-ancha .tab-content,
+.reveal .slides section.tabla-ancha .tab-pane,
+.reveal .slides section.tabla-ancha .columns {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.reveal .slides section.tabla-ancha .columns {
+  display: flex !important;
+}
+
+.reveal .slides section.tabla-ancha .column {
+  box-sizing: border-box !important;
+  flex: 0 0 auto !important;
+}
+
+.reveal .slides section.tabla-ancha table {
+  width: 100% !important;
+  table-layout: fixed !important;
+}

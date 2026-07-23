@@ -1,0 +1,345 @@
+## Modelo de Precios Hedónicos {auto-animate=true}
+
+::: {.columns  style="display: flex; align-items: center;"}
+
+::: {.column width="40%" style="display: flex !important; flex-direction: column !important; justify-content: space-evenly !important;align-items: stretch !important;"}
+::: {.fragment .fade-in-then-out fragment-index=1}
+::: {style="font-size: 0.8em;"}
+<!-- Cuando el mercado analizado es competitivo, los productos se diferencian por la calidad y, además, poseen un número considerable
+de atributos. <br> <br> -->
+El modelo de precios hedónicos propone que los precios de equilibrio en un mercado con productos diferenciados puede expresarse como una función de los precios (implícitos) de los atributos o características que el bien en cuestión posee.
+
+$$P(Z)=P(z_1, z_2, \dots, z_n)$$
+:::
+
+
+:::
+:::
+
+::: {.column width="60%"}
+::: {.r-stack}
+
+::: {.fragment fragment-index=1}
+```{python}
+#| echo: false
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(1.015, 9.5, 500)
+p = np.log(15 * (x - 1)) / np.log(3) + 1.55
+
+x1 = np.linspace(1.25, 5, 200)
+x2 = np.linspace(0.001, 2.8, 200)
+x3 = np.linspace(4.75, 9, 200)
+x4 = np.linspace(4, 8.2, 200)
+
+plt.figure(figsize=(10, 6))
+
+ax = plt.gca()
+
+# ocultar todos los spines
+for spine in ["top", "right", "left", "bottom"]:
+    ax.spines[spine].set_visible(False)
+
+# eliminar ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+# límites (IMPORTANTE: antes de las flechas)
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 9)
+
+# flecha eje X
+ax.annotate(
+    "", xy=(12, 0), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# flecha eje Y
+ax.annotate(
+    "", xy=(0, 9), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# etiquetas de ejes
+ax.text(12.1, -0.15, r"$z_1$", ha="left", va="top")
+ax.text(-0.2, 9.1, "P(z)", ha="right", va="bottom")
+
+
+# quitar ejes superior y derecho
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# eliminar numeración de ejes
+ax.set_yticks([])
+ax.set_xticks([2, 6.5])
+ax.set_xticklabels([r"$z_1^*$", r"$z_2^*$"])
+
+plt.plot(x, p, color="black", linewidth=2)
+plt.axvline(2, linestyle="--", color="gray")
+plt.axvline(6.5, linestyle="--", color="gray")
+
+plt.plot(x1, -1/(x1-1)+5, color="black", linewidth=1)
+plt.plot(x2, -1/(x2-3)+3, color="black", linewidth=1)
+plt.plot(x3, -1/(x3-4.5)+6.05, color="black", linewidth=1)
+plt.plot(x4, -1/(x4-8.5)+5.1, color="black", linewidth=1)
+
+plt.scatter([2, 6.5], [4, 5.55], color="black", zorder=5)
+
+plt.text(10, 6, r"$p(z_1;z_2,\dots,z_n)$" " Max WTP")
+plt.text(1.5, 1.5, r"$\theta^1(\cdot)$" " Max WTP")
+plt.text(5, 2.5, r"$\theta^2(\cdot)$")
+plt.text(3, 6.5, r"$\phi^1(\cdot)$" " Min WTA")
+plt.text(8.5, 7.5, r"$\phi^2(\cdot)$" " Min WTA")
+
+plt.xlabel(r"$z_1$")
+plt.ylabel("P(z)")
+plt.xlim(0, 12)
+plt.ylim(0, 9)
+
+
+plt.show()
+
+```
+:::
+:::
+:::
+:::
+
+## Modelo de Precios Hedónicos {auto-animate=true}
+::: {.columns  style="display: flex; align-items: center;"}
+
+::: {.column width="40%" style="display: flex !important; flex-direction: column !important; justify-content: space-evenly !important;align-items: stretch !important;"}
+::: {style="font-size: 0.8em;"}
+Cuando: <br>
+
+- los mercados son débiles (pocos agentes) <br>
+
+- hay pocos sustitutos para el bien heterogéneo  <br>
+
+:::
+:::
+
+::: {.column width="60%"}
+::: {.r-stack}
+```{python}
+#| echo: false
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(1.015, 9.5, 500)
+p = np.log(15 * (x - 1)) / np.log(3) + 1.55
+
+x1 = np.linspace(1.25, 5, 200)
+x2 = np.linspace(0.001, 2.8, 200)
+x3 = np.linspace(4.75, 9, 200)
+x4 = np.linspace(4, 8.2, 200)
+
+plt.figure(figsize=(10, 6))
+
+ax = plt.gca()
+
+# ocultar todos los spines
+for spine in ["top", "right", "left", "bottom"]:
+    ax.spines[spine].set_visible(False)
+
+# eliminar ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+# límites (IMPORTANTE: antes de las flechas)
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 9)
+
+# flecha eje X
+ax.annotate(
+    "", xy=(12, 0), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# flecha eje Y
+ax.annotate(
+    "", xy=(0, 9), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# Flechas anchas HACIA ABAJO debajo de phi
+ax.annotate(
+    "", xy=(3.2, 5.8), xytext=(3.2, 6.4),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+ax.annotate(
+    "", xy=(8.7, 6.8), xytext=(8.7, 7.4),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+# Flechas anchas HACIA ARRIBA arriba de theta
+ax.annotate(
+    "", xy=(1.7, 2.5), xytext=(1.7, 1.9),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+ax.annotate(
+    "", xy=(5.2, 3.6), xytext=(5.2, 3),
+    arrowprops=dict(arrowstyle="simple", color="black", linewidth=0)
+)
+
+# etiquetas de ejes
+ax.text(12.1, -0.15, r"$z_1$", ha="left", va="top")
+ax.text(-0.2, 9.1, "P(z)", ha="right", va="bottom")
+
+
+# quitar ejes superior y derecho
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# eliminar numeración de ejes
+ax.set_yticks([])
+ax.set_xticks([2, 6.5])
+ax.set_xticklabels([r"$z_1^*$", r"$z_2^*$"])
+
+plt.plot(x, p, color="black", linewidth=2)
+plt.axvline(2, linestyle="--", color="gray")
+plt.axvline(6.5, linestyle="--", color="gray")
+
+plt.plot(x1, -1/(x1-1)+5, color="black", linewidth=1)
+plt.plot(x2, -1/(x2-3)+3, color="black", linewidth=1)
+plt.plot(x3, -1/(x3-4.5)+6.05, color="black", linewidth=1)
+plt.plot(x4, -1/(x4-8.5)+5.1, color="black", linewidth=1)
+
+plt.scatter([2, 6.5], [4, 5.55], color="black", zorder=5)
+
+plt.text(10, 6, r"$p(z_1;z_2,\dots,z_n)$")
+plt.text(1.5, 1.5, r"$\theta^1(\cdot)$"" Max WTP")
+plt.text(5, 2.5, r"$\theta^2(\cdot)$"" Max WTP")
+plt.text(3, 6.5, r"$\phi^1(\cdot)$" " Min WTA")
+plt.text(8.5, 7.5, r"$\phi^2(\cdot)$" " Min WTA")
+
+
+plt.xlabel(r"$z_1$")
+plt.ylabel("P(z)")
+plt.xlim(0, 12)
+plt.ylim(0, 9)
+
+
+plt.show()
+
+```
+:::
+
+:::
+:::
+
+
+## Modelo de Precios Hedónicos {auto-animate=true}
+::: {.columns  style="display: flex; align-items: center;"}
+
+::: {.column width="40%" style="display: flex !important; flex-direction: column !important; justify-content: space-evenly !important;align-items: stretch !important;"}
+::: {style="font-size: 0.8em;"}
+
+El excedente no se reduce a cero debido a la ausencia de ingresos de nuevos compradores y vendedores (siga siendo positivo) y su distribución depende del poder de negociación de los agentes involucrados. <br>
+:::
+::: {style="font-size: 0.6em;"}
+(Harding, Rosenthal, y Sirmans, 2003)
+:::
+
+
+:::
+
+::: {.column width="60%"}
+::: {.r-stack}
+```{python}
+#| echo: false
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(1.015, 9.5, 500)
+p = np.log(15 * (x - 1)) / np.log(3) + 1.55
+
+x1 = np.linspace(1.25, 5, 200)
+x2 = np.linspace(0.001, 2.8, 200)
+x3 = np.linspace(4.75, 9, 200)
+x4 = np.linspace(4, 8.2, 200)
+
+plt.figure(figsize=(10, 6))
+
+ax = plt.gca()
+
+# ocultar todos los spines
+for spine in ["top", "right", "left", "bottom"]:
+    ax.spines[spine].set_visible(False)
+
+# eliminar ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+# límites (IMPORTANTE: antes de las flechas)
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 9)
+
+# flecha eje X
+ax.annotate(
+    "", xy=(12, 0), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# flecha eje Y
+ax.annotate(
+    "", xy=(0, 9), xytext=(0, 0),
+    arrowprops=dict(arrowstyle="->", linewidth=1.5, color="black")
+)
+
+# etiquetas de ejes
+ax.text(12.1, -0.15, r"$z_1$", ha="left", va="top")
+ax.text(-0.2, 9.1, "P(z)", ha="right", va="bottom")
+
+
+# quitar ejes superior y derecho
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# ticks como en el TikZ original
+ax.set_yticks([])
+ax.set_xticks([2, 6.5])
+ax.set_xticklabels([r"$z_1^*$", r"$z_2^*$"])
+
+plt.plot(x, p, color="black", linewidth=2)
+plt.axvline(2, linestyle="--", color="gray")
+plt.axvline(6.5, linestyle="--", color="gray")
+
+plt.plot(x1, -1/(x1-1)+5.5, color="black", linewidth=1)
+plt.plot(x2, -1/(x2-3)+2.5, color="black", linewidth=1)
+plt.plot(x3, -1/(x3-4.5)+6.5, color="black", linewidth=1)
+plt.plot(x4, -1/(x4-8.5)+4.6, color="black", linewidth=1)
+
+plt.plot([2, 2], [3.5, 4.5], color="black", linewidth=2)
+plt.plot([6.5, 6.5], [5, 6], color="black", linewidth=2)
+
+plt.annotate("Excedente", xy=(1.8, 4), xytext=(1, 6),
+             arrowprops=dict(arrowstyle="->"), ha="center")
+plt.annotate("Excedente", xy=(6.3, 5.55), xytext=(5, 7),
+             arrowprops=dict(arrowstyle="->"), ha="center")
+
+plt.text(9.5, 6, r"$p(z_1;z_2,\dots,z_n)$")
+plt.text(2.5, 3.75, "Min WTA")
+plt.text(7, 5, "Min WTA")
+plt.text(3, 5.5, "Max WTP")
+plt.text(8.5, 6.5, "Max WTP")
+
+plt.xlabel(r"$z_1$")
+plt.ylabel("P(z)")
+plt.xlim(0, 12)
+plt.ylim(0, 9)
+
+plt.show()
+
+```
+:::
+
+:::
+:::
+
