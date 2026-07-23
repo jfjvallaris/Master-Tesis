@@ -1,0 +1,21 @@
+# Datos y bases (pesados, confidenciales o regenerables desde el scraper)
+*.do
+*.dta
+*.xlsx
+*.xls
+*.csv
+
+# Documentos generados / entregables pesados
+*.docx
+*.pdf
+
+# Basura habitual de Quarto / Python
+/.quarto/
+*_files/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Sistema
+.DS_Store
+Thumbs.db
