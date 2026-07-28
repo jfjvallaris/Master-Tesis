@@ -16,7 +16,7 @@ format:
       data-background-opacity: "0.6"
     parallax-background-image: "cesped_river_hoy.jpg"
     parallax-background-size: "2400px 900px"
-    parallax-background-horizontal: 40
+    parallax-background-horizontal: 30
     parallax-background-vertical: 0
     # parallax-background-position: "top"
     chalkboard: true # Incompatible con embed-resources
@@ -102,34 +102,36 @@ datos_mco = {
 
     # Modelo 3: EL ELEGIDO (Sin edad^2, variables depuradas)
     'MCO3_b': [-0.108, None, None, None, None, 0.263, 0.243, 0.257, 0.012, 0.028, None, 0.138, 0.164, 0.542, 0.307],
-    'MCO3_se': [0.022, None, None, None, None, 0.105, 0.098, 0.205, 0.003, 0.013, None, 0.021, 0.040, 0.044, 0.040],
-    
+    'MCO3_se': [0.014, None, None, None, None, 0.105, 0.098, 0.205, 0.003, 0.013, None, 0.021, 0.040, 0.044, 0.040],
+
     # Modelo 4: Efectos Fijos (Saturado)
     'MCO4_b': [-0.092, None, None, None, None, 0.117, 0.034, 0.419, 0.005, 0.040, None, 0.092, 0.016, None, None],
-    'MCO4_se': [0.000, None, None, None, None, 0.170, 0.169, 0.292, 0.006, 0.020, None, 0.034, 0.057, None, None]
+    'MCO4_se': [0.022, None, None, None, None, 0.170, 0.169, 0.292, 0.006, 0.020, None, 0.034, 0.057, None, None]
 }
 df_mco = pd.DataFrame(datos_mco)
 
 # B. TABLA 11: EFECTOS MARGINALES (MCO vs TOBIT)
 # Usamos los Efectos Marginales del Tobit para que sean comparables con MCO
 datos_tobit = {
+    # Mismos nombres que en las tablas del deck, para poder leer el
+    # gráfico contra la Tabla 11 sin traducir.
     'Variable': [
-        'Edad', 'Delantero', 'Mediocampista', 'Portero', 
-        'Partidos Jugados', 'Goles', 
-        'Valor Plantel Comp.', 'Valor Plantel Vend.', 
-        'Ventanas Restantes', 'Temp. (Inflación)'
+        'edad', 'delantero', 'mediocampista', 'portero',
+        'pj', 'goles',
+        'lvalor_plantel_c', 'lvalor_plantel_v',
+        'rest_ventana_transfer', 'temporada'
     ],
     # MCO Truncado (Modelo 3) - Repetimos para graficar comparaciones
     'MCO_b': [-0.108, 0.263, 0.243, 0.257, 0.012, 0.028, 0.542, 0.307, 0.138, 0.164],
-    'MCO_se': [0.022, 0.105, 0.098, 0.205, 0.003, 0.013, 0.044, 0.040, 0.021, 0.040],
+    'MCO_se': [0.014, 0.105, 0.098, 0.205, 0.003, 0.013, 0.044, 0.040, 0.021, 0.040],
     
     # MCO Censurado (Con ceros, sin corrección)
     'Cens_b': [-0.657, -0.262, 0.167, 1.847, 0.064, 0.275, 2.442, -0.008, 0.553, 0.228],
-    'Cens_se': [0.044, 0.452, 0.768, 0.016, 0.058, 0.172, 0.179, 0.114, 0.170, 0.000], # SE approx o faltantes en texto
-    
+    'Cens_se': [0.044, 0.490, 0.452, 0.768, 0.016, 0.058, 0.172, 0.179, 0.114, 0.170],
+
     # Tobit (Efectos Marginales)
     'Tobit_b': [-0.181, -0.011, 0.084, 0.606, 0.019, 0.069, 0.660, 0.112, 0.136, 0.074],
-    'Tobit_se': [0.011, 0.112, 0.105, 0.218, 0.004, 0.013, 0.041, 0.024, 0.040, 0.202]
+    'Tobit_se': [0.011, 0.112, 0.105, 0.218, 0.004, 0.013, 0.040, 0.041, 0.024, 0.040]
 }
 df_tobit = pd.DataFrame(datos_tobit)
 
@@ -165,20 +167,38 @@ def add_confidence_interval(fig, x_vals, y_val, color):
 pio.templates.default = "plotly_dark"
 COLOR_TOBIT = '#e74c3c'
 COLOR_MCO = '#7f8c8d'
-COLOR_POSICION = '#9b59b6'
-COLOR_NEGOCIO = '#2ecc71'
-COLOR_RENDIMIENTO = '#3498db'
-COLOR_EDAD = '#c0392b'
 
+# Grupos de la descomposición del modelo (J, R, L/S, B). Se mantienen
+# iguales en todo el deck: mismo color para el mismo grupo en todos los
+# gráficos y tablas.
+COLOR_JUGADOR = '#9b59b6'      # J: características personales y posición
+COLOR_RENDIMIENTO = '#3498db'  # R: rendimiento de la temporada anterior
+COLOR_TIEMPO = '#f39c12'       # L, S: contrato y momento de la operación
+COLOR_NEGOCIO = '#2ecc71'      # B: poder de negociación (valor de plantel)
+
+GRUPOS = {
+    'Jugador': COLOR_JUGADOR,
+    'Rendimiento': COLOR_RENDIMIENTO,
+    'Contrato y tiempo': COLOR_TIEMPO,
+    'Negociación': COLOR_NEGOCIO,
+}
 
 # 2. Datos Centralizados (Coeficientes y SE)
 # **MODELO 3 (Base para Forest Plot y MCO en Dumbbell)**
+# Orden igual al de la Tabla 9, para que el gráfico se lea contra ella.
 df_mco_data = {
-    'Variable': ['Medio', 'Delantero', 'Ventanas Restantes', 'Goles (Temp. Ant)', 'Partidos Jugados', 'Edad'],
-    'Coef': [0.243, 0.263, 0.138, 0.028, 0.012, -0.108],
-    'SE': [0.098, 0.105, 0.021, 0.013, 0.003, 0.022],
-    'Color': [COLOR_POSICION, COLOR_POSICION, COLOR_NEGOCIO, COLOR_RENDIMIENTO, COLOR_RENDIMIENTO, COLOR_EDAD]
+    'Variable': ['edad', 'delantero', 'mediocampista', 'portero',
+                 'pj', 'goles',
+                 'rest_ventana_transfer', 'temporada',
+                 'lvalor_plantel_c', 'lvalor_plantel_v'],
+    'Coef': [-0.108, 0.263, 0.243, 0.257, 0.012, 0.028, 0.138, 0.164, 0.542, 0.307],
+    'SE':   [0.014, 0.105, 0.098, 0.205, 0.003, 0.013, 0.021, 0.040, 0.044, 0.040],
+    'Grupo': ['Jugador', 'Jugador', 'Jugador', 'Jugador',
+              'Rendimiento', 'Rendimiento',
+              'Contrato y tiempo', 'Contrato y tiempo',
+              'Negociación', 'Negociación'],
 }
+df_mco_data['Color'] = [GRUPOS[g] for g in df_mco_data['Grupo']]
 ```
 
 
@@ -1773,3 +1793,761 @@ except Exception as e:
 
 :::
 :::
+
+## Estrategia de Estimación: Modelos Anidados {.top style="font-size: 0.9em;"}
+
+::: {style="display: flex; justify-content: center; gap: 45px; font-size: 0.62em; color: #7f8c8d; margin-bottom: 8px;"}
+[**1 ·** Línea base]{.fragment .highlight-current-blue fragment-index=1}
+[**2 ·** + Negociación]{.fragment .highlight-current-blue fragment-index=2}
+[**3 ·** Depuración]{.fragment .highlight-current-blue fragment-index=3}
+[**4 ·** Efectos fijos]{.fragment .highlight-current-blue fragment-index=4}
+:::
+
+::: {style="text-align: center; font-size: 0.78em; margin: 0 0 10px 0;"}
+$$\ln(P_{it}) = \alpha + \beta_J^TJ_{it} + \beta_R^TR_{it-1} + \beta_L^TL_{it} + \beta_S^TS_{it} + \underbrace{\lambda_v\ln(B^v_{it-1})+\lambda_c\ln(B^c_{it-1})}_{B_{it}} + \varepsilon_{it}$$
+:::
+
+::: {style="font-size: 0.72em; line-height: 1.5;"}
+
+::: {style="display: grid; grid-template-columns: 250px 1fr; gap: 16px; border-left: 3px solid #9b59b6; padding-left: 14px; margin-bottom: 9px;"}
+::: {}
+[$J_{it}$ · Jugador]{style="color: #9b59b6; font-weight: bold;"}
+:::
+::: {}
+edad · [edad²]{.fragment .strike .semi-fade-out fragment-index=3} · [altura]{.fragment .strike .semi-fade-out fragment-index=2} · [comunitario]{.fragment .strike .semi-fade-out fragment-index=3} · [extranjero]{.fragment .strike .semi-fade-out fragment-index=2} · delantero · mediocampista · portero
+:::
+:::
+
+::: {style="display: grid; grid-template-columns: 250px 1fr; gap: 16px; border-left: 3px solid #3498db; padding-left: 14px; margin-bottom: 9px;"}
+::: {}
+[$R_{it-1}$ · Rendimiento]{style="color: #3498db; font-weight: bold;"}
+:::
+::: {}
+pj · goles · [asis]{.fragment .strike .semi-fade-out fragment-index=3} · [amonestac]{.fragment .strike .semi-fade-out fragment-index=3} · [expuls]{.fragment .strike .semi-fade-out fragment-index=3} · [goles_conced]{.fragment .strike .semi-fade-out fragment-index=3} · [vallas_inv]{.fragment .strike .semi-fade-out fragment-index=3}
+:::
+:::
+
+::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;"}
+
+::: {style="display: grid; grid-template-columns: 250px 1fr; gap: 16px; border-left: 3px solid #f39c12; padding-left: 14px;"}
+::: {}
+[$L_{it}$, $S_{it}$ · Contrato y tiempo]{style="color: #f39c12; font-weight: bold;"}
+:::
+::: {}
+rest_ventana_transfer · temporada · [verano]{.fragment .strike .semi-fade-out fragment-index=3}
+:::
+:::
+
+::: {style="display: grid; grid-template-columns: auto 1fr; gap: 16px; border-left: 3px solid #2ecc71; padding-left: 14px;"}
+::: {}
+[$B_{it}$ · Negociación]{style="color: #2ecc71; font-weight: bold;"}
+:::
+::: {}
+[[lvalor_plantel_c]{.fragment .strike .semi-fade-out fragment-index=4}]{.fragment .fade-in fragment-index=2} · [[lvalor_plantel_v]{.fragment .strike .semi-fade-out fragment-index=4}]{.fragment .fade-in fragment-index=2} · [Ef. fijos comprador · Ef. fijos vendedor]{.fragment .fade-in fragment-index=4}
+:::
+:::
+
+:::
+
+:::
+
+::: {style="height: 250px; margin-top: 16px;"}
+::: {.r-stack}
+
+::: {.fragment .fade-in-then-out fragment-index=1 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Modelo 1 — Línea base"}
+::: {style="font-size: 0.8em; line-height: 1.45;"}
+El modelo hedónico más simple: el precio se explica únicamente por los atributos observables de la operación, con $B_{it}=0$ — todavía no intervienen las características de los clubes. Entran las **características personales** del jugador ($J_{it}$: edad, altura, nacionalidad y posición), su **rendimiento en la temporada previa** ($R_{it-1}$), las **ventanas de contrato restantes** ($L_{it}$) y el **momento de la operación** ($S_{it}$: temporada y estación del mercado).
+
+La edad se incorpora con término cuadrático, como propone la literatura (Carmichael y Thomas, 1993): la experiencia suma valor hasta un punto a partir del cual se impone la pérdida de potencial.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Modelo 2 — Incorporación del poder de negociación"}
+::: {style="font-size: 0.8em; line-height: 1.45;"}
+Se suman las características generales de los clubes: el logaritmo del **valor de mercado del plantel** comprador y vendedor de la temporada anterior, como *proxy* del poder de negociación. Al ser una especificación log-log, $\lambda_v$ y $\lambda_c$ se leen como **elasticidades precio–valoración del plantel**.
+
+Se aprovecha para depurar las características personales que, como en buena parte de la literatura hedónica, no resultan significativas: la **altura** y la condición de **extranjero**.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=3 style="width: 100%;"}
+::: {.callout-tip appearance="minimal" icon=false title="Modelo 3 — Depuración (modelo preferido)"}
+::: {style="font-size: 0.8em; line-height: 1.45;"}
+Segunda depuración, ahora sobre el rendimiento: salen las estadísticas no significativas o con signo opuesto al esperado sin interpretación teórica posible (**asistencias, amonestaciones, expulsiones** y las específicas de arqueros, **goles concedidos** y **vallas invictas**). También se descartan el **término cuadrático de la edad** —que ya había perdido significancia en el Modelo 2—, **comunitario** y **verano**.
+
+Es el modelo más parsimonioso sin censura y el que se prefiere para interpretar los resultados.
+:::
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=4 style="width: 100%;"}
+::: {.callout-important appearance="minimal" icon=false title="Modelo 4 — Saturación con efectos fijos"}
+::: {style="font-size: 0.8em; line-height: 1.45;"}
+En lugar de representar a los clubes mediante el valor de sus planteles, se los incorpora con **efectos fijos de comprador y de vendedor**: una identidad propia para cada club en lugar de una variable continua.
+
+El objetivo es saturar el modelo y detectar si existen factores no observables de los equipos que alteren sustancialmente los coeficientes estimados en el Modelo 3.
+:::
+:::
+:::
+
+:::
+:::
+
+## Estrategia de Estimación: La Censura del Precio {.top}
+
+:::: {.columns style="display: flex; align-items: center;"}
+
+::: {.column width="47%"}
+::: {style="background: #fff; padding: 10px 12px 2px 12px; border-radius: 10px; max-width: 520px; margin: 0 auto;"}
+![](image5.png){width="100%"}
+:::
+::: {style="font-size: 0.42em; color: #bdc3c7; text-align: center; margin-top: 8px;"}
+Figura 5a — Histograma de $\ln(\text{precio}+1)$. Transferencias con contrato verificado, 2021-2024 <br>
+($n=1.116$: 663 sin precio, 453 con precio).
+:::
+
+::: {style="text-align: center; font-size: 0.62em; margin-top: 42px;"}
+$$\ln\left( y_{i} \right) = \left\{ \begin{matrix}
+\ln\left( y_{i}^{*} + 1 \right), & \text{si } y_{i}^{*} > L \\
+0, & \text{si } y_{i}^{*} \leq L \\
+\end{matrix} \right.\ \quad\text{con } L > 0$$
+:::
+:::
+
+::: {.column width="53%" style="padding-left: 40px;"}
+
+::: {.fragment style="margin-bottom: 26px;"}
+::: {.callout-note appearance="minimal" icon=false title="El logaritmo no admite el cero"}
+::: {style="font-size: 0.9em; line-height: 1.4;"}
+Se modela $\ln(P+1)$: inocuo para las observaciones con precio y permite incorporar los ceros.
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+- Casi la mitad de la muestra tiene precio cero → se modela **ln(precio + 1)**.
+- Inocuo: ln(45.249) ≈ ln(45.250).
+- **Analogía FIFA:** si prohibieran los pases gratis sin fijar mínimo, los clubes pondrían 1 euro simbólico. La voluntad de las partes sería la misma → el cero es resultado de negociación, no dato faltante.
+:::
+:::
+:::
+
+::: {.fragment style="margin-bottom: 26px;"}
+::: {.callout-important appearance="minimal" icon=false title="La censura no ocurre en cero"}
+::: {style="font-size: 0.9em; line-height: 1.4;"}
+La brecha en los datos ubica la cota en un valor positivo por encima de cero. Para estimar alcanza con conocer dónde está esa cota.
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+- El caso tradicional censura en cero; acá la cota está **por encima de cero**.
+- La brecha del histograma: no hay operaciones por montos chicos.
+- Censurar en cero afirmaría que es probable hallar casos entre 0 y el mínimo. Los datos lo desmienten.
+- **Royston (1992):** no rechaza normalidad de los precios positivos (62%) → menos probable aún que la brecha esconda valores cerca de cero.
+- No hace falta observar ningún y* bajo el umbral, solo conocer la cota.
+:::
+:::
+:::
+
+::: {.fragment}
+::: {.callout-tip appearance="minimal" icon=false title="Dónde ubicar el umbral (Carson y Sun, 2007)"}
+::: {style="font-size: 0.9em; line-height: 1.4;"}
+Un umbral mal ubicado sesga más que la no normalidad o la heterocedasticidad. Se adopta $L=\ln(45.000)$, el número redondo más cercano al mínimo observado (45.249).
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+- **Carson y Sun (2007), Monte Carlo:** umbral mal ubicado sesga más que la no normalidad o la heterocedasticidad.
+- Recomiendan fijarlo en el mínimo no censurado, o apenas por debajo, para que ese mínimo cuente como no censurado.
+- En muestras grandes no hay pérdida de eficiencia.
+- Sugieren números redondos. Acá aplica a medias: precios en euros, negociación en dólares. → **L = ln(45.000)**.
+:::
+:::
+:::
+
+:::
+
+::::
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**Si preguntan por la muestra**
+
+- Figura = **1.116** con contrato verificado (Tabla 2), de las cuales **453** con precio (Tabla 3).
+- Distinta de la muestra de regresión: **769** = 388 con precio + 381 sin precio, las de información completa.
+:::
+:::
+
+## Estrategia de Estimación: Truncado, Censurado y Tobit {.top}
+
+::: {style="font-size: 0.8em; color: #bdc3c7; text-align: center; margin-bottom: 20px;"}
+Las tres estimaciones mantienen la especificación del **Modelo 3** y se diferencian en el **tratamiento que le dan a las transferencias sin precio**.
+:::
+
+:::: {style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 34px;"}
+
+::: {.fragment}
+::: {style="display: flex; height: 30px; border-radius: 6px; font-size: 0.52em; font-weight: bold; margin-bottom: 11px;"}
+::: {style="flex: 388; background: #2ecc71; color: #111; display: flex; align-items: center; justify-content: center; border-radius: 5px 0 0 5px;"}
+388 con precio
+:::
+::: {style="flex: 381; border: 2px dashed #9b59b6; color: #9b59b6; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 0 5px 5px 0;"}
+381 excluidas
+:::
+:::
+::: {.callout-tip appearance="minimal" icon=false title="MCO Truncado"}
+::: {style="font-size: 0.95em; line-height: 1.45;"}
+Se estima solo con las observaciones de precio positivo. Equivale a un modelo truncado: es válido si el interés se limita a ese subgrupo, pero queda expuesto a **sesgo de selección**.
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**MCO Truncado** — es el Modelo 3 de la Tabla 9.
+
+- Eliminar los y = 0 equivale a estimar un modelo truncado.
+- Riesgo: si la decisión de transferir se correlaciona con lo que determina el valor → **sesgo de selección**.
+- Válido igual si el interés se limita a los transferidos con precio.
+:::
+:::
+:::
+
+::: {.fragment}
+::: {style="display: flex; height: 30px; border-radius: 6px; overflow: hidden; font-size: 0.52em; font-weight: bold; margin-bottom: 11px;"}
+::: {style="flex: 388; background: #2ecc71; color: #111; display: flex; align-items: center; justify-content: center;"}
+388 con precio
+:::
+::: {style="flex: 381; background: #9b59b6; color: #fff; display: flex; align-items: center; justify-content: center;"}
+381 como precio cero
+:::
+:::
+::: {.callout-warning appearance="minimal" icon=false title="MCO Censurado"}
+::: {style="font-size: 0.95em; line-height: 1.45;"}
+Incorpora las transferencias sin precio **sin corrección alguna**: asume que un valor nulo es un resultado válido y observable, un dato más de la negociación.
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**MCO Censurado**
+
+- MCO con los positivos **y** los ceros con contrato vigente.
+- Supone que el valor nulo es un resultado válido y observable.
+- Sin ajuste por censura: los coeficientes ignoran la probabilidad de pertenecer al grupo con precio.
+:::
+:::
+:::
+
+::: {.fragment}
+::: {style="display: flex; height: 30px; border-radius: 6px; overflow: hidden; font-size: 0.52em; font-weight: bold; margin-bottom: 11px;"}
+::: {style="flex: 388; background: #2ecc71; color: #111; display: flex; align-items: center; justify-content: center;"}
+388 observadas
+:::
+::: {style="flex: 381; background: repeating-linear-gradient(45deg, #9b59b6, #9b59b6 5px, #6b3f80 5px, #6b3f80 10px); color: #fff; display: flex; align-items: center; justify-content: center;"}
+381 censuradas en $L$
+:::
+:::
+::: {.callout-important appearance="minimal" icon=false title="Tobit"}
+::: {style="font-size: 0.95em; line-height: 1.45;"}
+Trata la censura como un **fenómeno estructural del mercado** y ajusta la estimación por la probabilidad de observar precio.
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**Tobit** — se aplica solo sobre el Modelo 3.
+
+- Ajusta por que el precio solo se observa por encima del umbral.
+- Excluye los ceros **sin** contrato vigente: ahí el club consintió la salida sin pago, es otra operación.
+
+**Por qué no Heckman** (si preguntan)
+
+- La base no tiene estadísticas de jugadores no transferidos.
+- **Carmichael et al. (1999):** el enfoque de negociación es incompatible con selección-corrección. Toda variable de la ecuación de precio debe ir en la de probabilidad de transferencia, pero para el no transferido no existe club comprador.
+:::
+:::
+:::
+
+::::
+
+::: {.fragment}
+::: {style="max-width: 1250px; margin: 18px auto 0 auto;"}
+::: {.callout-note appearance="minimal" icon=false title="Una advertencia para comparar los coeficientes"}
+::: {style="font-size: 0.95em; line-height: 1.45;"}
+Los coeficientes de pendiente de MCO estiman directamente el cambio marginal, mientras que los del Tobit requieren un factor de ajuste. Las tablas de resultados reportan **efectos parciales**, comparables entre ambas estimaciones.
+:::
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**Comparabilidad**
+
+- El coeficiente Tobit necesita un factor de ajuste; el de MCO ya es el cambio marginal.
+- Continuas: efecto parcial al promedio (EPA) o efecto parcial promedio (**EPP**, preferido).
+- Discretas: la comparación MCO vs Tobit no es directa (Wooldridge, 2010).
+:::
+:::
+:::
+
+## Resultados: Modelos con Precios Positivos {.smaller .scrollable .top}
+
+::: {style="font-size: 0.62em; color: #bdc3c7; margin-bottom: 10px;"}
+Variable dependiente: `lprecio`. Errores estándar robustos de Huber-White entre paréntesis — la prueba de Breusch-Pagan rechaza la homocedasticidad en los cuatro modelos. *Pasar el mouse sobre una celda resalta su variable y su modelo.*
+:::
+
+<table class="tabla-reg tabla-hover">
+<colgroup>
+<col class="cv"><col span="2"><col span="2"><col span="2"><col span="2">
+</colgroup>
+<thead>
+<tr><th class="v">Variable</th><th data-m="1" colspan="2">Modelo 1</th><th data-m="2" colspan="2">Modelo 2</th><th data-m="3" colspan="2">Modelo 3</th><th data-m="4" colspan="2">Modelo 4</th></tr>
+</thead>
+<tbody>
+<tr class="g-jug"><td class="v">edad</td><td data-m="1" class="c">-0.449<span class="s">**</span></td><td data-m="1" class="e">(0.176)</td><td data-m="2" class="c">-0.169<span class="s"></span></td><td data-m="2" class="e">(0.117)</td><td data-m="3" class="c">-0.108<span class="s">***</span></td><td data-m="3" class="e">(0.014)</td><td data-m="4" class="c">-0.092<span class="s">***</span></td><td data-m="4" class="e">(0.022)</td></tr>
+<tr class="g-jug"><td class="v">edad²</td><td data-m="1" class="c">0.006<span class="s">*</span></td><td data-m="1" class="e">(0.003)</td><td data-m="2" class="c">0.001<span class="s"></span></td><td data-m="2" class="e">(0.002)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">altura</td><td data-m="1" class="c">0.008<span class="s"></span></td><td data-m="1" class="e">(0.008)</td><td data-m="2" class="n" colspan="2"></td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">comunitario</td><td data-m="1" class="c">0.337<span class="s">***</span></td><td data-m="1" class="e">(0.120)</td><td data-m="2" class="c">0.146<span class="s"></span></td><td data-m="2" class="e">(0.089)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">extranjero</td><td data-m="1" class="c">-0.155<span class="s"></span></td><td data-m="1" class="e">(0.121)</td><td data-m="2" class="n" colspan="2"></td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">delantero</td><td data-m="1" class="c">0.106<span class="s"></span></td><td data-m="1" class="e">(0.154)</td><td data-m="2" class="c">0.258<span class="s">**</span></td><td data-m="2" class="e">(0.113)</td><td data-m="3" class="c">0.263<span class="s">**</span></td><td data-m="3" class="e">(0.105)</td><td data-m="4" class="c">0.117<span class="s"></span></td><td data-m="4" class="e">(0.170)</td></tr>
+<tr class="g-jug"><td class="v">mediocampista</td><td data-m="1" class="c">0.199<span class="s"></span></td><td data-m="1" class="e">(0.137)</td><td data-m="2" class="c">0.241<span class="s">**</span></td><td data-m="2" class="e">(0.101)</td><td data-m="3" class="c">0.243<span class="s">**</span></td><td data-m="3" class="e">(0.098)</td><td data-m="4" class="c">0.034<span class="s"></span></td><td data-m="4" class="e">(0.169)</td></tr>
+<tr class="g-jug"><td class="v">portero</td><td data-m="1" class="c">-0.467<span class="s"></span></td><td data-m="1" class="e">(0.546)</td><td data-m="2" class="c">-0.127<span class="s"></span></td><td data-m="2" class="e">(0.449)</td><td data-m="3" class="c">0.257<span class="s"></span></td><td data-m="3" class="e">(0.205)</td><td data-m="4" class="c">0.419<span class="s"></span></td><td data-m="4" class="e">(0.292)</td></tr>
+<tr class="g-rend sep"><td class="v">pj</td><td data-m="1" class="c">0.016<span class="s">**</span></td><td data-m="1" class="e">(0.006)</td><td data-m="2" class="c">0.010<span class="s">**</span></td><td data-m="2" class="e">(0.004)</td><td data-m="3" class="c">0.012<span class="s">***</span></td><td data-m="3" class="e">(0.003)</td><td data-m="4" class="c">0.005<span class="s"></span></td><td data-m="4" class="e">(0.006)</td></tr>
+<tr class="g-rend"><td class="v">goles</td><td data-m="1" class="c">0.032<span class="s">*</span></td><td data-m="1" class="e">(0.017)</td><td data-m="2" class="c">0.033<span class="s">**</span></td><td data-m="2" class="e">(0.014)</td><td data-m="3" class="c">0.028<span class="s">**</span></td><td data-m="3" class="e">(0.013)</td><td data-m="4" class="c">0.040<span class="s">**</span></td><td data-m="4" class="e">(0.020)</td></tr>
+<tr class="g-rend"><td class="v">asis</td><td data-m="1" class="c">0.019<span class="s"></span></td><td data-m="1" class="e">(0.026)</td><td data-m="2" class="c">0.002<span class="s"></span></td><td data-m="2" class="e">(0.019)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">amonestac</td><td data-m="1" class="c">-0.004<span class="s"></span></td><td data-m="1" class="e">(0.018)</td><td data-m="2" class="c">0.001<span class="s"></span></td><td data-m="2" class="e">(0.013)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">expuls</td><td data-m="1" class="c">0.133<span class="s">*</span></td><td data-m="1" class="e">(0.075)</td><td data-m="2" class="c">0.110<span class="s">*</span></td><td data-m="2" class="e">(0.060)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">goles_conced</td><td data-m="1" class="c">0.038<span class="s">**</span></td><td data-m="1" class="e">(0.019)</td><td data-m="2" class="c">0.026<span class="s">*</span></td><td data-m="2" class="e">(0.014)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">vallas_inv</td><td data-m="1" class="c">-0.070<span class="s">*</span></td><td data-m="1" class="e">(0.036)</td><td data-m="2" class="c">-0.037<span class="s"></span></td><td data-m="2" class="e">(0.037)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-tiempo sep"><td class="v">rest_ventana_transfer</td><td data-m="1" class="c">0.202<span class="s">***</span></td><td data-m="1" class="e">(0.027)</td><td data-m="2" class="c">0.143<span class="s">***</span></td><td data-m="2" class="e">(0.021)</td><td data-m="3" class="c">0.138<span class="s">***</span></td><td data-m="3" class="e">(0.021)</td><td data-m="4" class="c">0.092<span class="s">***</span></td><td data-m="4" class="e">(0.034)</td></tr>
+<tr class="g-tiempo"><td class="v">temporada</td><td data-m="1" class="c">0.048<span class="s"></span></td><td data-m="1" class="e">(0.059)</td><td data-m="2" class="c">0.181<span class="s">***</span></td><td data-m="2" class="e">(0.044)</td><td data-m="3" class="c">0.164<span class="s">***</span></td><td data-m="3" class="e">(0.040)</td><td data-m="4" class="c">0.016<span class="s"></span></td><td data-m="4" class="e">(0.057)</td></tr>
+<tr class="g-tiempo"><td class="v">verano</td><td data-m="1" class="c">0.005<span class="s"></span></td><td data-m="1" class="e">(0.117)</td><td data-m="2" class="c">-0.124<span class="s"></span></td><td data-m="2" class="e">(0.088)</td><td data-m="3" class="n" colspan="2"></td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-negoc sep"><td class="v">lvalor_plantel_c</td><td data-m="1" class="n" colspan="2"></td><td data-m="2" class="c">0.531<span class="s">***</span></td><td data-m="2" class="e">(0.045)</td><td data-m="3" class="c">0.542<span class="s">***</span></td><td data-m="3" class="e">(0.044)</td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="g-negoc"><td class="v">lvalor_plantel_v</td><td data-m="1" class="n" colspan="2"></td><td data-m="2" class="c">0.307<span class="s">***</span></td><td data-m="2" class="e">(0.040)</td><td data-m="3" class="c">0.307<span class="s">***</span></td><td data-m="3" class="e">(0.040)</td><td data-m="4" class="n" colspan="2"></td></tr>
+<tr class="sep"><td class="v">Ef. Comprador</td><td data-m="1" class="st" colspan="2">No</td><td data-m="2" class="st" colspan="2">No</td><td data-m="3" class="st" colspan="2">No</td><td data-m="4" class="st" colspan="2">Sí</td></tr>
+<tr><td class="v">Ef. Vendedor</td><td data-m="1" class="st" colspan="2">No</td><td data-m="2" class="st" colspan="2">No</td><td data-m="3" class="st" colspan="2">No</td><td data-m="4" class="st" colspan="2">Sí</td></tr>
+<tr class="sep"><td class="v">N</td><td data-m="1" class="st" colspan="2">390</td><td data-m="2" class="st" colspan="2">388</td><td data-m="3" class="st" colspan="2">388</td><td data-m="4" class="st" colspan="2">390</td></tr>
+<tr><td class="v">R²</td><td data-m="1" class="st" colspan="2">0.338</td><td data-m="2" class="st" colspan="2">0.627</td><td data-m="3" class="st" colspan="2">0.617</td><td data-m="4" class="st" colspan="2">0.918</td></tr>
+<tr><td class="v">df_m</td><td data-m="1" class="st" colspan="2">18</td><td data-m="2" class="st" colspan="2">18</td><td data-m="3" class="st" colspan="2">10</td><td data-m="4" class="st" colspan="2">115</td></tr>
+</tbody>
+</table>
+
+<script>
+(() => {
+  const tabla = document.currentScript.previousElementSibling;
+  const limpiar = () => tabla.querySelectorAll('.fila-hl, .col-hl')
+    .forEach(el => el.classList.remove('fila-hl', 'col-hl'));
+  tabla.addEventListener('mouseover', e => {
+    const celda = e.target.closest('td, th');
+    if (!celda || !tabla.contains(celda)) return;
+    limpiar();
+    if (celda.parentNode.parentNode.tagName === 'TBODY') celda.parentNode.classList.add('fila-hl');
+    const m = celda.dataset.m;
+    if (m) tabla.querySelectorAll('[data-m="' + m + '"]').forEach(c => c.classList.add('col-hl'));
+  });
+  tabla.addEventListener('mouseleave', limpiar);
+})();
+</script>
+
+::: {style="font-size: 0.5em; text-align: center; margin-top: 10px;"}
+\* p<0.1, \*\* p<0.05, \*\*\* p<0.01 &nbsp;·&nbsp; Grupos: [Jugador]{style="color:#9b59b6;"} · [Rendimiento]{style="color:#3498db;"} · [Contrato y tiempo]{style="color:#f39c12;"} · [Negociación]{style="color:#2ecc71;"}
+:::
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**Slide interactiva** — el mouse ilumina fila + modelo. Para preguntas del jurado. La siguiente es la misma tabla sin efecto, para exponer.
+:::
+:::
+
+## Resultados: Modelos con Precios Positivos {.smaller .scrollable .top}
+
+::: {style="font-size: 0.62em; color: #bdc3c7; margin-bottom: 10px;"}
+Variable dependiente: `lprecio`. Errores estándar robustos de Huber-White entre paréntesis — la prueba de Breusch-Pagan rechaza la homocedasticidad en los cuatro modelos. Columna resaltada: **Modelo 3**, el preferido.
+:::
+
+<table class="tabla-reg">
+<colgroup>
+<col class="cv"><col span="2"><col span="2"><col span="2" class="m3"><col span="2">
+</colgroup>
+<thead>
+<tr><th class="v">Variable</th><th colspan="2">Modelo 1</th><th colspan="2">Modelo 2</th><th colspan="2">Modelo 3</th><th colspan="2">Modelo 4</th></tr>
+</thead>
+<tbody>
+<tr class="g-jug"><td class="v">edad</td><td class="c">-0.449<span class="s">**</span></td><td class="e">(0.176)</td><td class="c">-0.169<span class="s"></span></td><td class="e">(0.117)</td><td class="c">-0.108<span class="s">***</span></td><td class="e">(0.014)</td><td class="c">-0.092<span class="s">***</span></td><td class="e">(0.022)</td></tr>
+<tr class="g-jug"><td class="v">edad²</td><td class="c">0.006<span class="s">*</span></td><td class="e">(0.003)</td><td class="c">0.001<span class="s"></span></td><td class="e">(0.002)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">altura</td><td class="c">0.008<span class="s"></span></td><td class="e">(0.008)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">comunitario</td><td class="c">0.337<span class="s">***</span></td><td class="e">(0.120)</td><td class="c">0.146<span class="s"></span></td><td class="e">(0.089)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">extranjero</td><td class="c">-0.155<span class="s"></span></td><td class="e">(0.121)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-jug"><td class="v">delantero</td><td class="c">0.106<span class="s"></span></td><td class="e">(0.154)</td><td class="c">0.258<span class="s">**</span></td><td class="e">(0.113)</td><td class="c">0.263<span class="s">**</span></td><td class="e">(0.105)</td><td class="c">0.117<span class="s"></span></td><td class="e">(0.170)</td></tr>
+<tr class="g-jug"><td class="v">mediocampista</td><td class="c">0.199<span class="s"></span></td><td class="e">(0.137)</td><td class="c">0.241<span class="s">**</span></td><td class="e">(0.101)</td><td class="c">0.243<span class="s">**</span></td><td class="e">(0.098)</td><td class="c">0.034<span class="s"></span></td><td class="e">(0.169)</td></tr>
+<tr class="g-jug"><td class="v">portero</td><td class="c">-0.467<span class="s"></span></td><td class="e">(0.546)</td><td class="c">-0.127<span class="s"></span></td><td class="e">(0.449)</td><td class="c">0.257<span class="s"></span></td><td class="e">(0.205)</td><td class="c">0.419<span class="s"></span></td><td class="e">(0.292)</td></tr>
+<tr class="g-rend sep"><td class="v">pj</td><td class="c">0.016<span class="s">**</span></td><td class="e">(0.006)</td><td class="c">0.010<span class="s">**</span></td><td class="e">(0.004)</td><td class="c">0.012<span class="s">***</span></td><td class="e">(0.003)</td><td class="c">0.005<span class="s"></span></td><td class="e">(0.006)</td></tr>
+<tr class="g-rend"><td class="v">goles</td><td class="c">0.032<span class="s">*</span></td><td class="e">(0.017)</td><td class="c">0.033<span class="s">**</span></td><td class="e">(0.014)</td><td class="c">0.028<span class="s">**</span></td><td class="e">(0.013)</td><td class="c">0.040<span class="s">**</span></td><td class="e">(0.020)</td></tr>
+<tr class="g-rend"><td class="v">asis</td><td class="c">0.019<span class="s"></span></td><td class="e">(0.026)</td><td class="c">0.002<span class="s"></span></td><td class="e">(0.019)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">amonestac</td><td class="c">-0.004<span class="s"></span></td><td class="e">(0.018)</td><td class="c">0.001<span class="s"></span></td><td class="e">(0.013)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">expuls</td><td class="c">0.133<span class="s">*</span></td><td class="e">(0.075)</td><td class="c">0.110<span class="s">*</span></td><td class="e">(0.060)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">goles_conced</td><td class="c">0.038<span class="s">**</span></td><td class="e">(0.019)</td><td class="c">0.026<span class="s">*</span></td><td class="e">(0.014)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-rend"><td class="v">vallas_inv</td><td class="c">-0.070<span class="s">*</span></td><td class="e">(0.036)</td><td class="c">-0.037<span class="s"></span></td><td class="e">(0.037)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-tiempo sep"><td class="v">rest_ventana_transfer</td><td class="c">0.202<span class="s">***</span></td><td class="e">(0.027)</td><td class="c">0.143<span class="s">***</span></td><td class="e">(0.021)</td><td class="c">0.138<span class="s">***</span></td><td class="e">(0.021)</td><td class="c">0.092<span class="s">***</span></td><td class="e">(0.034)</td></tr>
+<tr class="g-tiempo"><td class="v">temporada</td><td class="c">0.048<span class="s"></span></td><td class="e">(0.059)</td><td class="c">0.181<span class="s">***</span></td><td class="e">(0.044)</td><td class="c">0.164<span class="s">***</span></td><td class="e">(0.040)</td><td class="c">0.016<span class="s"></span></td><td class="e">(0.057)</td></tr>
+<tr class="g-tiempo"><td class="v">verano</td><td class="c">0.005<span class="s"></span></td><td class="e">(0.117)</td><td class="c">-0.124<span class="s"></span></td><td class="e">(0.088)</td><td class="n" colspan="2"></td><td class="n" colspan="2"></td></tr>
+<tr class="g-negoc sep"><td class="v">lvalor_plantel_c</td><td class="n" colspan="2"></td><td class="c">0.531<span class="s">***</span></td><td class="e">(0.045)</td><td class="c">0.542<span class="s">***</span></td><td class="e">(0.044)</td><td class="n" colspan="2"></td></tr>
+<tr class="g-negoc"><td class="v">lvalor_plantel_v</td><td class="n" colspan="2"></td><td class="c">0.307<span class="s">***</span></td><td class="e">(0.040)</td><td class="c">0.307<span class="s">***</span></td><td class="e">(0.040)</td><td class="n" colspan="2"></td></tr>
+<tr class="sep"><td class="v">Ef. Comprador</td><td class="st" colspan="2">No</td><td class="st" colspan="2">No</td><td class="st" colspan="2">No</td><td class="st" colspan="2">Sí</td></tr>
+<tr><td class="v">Ef. Vendedor</td><td class="st" colspan="2">No</td><td class="st" colspan="2">No</td><td class="st" colspan="2">No</td><td class="st" colspan="2">Sí</td></tr>
+<tr class="sep"><td class="v">N</td><td class="st" colspan="2">390</td><td class="st" colspan="2">388</td><td class="st" colspan="2">388</td><td class="st" colspan="2">390</td></tr>
+<tr><td class="v">R²</td><td class="st" colspan="2">0.338</td><td class="st" colspan="2">0.627</td><td class="st" colspan="2">0.617</td><td class="st" colspan="2">0.918</td></tr>
+<tr><td class="v">df_m</td><td class="st" colspan="2">18</td><td class="st" colspan="2">18</td><td class="st" colspan="2">10</td><td class="st" colspan="2">115</td></tr>
+</tbody>
+</table>
+
+::: {style="font-size: 0.5em; text-align: center; margin-top: 10px;"}
+\* p<0.1, \*\* p<0.05, \*\*\* p<0.01 &nbsp;·&nbsp; Grupos: [Jugador]{style="color:#9b59b6;"} · [Rendimiento]{style="color:#3498db;"} · [Contrato y tiempo]{style="color:#f39c12;"} · [Negociación]{style="color:#2ecc71;"}
+:::
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**M1** — solo jugador, rendimiento y tiempo.
+
+- **edad** −0.449, cuadrática +0.006. Mínimo a los 37.4 años, pero solo 12 casos lo superan → repatriaciones atípicas.
+- **altura** y **extranjero** sin efecto. **comunitario** +40% → proxy de acceso a Europa.
+- **pj** +1.6%, **goles** +3.2%. Expulsiones, goles concedidos y vallas invictas con signo contrario al esperado.
+- **rest_ventana** +20% (22.5% corregido).
+
+**M2** — entran los planteles.
+
+- R² sube 0.29. Elasticidades: comprador **0.53**, vendedor **0.31**, al 1%.
+- Los grandes pagan por encima del rendimiento → la urgencia por ganar pesa más que el poderío económico.
+- Crítica de los clubes chicos: es relativa. Si fueran más grandes, cobrarían más.
+- Posiciones ganan significancia (Kennedy 1981): medios +27%, delanteros +29%. Base: defensores.
+- **temporada** pasa a 18% anual real, al 1%.
+
+**M3** — el preferido.
+
+- **edad** −10% por año. Sin cuadrática: la experiencia local no compensa el paso del tiempo.
+- **pj** +1.2%, **goles** +2.8%, **rest_ventana** +13.8%.
+- Al revés: perder una ventana cuesta casi 14%. **Es asociación, no receta para renovar contratos.**
+- Ramsey RESET p = 0.91 → sin variables omitidas.
+
+**M4** — efectos fijos.
+
+- R² 0.918, pero a costa de 115 grados de libertad.
+- Sobreviven edad, ventanas y goles. Posiciones y temporada pierden significancia.
+:::
+:::
+## Resultados: Efectos Estimados del Modelo 3 {.top}
+
+::: {style="font-size: 0.7em; color: #bdc3c7; margin-bottom: 4px;"}
+Coeficientes del Modelo 3 con intervalos de confianza al 95%. Un intervalo que cruza la línea del cero indica una variable sin efecto estadísticamente distinguible.
+:::
+
+```{python}
+#| label: forest-modelo3
+#| fig-align: center
+
+df_f = pd.DataFrame(df_mco_data)
+df_f['ic'] = 1.96 * df_f['SE']
+
+fig = go.Figure()
+
+# Una traza por grupo, para que la leyenda reproduzca la descomposición
+# del modelo que ya se presentó en las slides de metodología.
+for grupo, color in GRUPOS.items():
+    d = df_f[df_f['Grupo'] == grupo]
+    fig.add_trace(go.Scatter(
+        x=d['Coef'], y=d['Variable'],
+        mode='markers+text',
+        name=grupo,
+        marker=dict(color=color, size=15,
+                    line=dict(color='rgba(255,255,255,0.55)', width=1)),
+        error_x=dict(type='data', array=d['ic'], color=color,
+                     thickness=3, width=9),
+        text=[f'{c:.3f}' for c in d['Coef']],
+        textposition='top center',
+        textfont=dict(size=17, color='#dfe6e9'),
+        customdata=np.stack([d['Coef'] - d['ic'], d['Coef'] + d['ic']], axis=-1),
+        hovertemplate=('<b>%{y}</b><br>Coeficiente: %{x:.3f}'
+                       '<br>IC 95: [%{customdata[0]:.3f}, %{customdata[1]:.3f}]'
+                       '<extra></extra>'),
+    ))
+
+fig.add_vline(x=0, line=dict(color='rgba(255,255,255,0.45)', width=1.5, dash='dash'))
+
+fig.update_layout(
+    height=590,
+    margin=dict(l=300, r=50, t=12, b=70),
+    xaxis=dict(title=dict(text='Efecto sobre ln(precio)', font=dict(size=22)),
+               tickfont=dict(size=20), zeroline=False,
+               gridcolor='rgba(255,255,255,0.08)', range=[-0.30, 0.72]),
+    yaxis=dict(categoryorder='array',
+               categoryarray=list(reversed(df_f['Variable'])),
+               tickfont=dict(size=20),
+               gridcolor='rgba(255,255,255,0.05)'),
+    legend=dict(orientation='h', yanchor='bottom', y=1.0,
+                xanchor='center', x=0.5, title_text='',
+                font=dict(size=20)),
+    font=dict(size=20),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+)
+
+fig.show()
+```
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+Punto = coeficiente · Barra = IC 95%.
+
+- **portero** es el único intervalo que cruza el cero, y el más ancho. Escasez de arqueros en la muestra.
+- **Negociación domina:** comprador **0.542** vs vendedor **0.307**. La asimetría responde la segunda pregunta de investigación.
+- **Ojo con la escala:** `pj` y `goles` parecen nulos porque el coeficiente es por *un* partido o *un* gol. Veinte partidos superan cualquier dummy de posición.
+- **edad** es el único efecto negativo, ≈ −10% por año, con intervalo angosto.
+- **Unidades** (si preguntan): las de plantel son elasticidades (% ante 1%); el resto, semi-elasticidades (% por unidad).
+:::
+:::
+
+## Resultados: Qué Cambia al Incorporar el Poder de Negociación {.top}
+
+```{python}
+#| label: dumbbell-m1-m3
+#| fig-align: center
+
+# Las 20 variables de la Tabla 9, en su mismo orden. None marca las que el
+# modelo no estima: se dibujan con un aspa sobre el cero, del color del
+# modelo que NO la incluye, y con el tramo punteado.
+comp = pd.DataFrame({
+    'Variable': ['edad', 'edad²', 'altura', 'comunitario', 'extranjero',
+                 'delantero', 'mediocampista', 'portero',
+                 'pj', 'goles', 'asis', 'amonestac', 'expuls',
+                 'goles_conced', 'vallas_inv',
+                 'rest_ventana_transfer', 'temporada', 'verano',
+                 'lvalor_plantel_c', 'lvalor_plantel_v'],
+    'M1': [-0.449, 0.006, 0.008, 0.337, -0.155, 0.106, 0.199, -0.467,
+           0.016, 0.032, 0.019, -0.004, 0.133, 0.038, -0.070,
+           0.202, 0.048, 0.005, None, None],
+    'M3': [-0.108, None, None, None, None, 0.263, 0.243, 0.257,
+           0.012, 0.028, None, None, None, None, None,
+           0.138, 0.164, None, 0.542, 0.307],
+})
+
+fig = go.Figure()
+
+# 1. Segmentos: sólido si ambos modelos estiman la variable, punteado si
+#    uno de los extremos es "no estimada".
+for _, r in comp.iterrows():
+    completo = pd.notna(r['M1']) and pd.notna(r['M3'])
+    fig.add_trace(go.Scatter(
+        x=[r['M1'] if pd.notna(r['M1']) else 0,
+           r['M3'] if pd.notna(r['M3']) else 0],
+        y=[r['Variable'], r['Variable']], mode='lines',
+        line=dict(color='rgba(255,255,255,0.30)' if completo else 'rgba(255,255,255,0.12)',
+                  width=3, dash='solid' if completo else 'dot'),
+        showlegend=False, hoverinfo='skip',
+    ))
+
+# 2. Marcadores. El orden de dibujo importa: todo lo del Modelo 3 va
+#    encima de todo lo del Modelo 1. En varias filas el punto gris cae
+#    prácticamente sobre el cero (amonestac -0.004, verano 0.005, edad²
+#    0.006, altura 0.008), justo donde está el aspa verde.
+sin_m1 = comp.loc[comp['M1'].isna(), 'Variable']
+sin_m3 = comp.loc[comp['M3'].isna(), 'Variable']
+m1 = comp[comp['M1'].notna()]
+m3 = comp[comp['M3'].notna()]
+
+fig.add_trace(go.Scatter(
+    x=[0] * len(sin_m1), y=sin_m1, mode='markers', name='no estimada en M1',
+    legendrank=3,
+    marker=dict(color=COLOR_MCO, size=12, symbol='x-thin',
+                line=dict(width=3, color=COLOR_MCO)),
+    hovertemplate='<b>%{y}</b><br>No incluida en el Modelo 1<extra></extra>',
+))
+
+fig.add_trace(go.Scatter(
+    x=m1['M1'], y=m1['Variable'], mode='markers', name='Modelo 1', legendrank=1,
+    marker=dict(color=COLOR_MCO, size=15,
+                line=dict(color='rgba(255,255,255,0.55)', width=1.5)),
+    hovertemplate='<b>%{y}</b><br>Modelo 1: %{x:.3f}<extra></extra>',
+))
+
+fig.add_trace(go.Scatter(
+    x=[0] * len(sin_m3), y=sin_m3, mode='markers', name='no estimada en M3',
+    legendrank=4,
+    marker=dict(color=COLOR_NEGOCIO, size=13, symbol='x-thin',
+                line=dict(width=3.5, color=COLOR_NEGOCIO)),
+    hovertemplate='<b>%{y}</b><br>No incluida en el Modelo 3<extra></extra>',
+))
+
+fig.add_trace(go.Scatter(
+    x=m3['M3'], y=m3['Variable'], mode='markers', name='Modelo 3', legendrank=2,
+    marker=dict(color=COLOR_NEGOCIO, size=15,
+                line=dict(color='rgba(255,255,255,0.55)', width=1.5)),
+    hovertemplate='<b>%{y}</b><br>Modelo 3: %{x:.3f}<extra></extra>',
+))
+
+fig.add_vline(x=0, line=dict(color='rgba(255,255,255,0.40)', width=1.5, dash='dash'))
+
+fig.update_layout(
+    height=690,
+    margin=dict(l=300, r=50, t=8, b=60),
+    xaxis=dict(title=dict(text='Efecto sobre ln(precio)', font=dict(size=20)),
+               tickfont=dict(size=18), zeroline=False,
+               gridcolor='rgba(255,255,255,0.08)', range=[-0.56, 0.64]),
+    yaxis=dict(categoryorder='array',
+               categoryarray=list(reversed(comp['Variable'])),
+               tickfont=dict(size=18),
+               gridcolor='rgba(255,255,255,0.05)'),
+    legend=dict(orientation='h', yanchor='bottom', y=1.0,
+                xanchor='center', x=0.5, title_text='', font=dict(size=18),
+                traceorder='normal'),
+    font=dict(size=18),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+)
+
+fig.show()
+```
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+Gris = M1 (sin club) · Verde = M3 · Largo del segmento = cuánto capturaba el poder de negociación · Aspa = no estimada, del color del modelo que la deja afuera.
+
+- **edad** −0.449 → −0.108. Queda un cuarto: era el tipo de club, no la edad.
+- **portero** −0.467 → 0.257. Cambia de signo, intervalo enorme. Inestabilidad por escasez de arqueros, no hallazgo.
+- **delantero / mediocampista** suben y recién ahí son significativos.
+- **pj / goles** se mueven 0.004. El rendimiento es robusto.
+- **rest_ventana** 0.202 → 0.138. Parte era poder de los clubes grandes, que tienen contratos más largos.
+- **temporada** 0.048 → 0.164. Pasa a significativa al 1%.
+- Aspas verdes del medio: la depuración fue casi toda sobre rendimiento.
+:::
+:::
+
+## Resultados: Modelo Censurado y Tobit {.smaller .top visibility="hidden"}
+
+::: {style="font-size: 0.62em; color: #bdc3c7; margin-bottom: 10px;"}
+Variable dependiente: `lprecio`, sobre la especificación del **Modelo 3** y las 769 observaciones con contrato vigente. Umbral de censura $L=\ln(45.000)$. Columna resaltada: **Tobit**, el modelo corregido.
+:::
+
+<table class="tabla-reg">
+<colgroup>
+<col class="cv"><col span="2"><col span="2" class="m3">
+</colgroup>
+<thead>
+<tr><th class="v">Variable</th><th colspan="2">MCO Censurado</th><th colspan="2">Tobit</th></tr>
+</thead>
+<tbody>
+<tr class="g-jug"><td class="v">edad</td><td class="c">-0.657<span class="s">***</span></td><td class="e">(0.044)</td><td class="c">-0.181<span class="s">***</span></td><td class="e">(0.011)</td></tr>
+<tr class="g-jug"><td class="v">delantero</td><td class="c">-0.262<span class="s"></span></td><td class="e">(0.490)</td><td class="c">-0.011<span class="s"></span></td><td class="e">(0.112)</td></tr>
+<tr class="g-jug"><td class="v">mediocampista</td><td class="c">0.167<span class="s"></span></td><td class="e">(0.452)</td><td class="c">0.084<span class="s"></span></td><td class="e">(0.105)</td></tr>
+<tr class="g-jug"><td class="v">portero</td><td class="c">1.847<span class="s">**</span></td><td class="e">(0.768)</td><td class="c">0.606<span class="s">***</span></td><td class="e">(0.218)</td></tr>
+<tr class="g-rend sep"><td class="v">pj</td><td class="c">0.064<span class="s">***</span></td><td class="e">(0.016)</td><td class="c">0.019<span class="s">***</span></td><td class="e">(0.004)</td></tr>
+<tr class="g-rend"><td class="v">goles</td><td class="c">0.275<span class="s">***</span></td><td class="e">(0.058)</td><td class="c">0.069<span class="s">***</span></td><td class="e">(0.013)</td></tr>
+<tr class="g-negoc sep"><td class="v">lvalor_plantel_c</td><td class="c">2.442<span class="s">***</span></td><td class="e">(0.172)</td><td class="c">0.660<span class="s">***</span></td><td class="e">(0.040)</td></tr>
+<tr class="g-negoc"><td class="v">lvalor_plantel_v</td><td class="c">-0.008<span class="s"></span></td><td class="e">(0.179)</td><td class="c">0.112<span class="s">***</span></td><td class="e">(0.041)</td></tr>
+<tr class="g-tiempo sep"><td class="v">rest_ventana_transfer</td><td class="c">0.553<span class="s">***</span></td><td class="e">(0.114)</td><td class="c">0.136<span class="s">***</span></td><td class="e">(0.024)</td></tr>
+<tr class="g-tiempo"><td class="v">temporada</td><td class="c">0.228<span class="s"></span></td><td class="e">(0.170)</td><td class="c">0.074<span class="s">*</span></td><td class="e">(0.040)</td></tr>
+<tr class="sep"><td class="v">Varianza del error σ²</td><td class="n" colspan="2"></td><td class="c">2.593<span class="s">***</span></td><td class="e">(0.202)</td></tr>
+<tr class="sep"><td class="v">N</td><td class="st" colspan="2">769</td><td class="st" colspan="2">769</td></tr>
+<tr><td class="v">Proporción sin precio</td><td class="st" colspan="2">0.495</td><td class="st" colspan="2">0.495</td></tr>
+<tr><td class="v">R²</td><td class="st" colspan="2">0.560</td><td class="n" colspan="2"></td></tr>
+<tr><td class="v">Log-likelihood</td><td class="n" colspan="2"></td><td class="st" colspan="2">-915.799</td></tr>
+<tr><td class="v">df_m</td><td class="st" colspan="2">10</td><td class="st" colspan="2">10</td></tr>
+</tbody>
+</table>
+
+::: {style="font-size: 0.5em; text-align: center; margin-top: 10px;"}
+\* p<0.1, \*\* p<0.05, \*\*\* p<0.01 &nbsp;·&nbsp; Grupos: [Jugador]{style="color:#9b59b6;"} · [Rendimiento]{style="color:#3498db;"} · [Negociación]{style="color:#2ecc71;"} · [Contrato y tiempo]{style="color:#f39c12;"}
+:::
+
+## Resultados: Efectos Marginales de las Tres Estimaciones {.top}
+
+::: {style="font-size: 0.62em; color: #bdc3c7; margin-bottom: 16px; text-align: center;"}
+Efectos parciales promedio, condicionados a la probabilidad de que la variable latente supere el umbral de censura (10.7)
+:::
+
+<table class="tabla-reg tabla-angosta">
+<colgroup>
+<col class="cv"><col><col><col class="m3">
+</colgroup>
+<thead>
+<tr><th class="v">Variable</th><th>MCO Truncado</th><th>MCO Censurado</th><th>Tobit</th></tr>
+</thead>
+<tbody>
+<tr class="g-jug"><td class="v">edad</td><td class="c">-0.108<span class="s">***</span></td><td class="c">-0.657<span class="s">***</span></td><td class="c">-0.181<span class="s">***</span></td></tr>
+<tr class="g-jug"><td class="v">delantero</td><td class="c">0.263<span class="s">**</span></td><td class="c">-0.262<span class="s"></span></td><td class="c">-0.011<span class="s"></span></td></tr>
+<tr class="g-jug"><td class="v">mediocampista</td><td class="c">0.243<span class="s">**</span></td><td class="c">0.167<span class="s"></span></td><td class="c">0.084<span class="s"></span></td></tr>
+<tr class="g-jug"><td class="v">portero</td><td class="c">0.257<span class="s"></span></td><td class="c">1.847<span class="s">**</span></td><td class="c">0.606<span class="s">***</span></td></tr>
+<tr class="g-rend sep"><td class="v">pj</td><td class="c">0.012<span class="s">***</span></td><td class="c">0.064<span class="s">***</span></td><td class="c">0.019<span class="s">***</span></td></tr>
+<tr class="g-rend"><td class="v">goles</td><td class="c">0.028<span class="s">**</span></td><td class="c">0.275<span class="s">***</span></td><td class="c">0.069<span class="s">***</span></td></tr>
+<tr class="g-negoc sep"><td class="v">lvalor_plantel_c</td><td class="c">0.542<span class="s">***</span></td><td class="c">2.442<span class="s">***</span></td><td class="c">0.660<span class="s">***</span></td></tr>
+<tr class="g-negoc"><td class="v">lvalor_plantel_v</td><td class="c">0.307<span class="s">***</span></td><td class="c">-0.008<span class="s"></span></td><td class="c">0.112<span class="s">***</span></td></tr>
+<tr class="g-tiempo sep"><td class="v">rest_ventana_transfer</td><td class="c">0.138<span class="s">***</span></td><td class="c">0.553<span class="s">***</span></td><td class="c">0.136<span class="s">***</span></td></tr>
+<tr class="g-tiempo"><td class="v">temporada</td><td class="c">0.164<span class="s">***</span></td><td class="c">0.228<span class="s"></span></td><td class="c">0.074<span class="s">*</span></td></tr>
+</tbody>
+</table>
+
+::: {style="font-size: 0.5em; text-align: center; margin-top: 10px;"}
+\* p<0.1, \*\* p<0.05, \*\*\* p<0.01 &nbsp;·&nbsp; Las posiciones son indicativas: no es seguro que el software siga el método de Wooldridge (2010) para binarias.
+:::
+
+## Resultados: El Efecto de Corregir la Censura {.top}
+
+::: {style="font-size: 0.62em; color: #bdc3c7; margin-bottom: 6px; text-align: center;"}
+Efectos parciales de las tres estimaciones sobre la misma especificación. El Tobit recupera la magnitud del truncado, con la significatividad que aporta incorporar los ceros.
+:::
+
+```{python}
+#| label: dumbbell-tobit
+#| fig-align: center
+
+# Dos grises para las dos variantes sin corrección, rojo para la corregida.
+COLOR_CENSURADO = '#bdc3c7'
+
+df_t = pd.DataFrame(datos_tobit)
+
+fig = go.Figure()
+
+# Línea de rango: muestra de un vistazo cuánto se dispersan las tres
+# estimaciones para cada variable.
+for _, r in df_t.iterrows():
+    vals = [r['MCO_b'], r['Cens_b'], r['Tobit_b']]
+    fig.add_trace(go.Scatter(
+        x=[min(vals), max(vals)], y=[r['Variable']] * 2, mode='lines',
+        line=dict(color='rgba(255,255,255,0.22)', width=3),
+        showlegend=False, hoverinfo='skip',
+    ))
+
+series = [
+    ('MCO Censurado', 'Cens_b', COLOR_CENSURADO, 2),
+    ('MCO Truncado', 'MCO_b', COLOR_MCO, 1),
+    ('Tobit', 'Tobit_b', COLOR_TOBIT, 3),
+]
+for nombre, col, color, rango in series:
+    fig.add_trace(go.Scatter(
+        x=df_t[col], y=df_t['Variable'], mode='markers', name=nombre,
+        legendrank=rango,
+        marker=dict(color=color, size=15,
+                    line=dict(color='rgba(0,0,0,0.55)', width=1.5)),
+        hovertemplate='<b>%{y}</b><br>' + nombre + ': %{x:.3f}<extra></extra>',
+    ))
+
+fig.add_vline(x=0, line=dict(color='rgba(255,255,255,0.40)', width=1.5, dash='dash'))
+
+fig.update_layout(
+    height=560,
+    margin=dict(l=300, r=50, t=8, b=58),
+    xaxis=dict(title=dict(text='Efecto parcial sobre ln(precio)', font=dict(size=19)),
+               tickfont=dict(size=17), zeroline=False,
+               gridcolor='rgba(255,255,255,0.08)', range=[-0.85, 2.65]),
+    yaxis=dict(categoryorder='array',
+               categoryarray=list(reversed(df_t['Variable'])),
+               tickfont=dict(size=17),
+               gridcolor='rgba(255,255,255,0.05)'),
+    legend=dict(orientation='h', yanchor='bottom', y=1.0,
+                xanchor='center', x=0.5, title_text='', font=dict(size=18),
+                traceorder='normal'),
+    font=dict(size=18),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+)
+
+fig.show()
+```

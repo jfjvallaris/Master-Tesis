@@ -206,6 +206,141 @@
     margin-right: auto;
 }
 
+/* === Tablas de resultados de regresión (.tabla-reg) ===
+   Cada modelo ocupa un par de columnas: coeficiente y error estándar.
+   Las estrellas de significatividad van en una ranura de ancho fijo
+   para que no desplacen el punto decimal (equivale al r@{.}l de LaTeX). */
+
+.reveal .slides section .tabla-reg {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+  font-size: 0.86em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.reveal .slides section .tabla-reg th {
+  text-align: center;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.reveal .slides section .tabla-reg td {
+  padding: 1px 4px;
+  border: none;
+  white-space: nowrap;
+}
+
+/* Columna de nombres: aloja la línea de color del grupo */
+.reveal .slides section .tabla-reg td.v,
+.reveal .slides section .tabla-reg th.v {
+  text-align: left;
+  border-left: 3px solid transparent;
+  padding-left: 12px;
+}
+
+/* Coeficiente: alineado a la derecha, con ranura fija para las estrellas */
+.reveal .slides section .tabla-reg td.c {
+  text-align: right;
+  padding-right: 0;
+}
+
+.reveal .slides section .tabla-reg td.c .s {
+  display: inline-block;
+  width: 2.1em;
+  text-align: left;
+  padding-left: 1px;
+}
+
+/* Error estándar, pegado al coeficiente */
+.reveal .slides section .tabla-reg td.e {
+  text-align: left;
+  padding-left: 2px;
+  color: #bdc3c7;
+}
+
+/* Estadísticos del modelo (celdas combinadas) */
+.reveal .slides section .tabla-reg td.st {
+  text-align: center;
+}
+
+/* Aire entre bloques de modelo, sin línea vertical: la separación la da
+   el espacio a la izquierda de la celda que abre cada bloque */
+.reveal .slides section .tabla-reg td.c,
+.reveal .slides section .tabla-reg td.n,
+.reveal .slides section .tabla-reg td.st {
+  padding-left: 22px;
+}
+
+/* Separador horizontal entre grupos de variables */
+.reveal .slides section .tabla-reg tr.sep td {
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* Línea de color por grupo de variables (misma paleta que la slide de
+   modelos anidados) */
+.reveal .slides section .tabla-reg tr.g-jug    td.v { border-left-color: #9b59b6; }
+.reveal .slides section .tabla-reg tr.g-rend   td.v { border-left-color: #3498db; }
+.reveal .slides section .tabla-reg tr.g-tiempo td.v { border-left-color: #f39c12; }
+.reveal .slides section .tabla-reg tr.g-negoc  td.v { border-left-color: #2ecc71; }
+
+/* Resaltado del modelo preferido, vía <colgroup> para que funcione
+   también debajo de las celdas combinadas */
+.reveal .slides section .tabla-reg col.m3 {
+  background: rgba(52, 152, 219, 0.13);
+}
+
+/* --- Variante angosta (.tabla-angosta): para tablas de pocas columnas.
+   Sin `width: 100%` la tabla se ajusta a su contenido, así la columna de
+   nombres deja de estirarse; el margen automático la centra. --- */
+
+.reveal .slides section .tabla-reg.tabla-angosta {
+  width: auto;
+  margin: 0 auto;
+  font-size: 0.72em;
+}
+
+/* Aire entre el nombre de la variable y la primera columna de datos */
+.reveal .slides section .tabla-reg.tabla-angosta td.v,
+.reveal .slides section .tabla-reg.tabla-angosta th.v {
+  padding-right: 34px;
+}
+
+.reveal .slides section .tabla-reg.tabla-angosta th,
+.reveal .slides section .tabla-reg.tabla-angosta td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Más separación entre modelos, que acá no tienen par coef./e.e. */
+.reveal .slides section .tabla-reg.tabla-angosta td.c {
+  padding-left: 42px;
+}
+
+/* --- Variante exploratoria (.tabla-hover): resalta fila y modelo al
+   pasar el mouse. El bloque de modelo se identifica con data-m, para que
+   el resaltado abarque el par coeficiente + error estándar. --- */
+
+.reveal .slides section .tabla-hover tbody tr.fila-hl td {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.reveal .slides section .tabla-hover td.col-hl,
+.reveal .slides section .tabla-hover th.col-hl {
+  background: rgba(52, 152, 219, 0.16);
+}
+
+/* Intersección fila × modelo: el tono más fuerte marca la celda apuntada */
+.reveal .slides section .tabla-hover tbody tr.fila-hl td.col-hl {
+  background: rgba(52, 152, 219, 0.34);
+}
+
+.reveal .slides section .tabla-hover tbody tr:hover {
+  cursor: default;
+}
+
 /* === Ajustes SOLO para la slide de Definición de Variables === */
 
 .reveal .slides section.tabla-ancha {
