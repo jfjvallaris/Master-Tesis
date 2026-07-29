@@ -2551,3 +2551,102 @@ fig.update_layout(
 
 fig.show()
 ```
+
+## Resultados: ¿Es Adecuado el Tobit? {.top}
+
+::: {style="font-size: 0.58em; color: #bdc3c7; margin-bottom: 14px;"}
+Chequeo informal de Wooldridge (2010): se estima un **probit** sobre la probabilidad de que el precio sea observable. El Tobit es válido si sus coeficientes divididos por $\hat{\sigma}$ se acercan a los del probit. Acá $\hat{\sigma}=\sqrt{2.594}\approx 1.610$.
+:::
+
+::::: {style="display: flex; align-items: center; gap: 42px;"}
+
+:::: {style="flex: 0 0 60%;"}
+
+```{=html}
+<table class="tabla-reg tabla-angosta tabla-izq">
+<colgroup>
+<col class="cv"><col><col><col class="m3">
+</colgroup>
+<thead>
+<tr><th class="v">Variable</th><th>Tobit / σ̂</th><th>Probit</th><th>Diferencia</th></tr>
+</thead>
+<tbody>
+<tr class="g-jug"><td class="v">edad</td><td class="c">-0.194<span class="s">***</span></td><td class="c">-0.220<span class="s">***</span></td><td class="c">-0.026<span class="s"></span></td></tr>
+<tr class="g-jug"><td class="v">delantero</td><td class="c">-0.012<span class="s"></span></td><td class="c">-0.219<span class="s"></span></td><td class="c"><strong>-0.207</strong><span class="s"></span></td></tr>
+<tr class="g-jug"><td class="v">mediocampista</td><td class="c">0.091<span class="s"></span></td><td class="c">0.030<span class="s"></span></td><td class="c">-0.061<span class="s"></span></td></tr>
+<tr class="g-jug"><td class="v">portero</td><td class="c">0.602<span class="s">***</span></td><td class="c">0.700<span class="s">**</span></td><td class="c">0.098<span class="s"></span></td></tr>
+<tr class="g-rend sep"><td class="v">pj</td><td class="c">0.020<span class="s">***</span></td><td class="c">0.016<span class="s">***</span></td><td class="c">-0.004<span class="s"></span></td></tr>
+<tr class="g-rend"><td class="v">goles</td><td class="c">0.074<span class="s">***</span></td><td class="c">0.121<span class="s">***</span></td><td class="c">0.047<span class="s"></span></td></tr>
+<tr class="g-negoc sep"><td class="v">lvalor_plantel_c</td><td class="c">0.710<span class="s">***</span></td><td class="c">0.827<span class="s">***</span></td><td class="c">0.117<span class="s"></span></td></tr>
+<tr class="g-negoc"><td class="v">lvalor_plantel_v</td><td class="c">0.121<span class="s">***</span></td><td class="c">-0.028<span class="s"></span></td><td class="c"><strong>-0.149</strong><span class="s"></span></td></tr>
+<tr class="g-tiempo sep"><td class="v">rest_ventana_transfer</td><td class="c">0.147<span class="s">***</span></td><td class="c">0.169<span class="s">***</span></td><td class="c">0.022<span class="s"></span></td></tr>
+<tr class="g-tiempo"><td class="v">temporada</td><td class="c">0.080<span class="s">*</span></td><td class="c">0.074<span class="s"></span></td><td class="c">-0.006<span class="s"></span></td></tr>
+</tbody>
+</table>
+```
+
+::: {style="font-size: 0.45em; color: #bdc3c7; margin-top: 10px;"}
+\* p<0.1, \*\* p<0.05, \*\*\* p<0.01
+:::
+
+::::
+
+:::: {style="flex: 1; font-size: 0.72em; line-height: 1.45;"}
+
+::: {style="border-left: 3px solid #2ecc71; padding-left: 18px; margin-bottom: 30px;"}
+El valor del plantel **vendedor** explica el precio, pero no la probabilidad de que haya precio.
+:::
+
+::: {style="border-left: 3px solid #f39c12; padding-left: 18px; margin-bottom: 30px;"}
+La **temporada** tampoco: la inflación opera siempre, con precio o sin él.
+:::
+
+::: {style="border-left: 3px solid rgba(255,255,255,0.28); padding-left: 18px; margin-bottom: 30px;"}
+El resto de las variables explica las dos cosas: la probabilidad de tener precio y el precio en sí mismo.
+:::
+
+::::
+
+:::::
+
+## Resultados: Síntesis {.top}
+
+::: {style="font-size: 0.58em; color: #bdc3c7; margin-bottom: 18px;"}
+Efectos porcentuales sobre el precio. Primer valor: **Modelo 3** (solo precios positivos). Segundo: **Tobit** (corregido por censura).
+:::
+
+:::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 26px 34px; font-size: 0.72em; line-height: 1.45;"}
+
+::: {style="border-left: 4px solid #9b59b6; padding-left: 20px;"}
+[Jugador]{style="color: #9b59b6; font-weight: bold; font-size: 1.15em;"}
+
+La **edad** es el único atributo personal con efecto robusto: **−10%** por año, **−18%** al corregir la censura. Lineal, sin el efecto cuadrático que sugiere la literatura internacional.
+
+Las **posiciones** solo discriminan precios cuando se controla por el valor de los planteles, y pierden significancia en el Tobit.
+:::
+
+::: {style="border-left: 4px solid #3498db; padding-left: 20px;"}
+[Rendimiento]{style="color: #3498db; font-weight: bold; font-size: 1.15em;"}
+
+**Partidos jugados** y **goles** son significativos en todas las especificaciones: **+1.2%** por partido y **+2.8%** por gol, que pasan a **+2%** y **+7%** con la corrección.
+
+El resto de las estadísticas no sobrevive la depuración.
+:::
+
+::: {style="border-left: 4px solid #f39c12; padding-left: 20px;"}
+[Contrato y tiempo]{style="color: #f39c12; font-weight: bold; font-size: 1.15em;"}
+
+Cada **ventana de transferencia restante** vale cerca de **14%**, y es el resultado más estable del trabajo: casi idéntico en las tres estimaciones.
+
+El **factor inflacionario** ronda **16%** real por temporada, identificable solo sobre las observaciones con precio.
+:::
+
+::: {style="border-left: 4px solid #2ecc71; padding-left: 20px;"}
+[Negociación]{style="color: #2ecc71; font-weight: bold; font-size: 1.15em;"}
+
+Elasticidad del **comprador**: **0.54**, que sube a **0.66** con la corrección. Del **vendedor**: **0.31**, que baja a **0.11**.
+
+La asimetría se amplía al incorporar los ceros: el poder de negociación aparece concentrado del lado del comprador.
+:::
+
+::::

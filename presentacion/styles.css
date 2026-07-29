@@ -302,6 +302,17 @@
   font-size: 0.72em;
 }
 
+/* Alineada a la izquierda y más compacta, para convivir con una columna
+   de texto al costado */
+.reveal .slides section .tabla-reg.tabla-angosta.tabla-izq {
+  margin: 0;
+  font-size: 0.62em;
+}
+
+.reveal .slides section .tabla-reg.tabla-angosta.tabla-izq td.c {
+  padding-left: 30px;
+}
+
 /* Aire entre el nombre de la variable y la primera columna de datos */
 .reveal .slides section .tabla-reg.tabla-angosta td.v,
 .reveal .slides section .tabla-reg.tabla-angosta th.v {

@@ -148,6 +148,30 @@ que cualquier cambio de altura del contenido mueve todo el slide.
 - Cuerpo de callouts: `font-size: 0.85em` a `1.1em` según jerarquía
 - Slides con tablas densas: `{.smaller}` en el header del slide
 
+## HTML crudo dentro de fenced divs
+Pandoc tiene activa `markdown_in_html_blocks`: una tabla escrita como
+HTML suelto **no** se trata como bloque opaco, sino que su contenido se
+parsea como markdown y cada etiqueta sale como `RawBlock` separado. A
+nivel de slide eso funciona, pero **dentro de un `:::` el seguimiento de
+fences se rompe** y los cierres terminan como texto literal (Quarto avisa
+"The following string was found in the document: ::::").
+
+Regla: si una tabla HTML va dentro de un fenced div, envolverla en un
+bloque raw explícito:
+
+````
+```{=html}
+<table class="tabla-reg">…</table>
+```
+````
+
+Así queda un único `RawBlock` y el anidamiento de divs se respeta.
+
+Para diagnosticar este tipo de problema sin compilar el deck: extraer la
+slide a un archivo aparte y correr el pandoc que trae Quarto
+(`.../Quarto/bin/tools/pandoc.exe -f markdown -t native frag.md`).
+Si aparece un `Para [ Str "::::" ]`, ese fence no se reconoció.
+
 ## Tablas de regresión (clase `.tabla-reg`)
 Las tablas de resultados econométricos van en **HTML explícito**, no en
 markdown, para reproducir el formato de la tesis en LaTeX:
@@ -232,6 +256,14 @@ desarrollo largo va al capítulo de la tesis, no acá. Tamaño de letra
   mostrar tamaño muestral por tramo, sin saturar el gráfico.
 
 ## Redacción
+- **Conservar el grado de certeza del original.** Al condensar texto de
+  la tesis para una slide es fácil borrar los atenuantes ("muy
+  probablemente", "puede ser un indicador", "es esperable que") y
+  convertir una conjetura en afirmación. En una defensa eso es
+  exactamente lo que el jurado ataca. Si el capítulo hedgea, la slide
+  hedgea. Cuando un bloque es una explicación tentativa, decirlo en el
+  título del callout y usar `.callout-warning`, reservado para lo
+  ambiguo o no resuelto.
 - **No usar la construcción "no es X, sino Y"** (ni "la diferencia no
   está en A, sino en B", "no se trata de A, es B"). Es una muletilla de
   redacción publicitaria, ajena al registro académico. Afirmar
