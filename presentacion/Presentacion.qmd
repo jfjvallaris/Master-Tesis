@@ -2457,6 +2457,7 @@ Variable dependiente: `lprecio`, sobre la especificación del **Modelo 3** y las
 \* p<0.1, \*\* p<0.05, \*\*\* p<0.01 &nbsp;·&nbsp; Grupos: [Jugador]{style="color:#9b59b6;"} · [Rendimiento]{style="color:#3498db;"} · [Negociación]{style="color:#2ecc71;"} · [Contrato y tiempo]{style="color:#f39c12;"}
 :::
 
+
 ## Resultados: Efectos Marginales de las Tres Estimaciones {.top}
 
 ::: {style="font-size: 0.62em; color: #bdc3c7; margin-bottom: 16px; text-align: center;"}
@@ -2609,6 +2610,21 @@ El resto de las variables explica las dos cosas: la probabilidad de tener precio
 
 :::::
 
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**IDEA — versión corregida, no expuesta.**
+
+**Dónde están los ceros: se verifica directo, sin modelos.** Fracción de transferencias sin precio por quintil del regresor:
+
+- **edad**: 0.16 → 0.85 (monótona). **valor plantel comprador**: 0.90 → 0.14. **valor plantel vendedor**: plano, 0.37 a 0.60. **rest_ventana**: 0.65 → 0.12.
+- Efectos parciales del probit sobre P(tener precio): un año más de edad, **−4.2 pp**; 10% más de valor del comprador, **+1.6 pp**.
+
+**No usar el cambio de pendiente del censurado como prueba.** Su coeficiente es, según la variable, entre el 86% y el 100% del margen extensivo multiplicado por 13.98 (la media del log-precio de las positivas). El factor "4 a 10x" es esa constante, y depende de haber codificado los ceros en ln(1)=0 en vez de en la cota: puestos en la cota, la distorsión cae a 1.17x. Contraejemplo: `delantero` invierte el signo (+0.263 → −0.262) con probit no significativo.
+
+**Pendiente sin resolver, aparte de esto:** el test de Cragg rechaza el Tobit frente al modelo de dos partes (probit + truncada). El rechazo viene de la escala: σ del Tobit 1.61 contra 0.73 dentro de las positivas.
+:::
+:::
+
 ## Resultados: Síntesis {.top}
 
 ::: {style="font-size: 0.58em; color: #bdc3c7; margin-bottom: 18px;"}
@@ -2617,7 +2633,7 @@ Efectos porcentuales sobre el precio. Primer valor: **Modelo 3** (solo precios p
 
 :::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 26px 34px; font-size: 0.72em; line-height: 1.45;"}
 
-::: {style="border-left: 4px solid #9b59b6; padding-left: 20px;"}
+::: {.fragment style="border-left: 4px solid #9b59b6; padding-left: 20px;"}
 [Jugador]{style="color: #9b59b6; font-weight: bold; font-size: 1.15em;"}
 
 La **edad** es el único atributo personal con efecto robusto: **−10%** por año, **−18%** al corregir la censura. Lineal, sin el efecto cuadrático que sugiere la literatura internacional.
@@ -2625,7 +2641,7 @@ La **edad** es el único atributo personal con efecto robusto: **−10%** por a�
 Las **posiciones** solo discriminan precios cuando se controla por el valor de los planteles, y pierden significancia en el Tobit.
 :::
 
-::: {style="border-left: 4px solid #3498db; padding-left: 20px;"}
+::: {.fragment style="border-left: 4px solid #3498db; padding-left: 20px;"}
 [Rendimiento]{style="color: #3498db; font-weight: bold; font-size: 1.15em;"}
 
 **Partidos jugados** y **goles** son significativos en todas las especificaciones: **+1.2%** por partido y **+2.8%** por gol, que pasan a **+2%** y **+7%** con la corrección.
@@ -2633,7 +2649,7 @@ Las **posiciones** solo discriminan precios cuando se controla por el valor de l
 El resto de las estadísticas no sobrevive la depuración.
 :::
 
-::: {style="border-left: 4px solid #f39c12; padding-left: 20px;"}
+::: {.fragment style="border-left: 4px solid #f39c12; padding-left: 20px;"}
 [Contrato y tiempo]{style="color: #f39c12; font-weight: bold; font-size: 1.15em;"}
 
 Cada **ventana de transferencia restante** vale cerca de **14%**, y es el resultado más estable del trabajo: casi idéntico en las tres estimaciones.
@@ -2641,12 +2657,78 @@ Cada **ventana de transferencia restante** vale cerca de **14%**, y es el result
 El **factor inflacionario** ronda **16%** real por temporada, identificable solo sobre las observaciones con precio.
 :::
 
-::: {style="border-left: 4px solid #2ecc71; padding-left: 20px;"}
+::: {.fragment style="border-left: 4px solid #2ecc71; padding-left: 20px;"}
 [Negociación]{style="color: #2ecc71; font-weight: bold; font-size: 1.15em;"}
 
 Elasticidad del **comprador**: **0.54**, que sube a **0.66** con la corrección. Del **vendedor**: **0.31**, que baja a **0.11**.
 
-La asimetría se amplía al incorporar los ceros: el poder de negociación aparece concentrado del lado del comprador.
+El poder del vendedor se reduce a un tercio. Una explicación posible: las salidas sin cargo se deciden **antes**, y con el jugador, no con el club comprador.
+:::
+
+::::
+
+## Conclusiones: Por Qué y Para Qué se Comercian Jugadores {.top}
+
+::: {style="margin-top: 16px;"}
+<div style="border-left: 5px solid #e74c3c; padding-left: 15px; font-size: 0.8em;">
+¿Por qué y para qué se comercian jugadores de fútbol?
+</div>
+:::
+
+:::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 44px; font-size: 0.68em; line-height: 1.55;"}
+
+::: {.fragment style="border-left: 4px solid #3498db; padding-left: 20px;"}
+[Por qué]{style="color: #3498db; font-weight: bold; font-size: 1.15em;"}
+
+Los clubes tienen **derechos de exclusividad** sobre el uso de la fuerza de trabajo del futbolista.
+
+Ese derecho existe para **proteger el patrimonio** de los clubes y **sostener el interés del público**, estabilizando los planteles.
+:::
+
+::: {.fragment style="border-left: 4px solid #2ecc71; padding-left: 20px;"}
+[Para qué]{style="color: #2ecc71; font-weight: bold; font-size: 1.15em;"}
+
+Para **competir**: el plantel es el activo con el que se disputa el campeonato, y el mercado de pases es el modo de recomponerlo.
+
+El rendimiento deportivo, a su vez, sostiene los **ingresos** del club, directos e indirectos.
+:::
+
+::::
+
+## Conclusiones: Respuestas a las Preguntas {.top}
+
+::: {style="margin-top: 6px;"}
+<div style="border-left: 5px solid #e74c3c; padding-left: 15px; font-size: 0.8em;">
+¿Cuáles son los atributos que determinan los precios de transferencia? ¿Cuál es su incidencia?
+</div>
+:::
+
+:::: {.fragment style="margin-top: 18px; margin-left: 20px; font-size: 0.66em; line-height: 1.5;"}
+
+::: {style="border-left: 3px solid #9b59b6; padding-left: 16px; margin-bottom: 14px;"}
+**Jugador** · Edad, **−10%** por año, el atributo más determinante · Mediocampistas **+27%** · Delanteros **+29%**, sobre los defensores
+:::
+
+::: {style="border-left: 3px solid #3498db; padding-left: 16px; margin-bottom: 14px;"}
+**Rendimiento** · Partidos jugados **+1.2%** · Goles **+2.8%** · El resto de las estadísticas, sin evidencia suficiente
+:::
+
+::: {style="border-left: 3px solid #f39c12; padding-left: 16px;"}
+**Contrato** · Cada ventana de transferencia restante, **+14%**
+:::
+
+::::
+
+::: {style="margin-top: 34px;"}
+<div style="border-left: 5px solid #e74c3c; padding-left: 15px; font-size: 0.8em;">
+¿Tienen los clubes poder de mercado y/o poder de negociación?
+</div>
+:::
+
+:::: {.fragment style="margin-top: 18px; margin-left: 20px; font-size: 0.66em; line-height: 1.5;"}
+
+::: {style="border-left: 3px solid #2ecc71; padding-left: 16px;"}
+Sí, y de manera **asimétrica**. Los **vendedores** tienen poder positivo: consiguen mejores precios cuanto más valen. Los **compradores**, negativo: pagan más cuanto más grandes son, en lugar de lograr mejores precios.
 :::
 
 ::::
