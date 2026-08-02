@@ -66,7 +66,7 @@
 }
 
 .reveal .slides section:not(#title-slide) {
-  background: rgba(0, 0, 0, 0.7) !important;
+  background: rgba(0, 0, 0, 0.85) !important;
   backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(255,255,255,0.15) !important;
   border-radius: 15px !important;

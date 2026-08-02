@@ -16,7 +16,7 @@ format:
       data-background-opacity: "0.6"
     parallax-background-image: "cesped_river_hoy.jpg"
     parallax-background-size: "2400px 900px"
-    parallax-background-horizontal: 30
+    parallax-background-horizontal: 27.3
     parallax-background-vertical: 0
     # parallax-background-position: "top"
     chalkboard: true # Incompatible con embed-resources
@@ -2667,17 +2667,15 @@ El poder del vendedor se reduce a un tercio. Una explicación posible: las salid
 
 ::::
 
-## Conclusiones: Por Qué y Para Qué se Comercian Jugadores {.top}
+## Conclusiones: Por Qué y Para Qué se Comercian Jugadores
 
-::: {style="margin-top: 16px;"}
 <div style="border-left: 5px solid #e74c3c; padding-left: 15px; font-size: 0.8em;">
 ¿Por qué y para qué se comercian jugadores de fútbol?
 </div>
-:::
 
-:::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 44px; font-size: 0.68em; line-height: 1.55;"}
+:::: {style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 46px; align-content: center; font-size: 0.72em; line-height: 1.6;"}
 
-::: {.fragment style="border-left: 4px solid #3498db; padding-left: 20px;"}
+::: {.fragment style="border-left: 4px solid #3498db; padding-left: 22px;"}
 [Por qué]{style="color: #3498db; font-weight: bold; font-size: 1.15em;"}
 
 Los clubes tienen **derechos de exclusividad** sobre el uso de la fuerza de trabajo del futbolista.
@@ -2685,50 +2683,207 @@ Los clubes tienen **derechos de exclusividad** sobre el uso de la fuerza de trab
 Ese derecho existe para **proteger el patrimonio** de los clubes y **sostener el interés del público**, estabilizando los planteles.
 :::
 
-::: {.fragment style="border-left: 4px solid #2ecc71; padding-left: 20px;"}
+::: {.fragment style="border-left: 4px solid #2ecc71; padding-left: 22px;"}
 [Para qué]{style="color: #2ecc71; font-weight: bold; font-size: 1.15em;"}
 
 Para **competir**: el plantel es el activo con el que se disputa el campeonato, y el mercado de pases es el modo de recomponerlo.
 
-El rendimiento deportivo, a su vez, sostiene los **ingresos** del club, directos e indirectos.
+Lo que el club maximiza es **utilidad**, no ingresos: éxito deportivo, asistencia y salud de la liga, con el beneficio económico como restricción (Sloane, 1971).
 :::
 
 ::::
 
-## Conclusiones: Respuestas a las Preguntas {.top}
+## Conclusiones: Los Atributos del Precio
 
-::: {style="margin-top: 6px;"}
 <div style="border-left: 5px solid #e74c3c; padding-left: 15px; font-size: 0.8em;">
 ¿Cuáles son los atributos que determinan los precios de transferencia? ¿Cuál es su incidencia?
 </div>
+
+:::: {.fragment style="flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-content: space-evenly; font-size: 0.68em; line-height: 1.45;"}
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
+[Edad]{style="color: #9b59b6; font-weight: bold;"}
+
+El atributo personal más determinante. La relación estimada es lineal decreciente, sin el tramo creciente que supone la forma cuadrática.
 :::
 
-:::: {.fragment style="margin-top: 18px; margin-left: 20px; font-size: 0.66em; line-height: 1.5;"}
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
+[Posición]{style="color: #9b59b6; font-weight: bold;"}
 
-::: {style="border-left: 3px solid #9b59b6; padding-left: 16px; margin-bottom: 14px;"}
-**Jugador** · Edad, **−10%** por año, el atributo más determinante · Mediocampistas **+27%** · Delanteros **+29%**, sobre los defensores
+Resulta significativa en mediocampistas y delanteros, tomando a los defensores como categoría base.
 :::
 
-::: {style="border-left: 3px solid #3498db; padding-left: 16px; margin-bottom: 14px;"}
-**Rendimiento** · Partidos jugados **+1.2%** · Goles **+2.8%** · El resto de las estadísticas, sin evidencia suficiente
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
+[Porteros]{style="color: #9b59b6; font-weight: bold;"}
+
+La escasez de observaciones y lo diferente de su rol vuelven inestable el coeficiente. Amerita evaluar su exclusión.
 :::
 
-::: {style="border-left: 3px solid #f39c12; padding-left: 16px;"}
-**Contrato** · Cada ventana de transferencia restante, **+14%**
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
+[Nacionalidad]{style="color: #9b59b6; font-weight: bold;"}
+
+El pasaporte comunitario pierde peso al incorporar los identificadores de los clubes. Opera como señal de acceso al fútbol europeo.
+:::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #3498db;"}
+[Rendimiento]{style="color: #3498db; font-weight: bold;"}
+
+Solo las estadísticas de mayor reconocimiento, partidos jugados y goles, muestran influencia. El resto no reúne evidencia suficiente.
+:::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #f39c12;"}
+[Contrato]{style="color: #f39c12; font-weight: bold;"}
+
+Las ventanas de transferencia restantes conservan su efecto en las tres estimaciones. La proximidad del vencimiento reduce el precio.
 :::
 
 ::::
 
-::: {style="margin-top: 34px;"}
+## Conclusiones: La Edad Frente a la Literatura Internacional
+
+::: {style="font-size: 0.68em; color: #bdc3c7; line-height: 1.5;"}
+Franceschi (2024) revisa sistemáticamente **29 artículos** con **111 especificaciones** sobre valoración de futbolistas. Predominan las ligas europeas —la Premier League es la más estudiada— con solo dos casos fuera de Europa. En las **82** especificaciones que incorporan la edad, la forma funcional se distribuye así:
+:::
+
+:::: {style="font-size: 0.66em; line-height: 1.5;"}
+
+::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 54%, transparent 54%); padding: 9px 16px; margin-bottom: 8px;"}
+Forma de U invertida · **44** especificaciones (54%)
+:::
+
+::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 28%, transparent 28%); padding: 9px 16px; margin-bottom: 8px;"}
+Sin relación significativa · **23** (28%)
+:::
+
+::: {.fragment style="background: linear-gradient(to right, rgba(155,89,182,0.55) 13%, transparent 13%); padding: 9px 16px; margin-bottom: 8px; border-left: 3px solid #9b59b6;"}
+Relación decreciente · **11** (13%) — [la forma hallada en este trabajo]{style="color: #9b59b6;"}
+:::
+
+::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 4%, transparent 4%); padding: 9px 16px;"}
+Forma de U · **3** (4%)
+:::
+
+::::
+
+::: {.fragment style="font-size: 0.68em; line-height: 1.5; margin-top: 6px;"}
+El resultado se aparta de la forma dominante, pero corresponde al segundo patrón más frecuente entre los que alcanzan significatividad. Una explicación posible es que los clubes argentinos no valoren la experiencia tanto como el potencial, o que exista discrepancia con los equipos europeos sobre cuándo concluye el período de formación del jugador, particularmente al momento de vender.
+:::
+
+## Conclusiones: El Poder de Negociación
+
 <div style="border-left: 5px solid #e74c3c; padding-left: 15px; font-size: 0.8em;">
 ¿Tienen los clubes poder de mercado y/o poder de negociación?
 </div>
+
+::: {style="font-size: 0.72em; margin-left: 22px;"}
+Lo tienen, y de manera asimétrica. Como sostienen Carmichael y Thomas (1993), no resulta realista tratar a compradores y vendedores de forma simétrica al negociar.
 :::
 
-:::: {.fragment style="margin-top: 18px; margin-left: 20px; font-size: 0.66em; line-height: 1.5;"}
+:::::: {style="flex: 1; display: grid; grid-template-columns: 72% 28%; gap: 30px; align-items: center; align-content: center; margin-left: 22px;"}
 
-::: {style="border-left: 3px solid #2ecc71; padding-left: 16px;"}
-Sí, y de manera **asimétrica**. Los **vendedores** tienen poder positivo: consiguen mejores precios cuanto más valen. Los **compradores**, negativo: pagan más cuanto más grandes son, en lugar de lograr mejores precios.
+::::: {.fragment style="font-size: 0.8em; line-height: 1.45;"}
+
+:::: {style="border-left: 3px solid #2ecc71; padding-left: 18px; margin-bottom: 16px;"}
+**Vendedores · poder positivo** · Obtienen mejores precios cuanto mayor es el valor de su plantel, en tanto poseen el rendimiento que la competencia deportiva demanda.
+::::
+
+:::: {style="border-left: 3px solid #e74c3c; padding-left: 18px;"}
+**Compradores · poder negativo** · Pagan más cuanto mayores son, en lugar de obtener mejores precios. Cuanto más relevante es su rol en la competencia, mayor resulta su erogación.
+::::
+
+:::::
+
+::::: {}
+
+```{=html}
+<div style="display: flex; gap: 26px; justify-content: center; align-items: stretch; height: 250px;">
+  <div style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 76px;">
+    <span style="font-size: 0.5em; color: #e74c3c; margin-bottom: 6px;">&uarr; 0.54</span>
+    <div style="width: 56px; height: 152px; background: #e74c3c; border-radius: 4px 4px 0 0;"></div>
+    <span style="font-size: 0.42em; margin-top: 10px; color: #bdc3c7;">Comprador</span>
+  </div>
+  <div style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 76px;">
+    <span style="font-size: 0.5em; color: #2ecc71; margin-bottom: 6px;">&uarr; 0.31</span>
+    <div style="width: 56px; height: 87px; background: #2ecc71; border-radius: 4px 4px 0 0;"></div>
+    <span style="font-size: 0.42em; margin-top: 10px; color: #bdc3c7;">Vendedor</span>
+  </div>
+</div>
+<div style="font-size: 0.4em; color: #bdc3c7; text-align: center; margin-top: 14px; line-height: 1.4;">
+Elasticidad precio&ndash;valor del plantel.<br>Ambas positivas: los dos empujan el precio hacia arriba.
+</div>
+```
+
+:::::
+
+::::::
+
+## Conclusiones: Limitaciones
+
+:::: {style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-content: space-evenly; font-size: 0.72em; line-height: 1.45;"}
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #e74c3c;"}
+[Variables contractuales ausentes]{style="color: #f1948a; font-weight: bold;"}
+
+La teoría destaca el salario y la cláusula de rescisión. Esa información es inaccesible salvo en Alemania, y su apertura depende de regulaciones: clubes y jugadores tienen incentivos a reservarla.
+:::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #e74c3c;"}
+[Medición del rendimiento]{style="color: #f1948a; font-weight: bold;"}
+
+Las estadísticas disponibles no aíslan el aporte propio de cada posición. El caso de los porteros es el más evidente.
+:::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #e74c3c;"}
+[Fuente de datos]{style="color: #f1948a; font-weight: bold;"}
+
+La fiabilidad de los precios de *transfermarkt* es menor en Sudamérica. Las transferencias sin precio se tratan como ceros reales, con posible error de clasificación.
+:::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #e74c3c;"}
+[Alcance de la muestra ampliada]{style="color: #f1948a; font-weight: bold;"}
+
+Incorporar las transferencias sin precio mejora la estimación de atributos, rendimiento y contrato, pero no capta el poder de negociación.
 :::
 
 ::::
+
+## Conclusiones: Agenda Futura
+
+:::: {style="flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-content: space-evenly; font-size: 0.72em; line-height: 1.45;"}
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #2ecc71;"}
+[Ampliar el rendimiento observado]{style="color: #2ecc71; font-weight: bold;"}
+
+Estadísticas más específicas y por competencia, con métodos que penalicen menos la inclusión de variables: Lasso, Ridge o componentes principales.
+:::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #2ecc71;"}
+[Sumar determinantes no observados]{style="color: #2ecc71; font-weight: bold;"}
+
+La propensión a las lesiones, la notoriedad del jugador y las convocatorias a la selección nacional.
+:::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #2ecc71;"}
+[Elegir la muestra según el objeto]{style="color: #2ecc71; font-weight: bold;"}
+
+Para atributos y desempeño, incorporar las observaciones sin precio. Para el poder de negociación, restringirse a las transferencias con precio positivo.
+:::
+
+::::
+
+## {background-image="fondo.png" background-size="cover" background-opacity="0.6"}
+
+::: {style="text-align: center; margin-top: 60px;"}
+::: {style="font-size: 1.6em; font-weight: bold;"}
+Gracias
+:::
+
+::: {style="font-size: 0.7em; color: #bdc3c7; margin-top: 40px; line-height: 1.6;"}
+**La Otra Competencia**<br>
+Análisis Económico del Mercado de Pases del Fútbol Argentino, 2021-2024
+:::
+
+::: {style="font-size: 0.6em; color: #bdc3c7; margin-top: 50px;"}
+Joel G. Vallaris · Director: Martin Trombetta
+:::
+:::

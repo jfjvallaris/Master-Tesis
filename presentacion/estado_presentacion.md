@@ -1,6 +1,6 @@
 # Estado de la presentación (Presentacion.qmd)
 
-Última actualización: 2026-07-27
+Última actualización: 2026-07-29
 
 ## Cómo usar este archivo
 Al empezar una conversación nueva, subir este archivo + `Presentacion.qmd` +
@@ -30,12 +30,13 @@ copiando solo el fragmento de código relevante.
 | C2 | Dumbbell MCO Truncado / Censurado / Tobit | 🔄 En curso (v1) | Slide "Resultados: El Efecto de Corregir la Censura". Tres puntos por variable sobre una línea de rango. **Colores:** dos grises para las dos variantes sin corrección (`COLOR_MCO` truncado, `#bdc3c7` censurado) y **rojo `COLOR_TOBIT` para el corregido**, siguiendo la semántica gris=sesgado / rojo=corregido que ya fija la paleta del chunk `setup`. El Tobit se dibuja último para quedar encima. `datos_tobit['Variable']` reescrito con los nombres crudos del resto del deck. **Sin líneas de rango y con `autorange=True`**, a propósito: así, al ocultar "MCO Censurado" desde la leyenda, el eje reescala y el gráfico funciona como zoom sobre truncado vs. Tobit (el rango pasa de [−0.657, 2.442] a [−0.181, 0.660]). Con líneas de rango eso no funcionaba: la línea se dibuja entre el mínimo y el máximo de las tres series y no responde al toggle, así que quedaba estirada apuntando a un punto oculto |
 | C3 | Tabla 12 + comparación Probit/Tobit | 🔄 En curso (v1) | **Dos slides.** (1) *"¿Es Adecuado el Tobit?"* = Tabla 12 con `.tabla-angosta`, columnas Tobit/σ̂, Probit y Diferencia (esta última resaltada por `colgroup`); en negrita las dos discrepancias grandes, `delantero` (−0.207) y `lvalor_plantel_v` (−0.149). Bajada con el chequeo informal de Wooldridge (2010) y σ̂=√2.594≈1.610. **Fusionadas en una sola** (v2): tabla a la izquierda (61%, clase `.tabla-izq` que la alinea a la izquierda y la baja a 0.62em) y a la derecha tres bloques **sin título** —`border-left` gris neutro, no callouts de Quarto, que fuerzan un título— centrados en la lectura del probit: `lvalor_plantel_v` explica el precio pero no la probabilidad; `temporada` tampoco, porque la inflación opera siempre; el resto explica las dos cosas. Verificado: la columna Diferencia cierra aritméticamente en las 10 filas. **Descartados de acá:** el callout "cada modelo estima otra cosa" (gustó pero no va en este lugar — sin destino asignado todavía) y la explicación conjetural sobre las salidas libres, que sigue en `3.Resultados.md:510-524` por si el jurado pregunta |
 | C4 | Síntesis de resultados | 🔄 En curso (v1) | Slide "Resultados: Síntesis". Grilla 2×2, un bloque por grupo de variables con la paleta del deck, cada uno con el efecto en el Modelo 3 y en el Tobit. Números verificados contra `3.Resultados.md`: edad −10%/−18%, pj +1.2%/+2%, goles +2.8%/+7%, ventanas ≈14% estable, temporada ≈16%, elasticidades comprador 0.54→0.66 y vendedor 0.31→0.11. **No responde las preguntas de investigación**: eso es D1, para no duplicar |
-| D1 | Conclusiones: respuestas a preguntas de investigación | ⬜ Pendiente | Retomar diseño de slide "Problema de investigación" |
-| D2 | Conclusiones: poder de negociación asimétrico | ⬜ Pendiente | — |
-| D3 | Conclusiones: edad (lineal vs. cuadrática) | ⬜ Pendiente | — |
-| D4 | Conclusiones: limitaciones | ⬜ Pendiente | — |
-| D5 | Conclusiones: agenda futura | ⬜ Pendiente | — |
-| D6 | Slide de cierre | ⬜ Pendiente | — |
+| D1 | Conclusiones: por qué y para qué se comercian | ✅ Listo | Pregunta en el recuadro rojo de la apertura + 2 columnas: "Por qué" (derechos de exclusividad, protección del patrimonio, estabilización de planteles) y "Para qué" (competir; el club maximiza **utilidad** en el sentido de Sloane 1971, con el beneficio como restricción, no ingresos) |
+| D2 | Conclusiones: los atributos del precio | ✅ Listo | 5 bloques interpretativos, **sin repetir coeficientes**: edad (lineal decreciente), posición, nacionalidad (el pasaporte comunitario pierde peso al entrar los identificadores de clubes; en modelos acotados opera como señal de acceso al fútbol europeo), rendimiento y contrato |
+| D3 | Conclusiones: la edad frente a la literatura internacional | ✅ Listo | Franceschi (2024): revisión sistemática de 29 artículos / 111 especificaciones, predominio europeo con 2 casos fuera. De las 82 con edad: U invertida 44 (54%), sin significancia 23 (28%), **decreciente 11 (13%) = este trabajo**, U 3 (4%). Barras proporcionales con `linear-gradient`. **Franceschi no está citado en la tesis** |
+| D4 | Conclusiones: poder de negociación | ✅ Listo | Vendedores poder positivo / compradores negativo, en 2 renglones. Columna derecha al 28% con gráfico de barras (0.54 vs 0.31), en bloque `{=html}`; el pie remarca que **ambas elasticidades son positivas**, o sea que los dos empujan el precio hacia arriba |
+| D5 | Conclusiones: limitaciones | ✅ Listo | Variables contractuales ausentes (salario y cláusula; solo Alemania), medición del rendimiento por posición, fiabilidad de transfermarkt en Sudamérica y ceros como dato real, alcance de la muestra ampliada |
+| D6 | Conclusiones: agenda futura | ✅ Listo | Ampliar rendimiento observado (Lasso/Ridge/componentes principales), sumar lesiones/notoriedad/selección, y elegir la muestra según el objeto de estudio |
+| D7 | Slide de cierre | ✅ Listo | Fondo `fondo.png`, "Gracias" + título y autoría |
 
 Leyenda: ⬜ Pendiente | 🔄 En curso | ✅ Listo
 
@@ -107,6 +108,16 @@ excel sirve para gráficos nuevos que no reporten conteos muestrales.
 ## Notas del expositor
 **Las escribe el autor** (decidido el 2026-07-28). No agregar bloques
 `::: {.notes}` a las slides nuevas salvo pedido explícito.
+
+## Ideas anotadas
+- **Slide de discusión con la literatura internacional.** Hoy existe
+  "Conclusiones: La Edad Frente a la Literatura Europea", que usa el
+  meta-análisis de Franceschi (2024). La idea es una slide más amplia que
+  discuta **todos** los resultados frente a la literatura, no solo la
+  edad. No borrar la de la edad: se conserva.
+- **Franceschi (2024) no está citado en la tesis.** Si se usa en la
+  defensa, tener la referencia completa a mano y evaluar incorporarlo al
+  capítulo.
 
 ## Ideas anotadas (evaluar al cerrar el grupo B)
 - **Slide de principales resultados.** Idea del autor: una slide que
