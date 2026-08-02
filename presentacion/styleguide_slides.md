@@ -130,6 +130,35 @@ que cualquier cambio de altura del contenido mueve todo el slide.
   descartó por este motivo en "Estrategia de Estimación" (2026-07-27),
   prefiriendo slides separados por tema.
 
+## Dimensiones de color (no mezclarlas)
+El deck tiene dos clasificaciones que se arrastran a lo largo de toda la
+exposición, y no pueden compartir tono:
+- **Grupos de variables** → el color: violeta jugador, azul rendimiento,
+  naranja contrato y tiempo, verde negociación.
+- **Observaciones con / sin precio** → **el relleno, no el color**: punto
+  o barra sólida = con precio, hueco = sin precio, rayado = censurado.
+  Se codifica así porque es un binario, y porque de ese modo el verde y
+  el violeta quedan libres para los grupos de variables.
+
+Los colores de **estimadores** (gris MCO, rojo Tobit) son locales a los
+dos gráficos de comparación y no constituyen una tercera dimensión.
+
+## Semántica de los callouts
+El tipo de callout **significa algo**, no se elige por variedad visual:
+- `note` (azul) → **neutral**. Exposición, definiciones, descripciones.
+  Es el default: si el bloque no juzga nada, va azul.
+- `tip` (verde) → lo que sube, lo bueno, lo que está a favor, lo que se
+  incluye o se corrige.
+- `important` (rojo) → lo que baja, lo malo, lo que está en contra, lo
+  que se excluye.
+- `warning` (amarillo) → el intermedio de esas escalas, y las
+  advertencias o tensiones no resueltas.
+
+Error a evitar: en "Truncado, Censurado y Tobit" los colores estaban
+invertidos (verde al truncado, rojo al Tobit), lo que sugería que el
+modelo preferido era el malo. Corregido a rojo → amarillo → verde según
+cuánto corrige cada uno la censura.
+
 ## Callouts (para agrupar argumentos/citas de autores)
 - `.callout-note appearance="minimal" icon=false` → definiciones o
   preguntas centrales.

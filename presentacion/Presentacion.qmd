@@ -1321,7 +1321,7 @@ $$
 ::: {.txt-ref}
 **Muestra Final**<br><br>
 
-* Se recopilaron 769 transferencias con información relevante completa:<br> <span style="color:#2ecc71">**Con Precio (388)**</span> y <span style="color:#9b59b6">**Sin Precio (381)**</span>.
+* Se recopilaron 769 transferencias con información relevante completa:<br> <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#fff;vertical-align:middle;"></span> **Con Precio (388)** y <span style="display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-sizing:border-box;vertical-align:middle;"></span> **Sin Precio (381)**.
 
 * La incorporación de las transferencias sin precio a la muestra se modela usando *Tobit*
 :::
@@ -1843,7 +1843,9 @@ rest_ventana_transfer · temporada · [verano]{.fragment .strike .semi-fade-out 
 [$B_{it}$ · Negociación]{style="color: #2ecc71; font-weight: bold;"}
 :::
 ::: {}
-[[lvalor_plantel_c]{.fragment .strike .semi-fade-out fragment-index=4}]{.fragment .fade-in fragment-index=2} · [[lvalor_plantel_v]{.fragment .strike .semi-fade-out fragment-index=4}]{.fragment .fade-in fragment-index=2} · [Ef. fijos comprador · Ef. fijos vendedor]{.fragment .fade-in fragment-index=4}
+[[lvalor_plantel_c]{.fragment .strike .semi-fade-out fragment-index=4}]{.fragment .fade-in fragment-index=2} · [[lvalor_plantel_v]{.fragment .strike .semi-fade-out fragment-index=4}]{.fragment .fade-in fragment-index=2} · \br
+
+[Ef. fijos comprador · Ef. fijos vendedor]{.fragment .fade-in fragment-index=4}
 :::
 :::
 
@@ -1851,12 +1853,19 @@ rest_ventana_transfer · temporada · [verano]{.fragment .strike .semi-fade-out 
 
 :::
 
-::: {style="height: 250px; margin-top: 16px;"}
+::: {style="height: 320px; margin-top: 16px;"}
 ::: {.r-stack}
 
 ::: {.fragment .fade-in-then-out fragment-index=1 style="width: 100%;"}
 ::: {.callout-note appearance="minimal" icon=false title="Modelo 1 — Línea base"}
 ::: {style="font-size: 0.8em; line-height: 1.45;"}
+- Atributos del jugador y de la operación: $J_{it}$, $R_{it-1}$, $L_{it}$, $S_{it}$
+- Sin características de los clubes ($B_{it}=0$)
+- Edad con término cuadrático, como propone la literatura
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
 El modelo hedónico más simple: el precio se explica únicamente por los atributos observables de la operación, con $B_{it}=0$ — todavía no intervienen las características de los clubes. Entran las **características personales** del jugador ($J_{it}$: edad, altura, nacionalidad y posición), su **rendimiento en la temporada previa** ($R_{it-1}$), las **ventanas de contrato restantes** ($L_{it}$) y el **momento de la operación** ($S_{it}$: temporada y estación del mercado).
 
 La edad se incorpora con término cuadrático, como propone la literatura (Carmichael y Thomas, 1993): la experiencia suma valor hasta un punto a partir del cual se impone la pérdida de potencial.
@@ -1867,6 +1876,14 @@ La edad se incorpora con término cuadrático, como propone la literatura (Carmi
 ::: {.fragment .fade-in-then-out fragment-index=2 style="width: 100%;"}
 ::: {.callout-note appearance="minimal" icon=false title="Modelo 2 — Incorporación del poder de negociación"}
 ::: {style="font-size: 0.8em; line-height: 1.45;"}
+- Entra $B_{it}$: valor de plantel comprador y vendedor
+- Especificación log-log $
+ightarrow$ elasticidades
+- Salen altura y extranjero
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
 Se suman las características generales de los clubes: el logaritmo del **valor de mercado del plantel** comprador y vendedor de la temporada anterior, como *proxy* del poder de negociación. Al ser una especificación log-log, $\lambda_v$ y $\lambda_c$ se leen como **elasticidades precio–valoración del plantel**.
 
 Se aprovecha para depurar las características personales que, como en buena parte de la literatura hedónica, no resultan significativas: la **altura** y la condición de **extranjero**.
@@ -1875,8 +1892,15 @@ Se aprovecha para depurar las características personales que, como en buena par
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=3 style="width: 100%;"}
-::: {.callout-tip appearance="minimal" icon=false title="Modelo 3 — Depuración (modelo preferido)"}
+::: {.callout-note appearance="minimal" icon=false title="Modelo 3 — Depuración (modelo preferido)"}
 ::: {style="font-size: 0.8em; line-height: 1.45;"}
+- Depuración del rendimiento no significativo
+- Salen también edad², comunitario y verano
+- Modelo preferido
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
 Segunda depuración, ahora sobre el rendimiento: salen las estadísticas no significativas o con signo opuesto al esperado sin interpretación teórica posible (**asistencias, amonestaciones, expulsiones** y las específicas de arqueros, **goles concedidos** y **vallas invictas**). También se descartan el **término cuadrático de la edad** —que ya había perdido significancia en el Modelo 2—, **comunitario** y **verano**.
 
 Es el modelo más parsimonioso sin censura y el que se prefiere para interpretar los resultados.
@@ -1885,8 +1909,15 @@ Es el modelo más parsimonioso sin censura y el que se prefiere para interpretar
 :::
 
 ::: {.fragment .fade-in fragment-index=4 style="width: 100%;"}
-::: {.callout-important appearance="minimal" icon=false title="Modelo 4 — Saturación con efectos fijos"}
+::: {.callout-note appearance="minimal" icon=false title="Modelo 4 — Saturación con efectos fijos"}
 ::: {style="font-size: 0.8em; line-height: 1.45;"}
+- $B_{it}$ $\rightarrow$ efectos fijos por club
+- Modelo saturado
+- Testea heterogeneidad no observable
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.7em;"}
 En lugar de representar a los clubes mediante el valor de sus planteles, se los incorpora con **efectos fijos de comprador y de vendedor**: una identidad propia para cada club en lugar de una variable continua.
 
 El objetivo es saturar el modelo y detectar si existen factores no observables de los equipos que alteren sustancialmente los coeficientes estimados en el Modelo 3.
@@ -1906,7 +1937,8 @@ El objetivo es saturar el modelo y detectar si existen factores no observables d
 ![](image5.png){width="100%"}
 :::
 ::: {style="font-size: 0.42em; color: #bdc3c7; text-align: center; margin-top: 8px;"}
-Figura 5a — Histograma de $\ln(\text{precio}+1)$. Transferencias con contrato verificado, 2021-2024 <br>
+Figura 5a — Histograma de $\ln(\text{precio}+1)$. <br>
+Transferencias con contrato verificado, 2021-2024 <br>
 ($n=1.116$: 663 sin precio, 453 con precio).
 :::
 
@@ -1923,7 +1955,9 @@ $$\ln\left( y_{i} \right) = \left\{ \begin{matrix}
 ::: {.fragment style="margin-bottom: 26px;"}
 ::: {.callout-note appearance="minimal" icon=false title="El logaritmo no admite el cero"}
 ::: {style="font-size: 0.9em; line-height: 1.4;"}
-Se modela $\ln(P+1)$: inocuo para las observaciones con precio y permite incorporar los ceros.
+Se modela $\ln(P+1)$<br>
+
+Inocuo para las observaciones con precio y permite incorporar los ceros.
 :::
 :::
 ::: {.notes}
@@ -1936,9 +1970,11 @@ Se modela $\ln(P+1)$: inocuo para las observaciones con precio y permite incorpo
 :::
 
 ::: {.fragment style="margin-bottom: 26px;"}
-::: {.callout-important appearance="minimal" icon=false title="La censura no ocurre en cero"}
+::: {.callout-note appearance="minimal" icon=false title="La censura no ocurre en cero"}
 ::: {style="font-size: 0.9em; line-height: 1.4;"}
-La brecha en los datos ubica la cota en un valor positivo por encima de cero. Para estimar alcanza con conocer dónde está esa cota.
+La brecha en los datos ubica la cota en un valor positivo por encima de cero. <br>
+
+Para estimar alcanza con conocer dónde está esa cota.
 :::
 :::
 ::: {.notes}
@@ -1953,9 +1989,11 @@ La brecha en los datos ubica la cota en un valor positivo por encima de cero. Pa
 :::
 
 ::: {.fragment}
-::: {.callout-tip appearance="minimal" icon=false title="Dónde ubicar el umbral (Carson y Sun, 2007)"}
+::: {.callout-note appearance="minimal" icon=false title="Dónde ubicar el umbral (Carson y Sun, 2007)"}
 ::: {style="font-size: 0.9em; line-height: 1.4;"}
-Un umbral mal ubicado sesga más que la no normalidad o la heterocedasticidad. Se adopta $L=\ln(45.000)$, el número redondo más cercano al mínimo observado (45.249).
+Un umbral mal ubicado sesga más que la no normalidad o la heterocedasticidad. <br>
+
+Se adopta $L=\ln(45.000)$, el número redondo más cercano al mínimo observado (45.249).
 :::
 :::
 ::: {.notes}
@@ -1991,20 +2029,24 @@ Las tres estimaciones mantienen la especificación del **Modelo 3** y se diferen
 
 ::: {.fragment}
 ::: {style="display: flex; height: 30px; border-radius: 6px; font-size: 0.52em; font-weight: bold; margin-bottom: 11px;"}
-::: {style="flex: 388; background: #2ecc71; color: #111; display: flex; align-items: center; justify-content: center; border-radius: 5px 0 0 5px;"}
+::: {style="flex: 388; background: #ecf0f1; color: #111; display: flex; align-items: center; justify-content: center; border-radius: 5px 0 0 5px;"}
 388 con precio
 :::
-::: {style="flex: 381; border: 2px dashed #9b59b6; color: #9b59b6; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 0 5px 5px 0;"}
+::: {style="flex: 381; border: 2px dashed #ecf0f1; color: #ecf0f1; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 0 5px 5px 0;"}
 381 excluidas
 :::
 :::
-::: {.callout-tip appearance="minimal" icon=false title="MCO Truncado"}
-::: {style="font-size: 0.95em; line-height: 1.45;"}
-Se estima solo con las observaciones de precio positivo. Equivale a un modelo truncado: es válido si el interés se limita a ese subgrupo, pero queda expuesto a **sesgo de selección**.
+::: {.callout-note appearance="minimal" icon=false title="MCO Truncado"}
+::: {style="font-size: 0.88em; line-height: 1.4;"}
+- Observaciones con precio positivo
+- Válido en el grupo de interés
+- Riesgo de sesgo de selección
 :::
 :::
 ::: {.notes}
 ::: {style="font-size: 0.7em;"}
+Se estima solo con las observaciones de precio positivo. Equivale a un modelo truncado: es válido si el interés se limita a ese subgrupo, pero queda expuesto a **sesgo de selección**.
+
 **MCO Truncado** — es el Modelo 3 de la Tabla 9.
 
 - Eliminar los y = 0 equivale a estimar un modelo truncado.
@@ -2016,20 +2058,24 @@ Se estima solo con las observaciones de precio positivo. Equivale a un modelo tr
 
 ::: {.fragment}
 ::: {style="display: flex; height: 30px; border-radius: 6px; overflow: hidden; font-size: 0.52em; font-weight: bold; margin-bottom: 11px;"}
-::: {style="flex: 388; background: #2ecc71; color: #111; display: flex; align-items: center; justify-content: center;"}
+::: {style="flex: 388; background: #ecf0f1; color: #111; display: flex; align-items: center; justify-content: center;"}
 388 con precio
 :::
-::: {style="flex: 381; background: #9b59b6; color: #fff; display: flex; align-items: center; justify-content: center;"}
+::: {style="flex: 381; background: #7f8c8d; color: #fff; display: flex; align-items: center; justify-content: center;"}
 381 como precio cero
 :::
 :::
-::: {.callout-warning appearance="minimal" icon=false title="MCO Censurado"}
-::: {style="font-size: 0.95em; line-height: 1.45;"}
-Incorpora las transferencias sin precio **sin corrección alguna**: asume que un valor nulo es un resultado válido y observable, un dato más de la negociación.
+::: {.callout-note appearance="minimal" icon=false title="MCO Censurado"}
+::: {style="font-size: 0.88em; line-height: 1.4;"}
+- Suma las transferencias sin precio
+- Sin corrección: el cero es un dato más
+- Ignora la probabilidad de observar precio
 :::
 :::
 ::: {.notes}
 ::: {style="font-size: 0.7em;"}
+Incorpora las transferencias sin precio **sin corrección alguna**: asume que un valor nulo es un resultado válido y observable, un dato más de la negociación.
+
 **MCO Censurado**
 
 - MCO con los positivos **y** los ceros con contrato vigente.
@@ -2041,20 +2087,24 @@ Incorpora las transferencias sin precio **sin corrección alguna**: asume que un
 
 ::: {.fragment}
 ::: {style="display: flex; height: 30px; border-radius: 6px; overflow: hidden; font-size: 0.52em; font-weight: bold; margin-bottom: 11px;"}
-::: {style="flex: 388; background: #2ecc71; color: #111; display: flex; align-items: center; justify-content: center;"}
+::: {style="flex: 388; background: #ecf0f1; color: #111; display: flex; align-items: center; justify-content: center;"}
 388 observadas
 :::
-::: {style="flex: 381; background: repeating-linear-gradient(45deg, #9b59b6, #9b59b6 5px, #6b3f80 5px, #6b3f80 10px); color: #fff; display: flex; align-items: center; justify-content: center;"}
+::: {style="flex: 381; background: repeating-linear-gradient(45deg, #7f8c8d, #7f8c8d 5px, #4d5656 5px, #4d5656 10px); color: #fff; display: flex; align-items: center; justify-content: center;"}
 381 censuradas en $L$
 :::
 :::
-::: {.callout-important appearance="minimal" icon=false title="Tobit"}
-::: {style="font-size: 0.95em; line-height: 1.45;"}
-Trata la censura como un **fenómeno estructural del mercado** y ajusta la estimación por la probabilidad de observar precio.
+::: {.callout-note appearance="minimal" icon=false title="Tobit"}
+::: {style="font-size: 0.88em; line-height: 1.4;"}
+- Suma las transferencias sin precio
+- Corrige por la probabilidad de observarlo
+- La censura, fenómeno estructural del mercado
 :::
 :::
 ::: {.notes}
 ::: {style="font-size: 0.7em;"}
+Trata la censura como un **fenómeno estructural del mercado** y ajusta la estimación por la probabilidad de observar precio.
+
 **Tobit** — se aplica solo sobre el Modelo 3.
 
 - Ajusta por que el precio solo se observa por encima del umbral.
@@ -2071,15 +2121,19 @@ Trata la censura como un **fenómeno estructural del mercado** y ajusta la estim
 ::::
 
 ::: {.fragment}
-::: {style="max-width: 1250px; margin: 18px auto 0 auto;"}
-::: {.callout-note appearance="minimal" icon=false title="Una advertencia para comparar los coeficientes"}
-::: {style="font-size: 0.95em; line-height: 1.45;"}
-Los coeficientes de pendiente de MCO estiman directamente el cambio marginal, mientras que los del Tobit requieren un factor de ajuste. Las tablas de resultados reportan **efectos parciales**, comparables entre ambas estimaciones.
+::: {style="max-width: 1400px; margin: -8px auto 0 auto;"}
+::: {.callout-important appearance="minimal" icon=false title="Advertencias para comparar los coeficientes"}
+::: {style="font-size: 0.85em; line-height: 1.4; column-count: 2; column-gap: 48px;"}
+- MCO: el coeficiente ya es el efecto marginal
+- Tobit: requiere un factor de ajuste
+- Las tablas reportan efectos parciales, comparables
 :::
 :::
 :::
 ::: {.notes}
 ::: {style="font-size: 0.7em;"}
+Los coeficientes de pendiente de MCO estiman directamente el cambio marginal, mientras que los del Tobit requieren un factor de ajuste. Las tablas de resultados reportan **efectos parciales**, comparables entre ambas estimaciones.
+
 **Comparabilidad**
 
 - El coeficiente Tobit necesita un factor de ajuste; el de MCO ya es el cambio marginal.
@@ -2412,7 +2466,7 @@ Gris = M1 (sin club) · Verde = M3 · Largo del segmento = cuánto capturaba el 
 
 - **edad** −0.449 → −0.108. Queda un cuarto: era el tipo de club, no la edad.
 - **portero** −0.467 → 0.257. Cambia de signo, intervalo enorme. Inestabilidad por escasez de arqueros, no hallazgo.
-- **delantero / mediocampista** suben y recién ahí son significativos.
+- **delantero / mediocampista** suben y recién ahí son significativos. (Cuando incorporo Valor del plantel)
 - **pj / goles** se mueven 0.004. El rendimiento es robusto.
 - **rest_ventana** 0.202 → 0.138. Parte era poder de los clubes grandes, que tienen contratos más largos.
 - **temporada** 0.048 → 0.164. Pasa a significativa al 1%.
@@ -2636,36 +2690,56 @@ Efectos porcentuales sobre el precio. Primer valor: **Modelo 3** (solo precios p
 ::: {.fragment style="border-left: 4px solid #9b59b6; padding-left: 20px;"}
 [Jugador]{style="color: #9b59b6; font-weight: bold; font-size: 1.15em;"}
 
-La **edad** es el único atributo personal con efecto robusto: **−10%** por año, **−18%** al corregir la censura. Lineal, sin el efecto cuadrático que sugiere la literatura internacional.
-
-Las **posiciones** solo discriminan precios cuando se controla por el valor de los planteles, y pierden significancia en el Tobit.
+- **Edad** · −10% → **−18%** al corregir <br> Lineal, sin efecto cuadrático
+- **Posiciones** pierden significancia en el Tobit
 :::
 
 ::: {.fragment style="border-left: 4px solid #3498db; padding-left: 20px;"}
 [Rendimiento]{style="color: #3498db; font-weight: bold; font-size: 1.15em;"}
 
-**Partidos jugados** y **goles** son significativos en todas las especificaciones: **+1.2%** por partido y **+2.8%** por gol, que pasan a **+2%** y **+7%** con la corrección.
-
-El resto de las estadísticas no sobrevive la depuración.
+- **Partidos** · +1.2% → +2%
+- **Goles** · +2.8% → +7%
+- Significativos en las tres estimaciones
 :::
 
 ::: {.fragment style="border-left: 4px solid #f39c12; padding-left: 20px;"}
 [Contrato y tiempo]{style="color: #f39c12; font-weight: bold; font-size: 1.15em;"}
 
-Cada **ventana de transferencia restante** vale cerca de **14%**, y es el resultado más estable del trabajo: casi idéntico en las tres estimaciones.
-
-El **factor inflacionario** ronda **16%** real por temporada, identificable solo sobre las observaciones con precio.
+- **Ventanas restantes** · ≈14% cada una <br> El resultado más estable del trabajo
+- **Inflación** · ≈16%, solo identificable con precios positivos
 :::
 
 ::: {.fragment style="border-left: 4px solid #2ecc71; padding-left: 20px;"}
 [Negociación]{style="color: #2ecc71; font-weight: bold; font-size: 1.15em;"}
 
-Elasticidad del **comprador**: **0.54**, que sube a **0.66** con la corrección. Del **vendedor**: **0.31**, que baja a **0.11**.
-
-El poder del vendedor se reduce a un tercio. Una explicación posible: las salidas sin cargo se deciden **antes**, y con el jugador, no con el club comprador.
+- **Comprador** · 0.54 → 0.66
+- **Vendedor** · 0.31 → 0.11 
+- Las salidas sin cargo se pactan antes, no interviene el comprador
 :::
 
 ::::
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+La **edad** es el único atributo personal con efecto robusto: **−10%** por año, **−18%** al corregir la censura. Lineal, sin el efecto cuadrático que sugiere la literatura internacional.
+
+Las **posiciones** solo discriminan precios cuando se controla por el valor de los planteles, y pierden significancia en el Tobit.
+
+**Partidos jugados** y **goles** son significativos en todas las especificaciones: **+1.2%** por partido y **+2.8%** por gol, que pasan a **+2%** y **+7%** con la corrección.
+
+El resto de las estadísticas no sobrevive la depuración.
+
+Cada **ventana de transferencia restante** vale cerca de **14%**, y es el resultado más estable del trabajo: casi idéntico en las tres estimaciones.
+
+El **factor inflacionario** ronda **16%** real por temporada, identificable solo sobre las observaciones con precio.
+
+Elasticidad del **comprador**: **0.54**, que sube a **0.66** con la corrección. Del **vendedor**: **0.31**, que baja a **0.11**.
+
+El poder del vendedor se reduce a un tercio. Una explicación posible: las salidas sin cargo se deciden **antes**, y con el jugador, no con el club comprador.
+
+A notar: las posiciones pierden significancia en el Tobit igual que la pierden en el Modelo 1, cuando el valor de los planteles no está. Y es justamente en el Tobit donde el efecto del plantel vendedor se derrumba de 0.31 a 0.11. Las dos cosas podrían ir juntas: la posición discriminaría precios solo mientras el efecto del vendedor esté vivo.
+:::
+:::
 
 ## Conclusiones: Por Qué y Para Qué se Comercian Jugadores
 
@@ -2678,7 +2752,7 @@ El poder del vendedor se reduce a un tercio. Una explicación posible: las salid
 ::: {.fragment style="border-left: 4px solid #3498db; padding-left: 22px;"}
 [Por qué]{style="color: #3498db; font-weight: bold; font-size: 1.15em;"}
 
-Los clubes tienen **derechos de exclusividad** sobre el uso de la fuerza de trabajo del futbolista.
+Los clubes tienen **derechos de exclusividad** sobre el uso de la fuerza de trabajo del futbolista. <br>
 
 Ese derecho existe para **proteger el patrimonio** de los clubes y **sostener el interés del público**, estabilizando los planteles.
 :::
@@ -2686,7 +2760,7 @@ Ese derecho existe para **proteger el patrimonio** de los clubes y **sostener el
 ::: {.fragment style="border-left: 4px solid #2ecc71; padding-left: 22px;"}
 [Para qué]{style="color: #2ecc71; font-weight: bold; font-size: 1.15em;"}
 
-Para **competir**: el plantel es el activo con el que se disputa el campeonato, y el mercado de pases es el modo de recomponerlo.
+Para **competir**: el plantel es el activo con el que se disputa el campeonato, y el mercado de pases es el modo de recomponerlo. <br>
 
 Lo que el club maximiza es **utilidad**, no ingresos: éxito deportivo, asistencia y salud de la liga, con el beneficio económico como restricción (Sloane, 1971).
 :::
@@ -2704,69 +2778,106 @@ Lo que el club maximiza es **utilidad**, no ingresos: éxito deportivo, asistenc
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
 [Edad]{style="color: #9b59b6; font-weight: bold;"}
 
-El atributo personal más determinante. La relación estimada es lineal decreciente, sin el tramo creciente que supone la forma cuadrática.
+- El atributo personal más determinante
+- Relación lineal decreciente <br> (Distinto respecto a investigaciones basadas en el fútbol europeo)
 :::
 
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
 [Posición]{style="color: #9b59b6; font-weight: bold;"}
 
-Resulta significativa en mediocampistas y delanteros, tomando a los defensores como categoría base.
+- Significativa en medios y delanteros <br> Categoría base: defensores
+- Significativa cuando se incopora el poder de negociación
 :::
 
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
 [Porteros]{style="color: #9b59b6; font-weight: bold;"}
 
-La escasez de observaciones y lo diferente de su rol vuelven inestable el coeficiente. Amerita evaluar su exclusión.
+- Coeficiente inestable
+- Escasez de observaciones y rol distinto
+- Evaluar su exclusión del modelo
 :::
 
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #9b59b6;"}
 [Nacionalidad]{style="color: #9b59b6; font-weight: bold;"}
 
-El pasaporte comunitario pierde peso al incorporar los identificadores de los clubes. Opera como señal de acceso al fútbol europeo.
+- **Comunitario** pierde peso al entrar los clubes
+- Señal de acceso al fútbol europeo (mayor valor de plantel)
 :::
 
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #3498db;"}
 [Rendimiento]{style="color: #3498db; font-weight: bold;"}
 
-Solo las estadísticas de mayor reconocimiento, partidos jugados y goles, muestran influencia. El resto no reúne evidencia suficiente.
+- Solo partidos jugados y goles
+- El resto, sin evidencia suficiente
 :::
 
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #f39c12;"}
 [Contrato]{style="color: #f39c12; font-weight: bold;"}
 
-Las ventanas de transferencia restantes conservan su efecto en las tres estimaciones. La proximidad del vencimiento reduce el precio.
+- Efecto estable en las tres estimaciones
+- La proximidad del vencimiento reduce el precio
 :::
 
 ::::
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+El atributo personal más determinante. La relación estimada es lineal decreciente, sin el tramo creciente que supone la forma cuadrática.
+
+Resulta significativa en mediocampistas y delanteros, tomando a los defensores como categoría base.
+
+La escasez de observaciones y lo diferente de su rol vuelven inestable el coeficiente. Amerita evaluar su exclusión.
+
+El pasaporte comunitario pierde peso al incorporar los identificadores de los clubes. Opera como señal de acceso al fútbol europeo.
+
+Solo las estadísticas de mayor reconocimiento, partidos jugados y goles, muestran influencia. El resto no reúne evidencia suficiente.
+
+Las ventanas de transferencia restantes conservan su efecto en las tres estimaciones. La proximidad del vencimiento reduce el precio.
+:::
+:::
 
 ## Conclusiones: La Edad Frente a la Literatura Internacional
 
-::: {style="font-size: 0.68em; color: #bdc3c7; line-height: 1.5;"}
-Franceschi (2024) revisa sistemáticamente **29 artículos** con **111 especificaciones** sobre valoración de futbolistas. Predominan las ligas europeas —la Premier League es la más estudiada— con solo dos casos fuera de Europa. En las **82** especificaciones que incorporan la edad, la forma funcional se distribuye así:
+:::: {style="flex: 1; display: grid; grid-template-columns: 68% 32%; gap: 38px; align-items: center; margin-top: 10px;"}
+
+::: {style="font-size: 0.88em; line-height: 1.5;"}
+
+::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 54%, transparent 54%); padding: 17px 22px; margin-bottom: 14px;"}
+Forma de U invertida · **44** (54%)
 :::
 
-:::: {style="font-size: 0.66em; line-height: 1.5;"}
-
-::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 54%, transparent 54%); padding: 9px 16px; margin-bottom: 8px;"}
-Forma de U invertida · **44** especificaciones (54%)
-:::
-
-::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 28%, transparent 28%); padding: 9px 16px; margin-bottom: 8px;"}
+::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 28%, transparent 28%); padding: 17px 22px; margin-bottom: 14px;"}
 Sin relación significativa · **23** (28%)
 :::
 
-::: {.fragment style="background: linear-gradient(to right, rgba(155,89,182,0.55) 13%, transparent 13%); padding: 9px 16px; margin-bottom: 8px; border-left: 3px solid #9b59b6;"}
-Relación decreciente · **11** (13%) — [la forma hallada en este trabajo]{style="color: #9b59b6;"}
+::: {style="background: linear-gradient(to right, rgba(155,89,182,0.55) 13%, transparent 13%); padding: 17px 22px; margin-bottom: 14px; border-left: 4px solid #9b59b6;"}
+Relación decreciente · **11** (13%) — [este trabajo]{style="color: #9b59b6;"}
 :::
 
-::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 4%, transparent 4%); padding: 9px 16px;"}
+::: {style="background: linear-gradient(to right, rgba(189,195,199,0.30) 4%, transparent 4%); padding: 17px 22px; margin-bottom: 14px;"}
 Forma de U · **3** (4%)
+:::
+
+::: {style="font-size: 0.5em; color: #bdc3c7; margin-top: 6px;"}
+Distribución de la forma funcional en las 82 especificaciones que incorporan la edad.
+:::
+
+:::
+
+::: {style="font-size: 0.66em; line-height: 1.6; color: #bdc3c7; border-left: 3px solid rgba(255,255,255,0.28); padding-left: 22px;"}
+**Franceschi (2024)** revisa sistemáticamente **29 artículos** con **111 especificaciones** sobre valoración de futbolistas.
+
+Predominan las ligas europeas —la Premier League es la más estudiada— y solo dos casos salen de Europa.
+
+De esas especificaciones, **82** incorporan la edad.
 :::
 
 ::::
 
-::: {.fragment style="font-size: 0.68em; line-height: 1.5; margin-top: 6px;"}
+::: {.notes}
+::: {style="font-size: 0.7em;"}
 El resultado se aparta de la forma dominante, pero corresponde al segundo patrón más frecuente entre los que alcanzan significatividad. Una explicación posible es que los clubes argentinos no valoren la experiencia tanto como el potencial, o que exista discrepancia con los equipos europeos sobre cuándo concluye el período de formación del jugador, particularmente al momento de vender.
+:::
 :::
 
 ## Conclusiones: El Poder de Negociación
@@ -2779,16 +2890,20 @@ El resultado se aparta de la forma dominante, pero corresponde al segundo patró
 Lo tienen, y de manera asimétrica. Como sostienen Carmichael y Thomas (1993), no resulta realista tratar a compradores y vendedores de forma simétrica al negociar.
 :::
 
-:::::: {style="flex: 1; display: grid; grid-template-columns: 72% 28%; gap: 30px; align-items: center; align-content: center; margin-left: 22px;"}
+:::::: {style="flex: 1; display: grid; grid-template-columns: 70% 30%; gap: 30px; align-items: stretch; align-content: stretch; margin-left: 22px;"}
 
-::::: {.fragment style="font-size: 0.8em; line-height: 1.45;"}
+::::: {.fragment style="font-size: 0.8em; line-height: 1.45; height: 100%; display: flex; flex-direction: column; justify-content: space-evenly;"}
 
 :::: {style="border-left: 3px solid #2ecc71; padding-left: 18px; margin-bottom: 16px;"}
-**Vendedores · poder positivo** · Obtienen mejores precios cuanto mayor es el valor de su plantel, en tanto poseen el rendimiento que la competencia deportiva demanda.
+**Vendedores · poder positivo** <br>
+Obtienen mejores precios cuanto mayor es el valor de su plantel <br>
+Poseen el rendimiento que la competencia deportiva demanda.
 ::::
 
 :::: {style="border-left: 3px solid #e74c3c; padding-left: 18px;"}
-**Compradores · poder negativo** · Pagan más cuanto mayores son, en lugar de obtener mejores precios. Cuanto más relevante es su rol en la competencia, mayor resulta su erogación.
+**Compradores · poder negativo** <br>
+Pagan más cuanto mayores son, en lugar de obtener mejores precios.<br>
+Cuanto más relevante es su rol en la competencia, mayor resulta su erogación.
 ::::
 
 :::::
@@ -2796,19 +2911,19 @@ Lo tienen, y de manera asimétrica. Como sostienen Carmichael y Thomas (1993), n
 ::::: {}
 
 ```{=html}
-<div style="display: flex; gap: 26px; justify-content: center; align-items: stretch; height: 250px;">
-  <div style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 76px;">
-    <span style="font-size: 0.5em; color: #e74c3c; margin-bottom: 6px;">&uarr; 0.54</span>
-    <div style="width: 56px; height: 152px; background: #e74c3c; border-radius: 4px 4px 0 0;"></div>
-    <span style="font-size: 0.42em; margin-top: 10px; color: #bdc3c7;">Comprador</span>
+<div style="display: flex; gap: 26px; justify-content: center; align-items: stretch; height: 320px;">
+  <div style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 96px;">
+    <span style="font-size: 0.62em; color: #e74c3c; margin-bottom: 6px;">&uarr; 0.54</span>
+    <div style="width: 72px; height: 196px; background: #e74c3c; border-radius: 4px 4px 0 0;"></div>
+    <span style="font-size: 0.52em; margin-top: 12px; color: #bdc3c7;">Comprador</span>
   </div>
-  <div style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 76px;">
-    <span style="font-size: 0.5em; color: #2ecc71; margin-bottom: 6px;">&uarr; 0.31</span>
-    <div style="width: 56px; height: 87px; background: #2ecc71; border-radius: 4px 4px 0 0;"></div>
-    <span style="font-size: 0.42em; margin-top: 10px; color: #bdc3c7;">Vendedor</span>
+  <div style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 96px;">
+    <span style="font-size: 0.62em; color: #2ecc71; margin-bottom: 6px;">&uarr; 0.31</span>
+    <div style="width: 72px; height: 112px; background: #2ecc71; border-radius: 4px 4px 0 0;"></div>
+    <span style="font-size: 0.52em; margin-top: 12px; color: #bdc3c7;">Vendedor</span>
   </div>
 </div>
-<div style="font-size: 0.4em; color: #bdc3c7; text-align: center; margin-top: 14px; line-height: 1.4;">
+<div style="font-size: 0.48em; color: #bdc3c7; text-align: center; margin-top: 16px; line-height: 1.4;">
 Elasticidad precio&ndash;valor del plantel.<br>Ambas positivas: los dos empujan el precio hacia arriba.
 </div>
 ```

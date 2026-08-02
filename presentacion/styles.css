@@ -190,8 +190,19 @@
 /* ESTADOS */
 .g { background-color: #bdc3c7; } /* Gris */
 .r { background-color: #e74c3c; opacity: 0.5; } /* Rojo Basura */
-.ok-price { background-color: #2ecc71; box-shadow: 0 0 6px #2ecc71; } /* Verde */
-.ok-noprice { background-color: #9b59b6; box-shadow: 0 0 6px #9b59b6; } /* Violeta */
+/* Con precio = relleno solido | Sin precio = hueco.
+   El binario se codifica por relleno y no por tono, para dejar libres
+   el verde y el violeta como colores de grupos de variables. */
+.ok-price {
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.55);
+}
+
+.ok-noprice {
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+}
 
 /* TEXTO EXPLICATIVO (Ahora tiene mucho más espacio) */
 .txt-ref { 
