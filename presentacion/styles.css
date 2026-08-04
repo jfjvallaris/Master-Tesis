@@ -393,3 +393,26 @@
   width: 100% !important;
   table-layout: fixed !important;
 }
+
+/* Slide de cierre: sin caja de sección, para que el recuadro lo aporte
+   el propio contenido y se vea el fondo alrededor */
+.reveal .slides section:not(#title-slide).cierre {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  justify-content: flex-end !important;
+}
+
+/* Banda de base: rectángulo oscuro al pie, sin degradado */
+.reveal .slides section:not(#title-slide).cierre::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 22% !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}

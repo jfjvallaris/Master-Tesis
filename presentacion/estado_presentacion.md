@@ -56,6 +56,14 @@ Leyenda: ⬜ Pendiente | 🔄 En curso | ✅ Listo
   `df = df_raw`.
 
 ## Inconsistencias detectadas en la tesis (a resolver por el autor)
+- **Tabla 10 mal rotulada.** Se titula "Parámetros Estimados del Modelo
+  Censurado y del modelo Tobit", pero la columna del Tobit no son los
+  parámetros: son los **efectos marginales**, los mismos que ya figuran
+  en la Tabla 11. Se comprueba con la salida de Stata: el coeficiente
+  crudo de `edad` es −0.3127 y la tabla informa −0.181, que es el efecto
+  marginal `ystar`. La única cifra que sí es un parámetro del Tobit en
+  esa tabla es σ² = 2.593. **Decisión: la Tabla 10 queda oculta de forma
+  definitiva**, porque además duplica la 11.
 - **`edad²` en el Modelo 2.** `2.Metodología.md:924-928` dice que el
   Modelo 2 elimina el término cuadrático de la edad, pero la Tabla 9 lo
   muestra estimado en ese modelo (0.001, no significativo) y recién
@@ -110,6 +118,20 @@ excel sirve para gráficos nuevos que no reporten conteos muestrales.
 `::: {.notes}` a las slides nuevas salvo pedido explícito.
 
 ## Ideas anotadas
+- **Falta una tabla descriptiva de la muestra**, después de la definición
+  de variables. Sería una mezcla entre la Tabla 7 (características por
+  posición) y la Tabla 8 (resumen de rendimiento), más apropiada que
+  cualquiera de las dos por separado. Sirve además para responder la
+  objeción *"solo estás viendo la rama descendente de la edad"*: la
+  muestra va de 18 a 39 años y el primer quintil es 18-23, así que los
+  jóvenes están representados.
+- **La slide de Franceschi es prescindible.** Se agregó porque el punto
+  fue cuestionado en la corrección de la tesis (ver
+  `Respuestas a Fernando Delbianco.docx`). Si la comparación con esa
+  revisión termina complicando más de lo que aporta, se puede eliminar.
+- **Candidato a `hidden`: el dumbbell "Del Modelo Base al Modelo Preferido"**
+  (M1 vs M3). El autor considera que aporta poco a los resultados. *No
+  ocultarlo todavía*, decidir al final.
 - **Slide de discusión con la literatura internacional.** Hoy existe
   "Conclusiones: La Edad Frente a la Literatura Europea", que usa el
   meta-análisis de Franceschi (2024). La idea es una slide más amplia que
