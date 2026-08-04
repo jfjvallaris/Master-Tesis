@@ -416,3 +416,95 @@
   pointer-events: none !important;
   z-index: 0 !important;
 }
+
+/* === Línea de tiempo unificada de Antecedentes ===
+   Posición = disciplina (arriba deporte, abajo fútbol).
+   Relleno del marcador = tipo de aporte (lleno teórico, hueco estimación). */
+
+.reveal .slides section .lt {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: 1fr 46px 1fr;
+  column-gap: 10px;
+  height: 330px;
+  font-size: 0.50em;
+  line-height: 1.35;
+}
+
+.reveal .slides section .lt .espina {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  align-self: center;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.reveal .slides section .lt .arriba {
+  grid-row: 1;
+  align-self: end;
+  text-align: center;
+  padding-bottom: 16px;
+}
+
+.reveal .slides section .lt .abajo {
+  grid-row: 3;
+  align-self: start;
+  text-align: center;
+  padding-top: 16px;
+}
+
+.reveal .slides section .lt .anio {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.reveal .slides section .lt .autor { color: #ecf0f1; }
+
+.reveal .slides section .lt .aporte {
+  color: #bdc3c7;
+  font-size: 0.92em;
+  margin-top: 3px;
+}
+
+.reveal .slides section .lt .marca {
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reveal .slides section .lt .marca i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.reveal .slides section .lt .teorico i  { background: #ecf0f1; }
+.reveal .slides section .lt .empirico i { background: transparent; border: 3px solid #ecf0f1; }
+
+/* Corte de escala: marca que entre dos hitos pasó mucho tiempo */
+.reveal .slides section .lt .corte {
+  grid-row: 2;
+  align-self: center;
+  justify-self: start;
+  transform: translateX(-50%);
+  font-size: 1.7em;
+  letter-spacing: -0.18em;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1;
+  z-index: 2;
+}
+
+.reveal .slides section .lt .corte-lbl {
+  grid-row: 2;
+  align-self: center;
+  justify-self: start;
+  transform: translate(-50%, -150%);
+  font-size: 0.82em;
+  color: #bdc3c7;
+  white-space: nowrap;
+  z-index: 2;
+}

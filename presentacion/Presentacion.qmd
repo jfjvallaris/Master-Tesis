@@ -403,7 +403,212 @@ Pero ¿Es esto realmente un problema?<br>
 
 
 
-## Antecedentes (Deporte)
+## Antecedentes {.top}
+
+::: {style="font-size: 0.55em; color: #bdc3c7; margin-bottom: 4px;"}
+Arriba, **economía del deporte**; abajo, **economía del fútbol**. Marcador lleno: **aporte teórico**. Marcador hueco: **trabajo de estimación**.
+:::
+
+```{=html}
+<div class="lt">
+<div class="espina"></div>
+<div class="corte" style="grid-column: 5;">//</div>
+<div class="corte-lbl" style="grid-column: 5;">19 años</div>
+<div class="corte" style="grid-column: 9;">//</div>
+<div class="corte-lbl" style="grid-column: 9;">16 años</div>
+<div class="arriba fragment" data-fragment-index="1" style="grid-column: 1;"><div class="aporte">Anclas de la economía del deporte</div><div class="autor">Rottenberg</div><div class="anio">1956</div></div>
+<div class="marca teorico fragment" data-fragment-index="1" style="grid-column: 1;"><i></i></div>
+<div class="arriba fragment" data-fragment-index="2" style="grid-column: 2;"><div class="aporte">La firma es la liga</div><div class="autor">Neale</div><div class="anio">1964</div></div>
+<div class="marca teorico fragment" data-fragment-index="2" style="grid-column: 2;"><i></i></div>
+<div class="abajo fragment" data-fragment-index="4" style="grid-column: 3;"><div class="anio">1971</div><div class="autor">Sloane</div><div class="aporte">El club maximiza utilidad</div></div>
+<div class="marca teorico fragment" data-fragment-index="4" style="grid-column: 3;"><i></i></div>
+<div class="arriba fragment" data-fragment-index="3" style="grid-column: 4;"><div class="aporte">Primer trabajo argentino</div><div class="autor">Di Marco</div><div class="anio">1974</div></div>
+<div class="marca teorico fragment" data-fragment-index="3" style="grid-column: 4;"><i></i></div>
+<div class="abajo fragment" data-fragment-index="5" style="grid-column: 5;"><div class="anio">1993</div><div class="autor">Carmichael y Thomas</div><div class="aporte">Primer estudio empírico (NBS)</div></div>
+<div class="marca empirico fragment" data-fragment-index="5" style="grid-column: 5;"><i></i></div>
+<div class="abajo fragment" data-fragment-index="6" style="grid-column: 6;"><div class="anio">1997</div><div class="autor">Szymanski y Smith</div><div class="aporte">Mercado competitivo</div></div>
+<div class="marca empirico fragment" data-fragment-index="6" style="grid-column: 6;"><i></i></div>
+<div class="abajo fragment" data-fragment-index="7" style="grid-column: 7;"><div class="anio">1999</div><div class="autor">Carmichael, Forest y Simmons</div><div class="aporte">Primer HPM</div></div>
+<div class="marca empirico fragment" data-fragment-index="7" style="grid-column: 7;"><i></i></div>
+<div class="abajo fragment" data-fragment-index="8" style="grid-column: 8;"><div class="anio">1999</div><div class="autor">Dobson y Gerrard</div><div class="aporte">Segmentación del mercado</div></div>
+<div class="marca empirico fragment" data-fragment-index="8" style="grid-column: 8;"><i></i></div>
+<div class="abajo fragment" data-fragment-index="9" style="grid-column: 9;"><div class="anio">2015</div><div class="autor">Ruijg y van Ophem</div><div class="aporte">Estratificación de clubes</div></div>
+<div class="marca empirico fragment" data-fragment-index="9" style="grid-column: 9;"><i></i></div>
+<div class="abajo fragment" data-fragment-index="10" style="grid-column: 10;"><div class="anio">2021-24</div><div class="autor">Poli, Besson y Ravenel</div><div class="aporte">Predictibilidad de precios (85%)</div></div>
+<div class="marca empirico fragment" data-fragment-index="10" style="grid-column: 10;"><i></i></div>
+</div>
+```
+
+::: {style="height: 250px; margin-top: 14px; max-width: 70%; margin-left: auto; margin-right: auto;"}
+::: {.r-stack}
+
+::: {.fragment .fade-in-then-out fragment-index=1 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Rottenberg (1956)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Propietarios: maximizadores racionales de ganancias
+- Incertidumbre de resultado → producto exitoso
+- El principio de invariancia
+- Mercado laboral monopsonista, de productos monopolístico
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+**Principio de invariancia**: la distribución del talento entre equipos termina igual con o sin restricciones a la movilidad. Cambia **quién se queda con la renta**, el club o el jugador, no la asignación. Antecedente deportivo del teorema de Coase.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Neale (1964)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Paradoja de Louis-Schmelling
+- Producto conjunto invertido
+- Max beneficios → **+** competencia deportiva, **−** competencia económica
+- **La firma no es el club, es la liga**
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+**Louis-Schmelling**: Joe Louis ganaba más dinero cuanto más fuerte era su rival. **Producto conjunto invertido**: el espectáculo lo produce el enfrentamiento, no el club; son coproductores antes que competidores. Si el producto es el campeonato, la unidad económica es la liga, un monopolio natural.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=3 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Di Marco (1974)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Primer trabajo argentino
+- Manifestación **directa**: producto bruto
+- Manifestación **indirecta**: calidad de vida y productividad
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+Primer trabajo argentino de economía del deporte. **Directa**: impacto sobre el producto bruto vía comercialización e inversión. **Indirecta**: mejora en calidad de vida y productividad laboral.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=4 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Sloane (1971)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- El club maximiza **utilidad**, no ganancias
+- U(E, A, S, π)
+- Los beneficios, como restricción de no negatividad
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+**U = U(E, A, S, π)**: E el éxito deportivo, A la asistencia de espectadores, S la "salud" de la liga —el balance competitivo— y π los beneficios, sujeta a π ≥ 0. El club maximiza esa utilidad; el beneficio opera como restricción.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=5 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Carmichael y Thomas (1993)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Primer estudio empírico
+- Enfoque de **negociación** (NBS)
+- Comprador y vendedor, asimétricos
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+**Solución de negociación de Nash**: el precio surge del reparto del excedente entre comprador y vendedor según su poder relativo. De ahí que no sea realista tratarlos de forma simétrica.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=6 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Szymanski y Smith (1997)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- El mercado de pases como mercado competitivo
+- NBS y HPM: difíciles de distinguir empíricamente
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+Modelan el mercado de pases como competitivo. Lo que importa acá: empíricamente, negociación y precios hedónicos son difíciles de distinguir.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=7 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Carmichael, Forest y Simmons (1999)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Primera aplicación de **precios hedónicos**
+- El enfoque que adopta este trabajo
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+**Precios hedónicos**: el precio como función de los atributos del bien, acá los del jugador. Es el enfoque que adopta esta tesis.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=8 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Dobson y Gerrard (1999)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Inflación y **segmentación** del mercado inglés, 1990-1996
+- Tres tipos: transferencia horizontal, de ascenso y de descenso
+- Efecto de la ley **Bosman**
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+Segmentan por **tipo de operación** —horizontal, de ascenso y de descenso— cruzado con el nivel de división, y buscan qué variables pesan en cada segmento. Miden además el efecto de la ley Bosman.
+:::
+:::
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=9 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Ruijg y van Ophem (2015)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Clasifican clubes: ¿mejora o deterioro?
+- Adaptan el ranking UEFA: buen ranking no implica salario alto
+- Mismo problema de identificar clubes; acá se resuelve con el **valor de plantel**
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+Clasifican clubes para saber si la transferencia implica mejora o deterioro. Adaptan el ranking UEFA porque un buen ranking no se corresponde con salarios altos. Mismo problema de identificación que enfrenta esta tesis.
+:::
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=10 style="width: 100%;"}
+::: {.callout-note appearance="minimal" icon=false title="Poli, Besson y Ravenel (2021-24)"}
+::: {style="font-size: 0.95em; line-height: 1.5;"}
+- Predictibilidad de los precios: **85%**
+- Estado del arte contra el que se contrasta
+:::
+:::
+::: {.notes}
+::: {style="font-size: 0.72em;"}
+Predictibilidad de los precios en torno al **85%**. Marca el estado del arte contra el que se contrasta este trabajo.
+:::
+:::
+:::
+
+:::
+:::
+
+::: {.notes}
+::: {style="font-size: 0.7em;"}
+**Lo que se ve al fusionar las dos líneas.** La economía del fútbol no llega después de que la economía del deporte se consolidó: Sloane (1971) cae entre Neale y Di Marco. Nace en paralelo.
+
+**Y lo que se ve del lado argentino.** Di Marco es contemporáneo de esa primera camada teórica, pero después de 1974 no hay hitos locales en el cuadro. El trabajo llega tarde en Argentina.
+
+**El corte metodológico.** Todos los aportes teóricos son anteriores a 1975; toda la evidencia de estimación arranca en 1993 con Carmichael y Thomas. Hay casi veinte años entre el marco conceptual y el primer contraste empírico.
+
+**Si preguntan por qué falta tal trabajo.** La línea recoge los avances asociados a esta investigación. Hubo otra producción en el período, lateral o sobre otras ramas: el racismo, por ejemplo, se abordó varias veces sin resultados concluyentes.
+
+**Hacia dónde va.** Los cuatro trabajos empíricos son los que arman la tradición en la que se inscribe esta tesis: el enfoque de negociación en 1993, el debate sobre competencia en 1997, la primera aplicación de precios hedónicos en 1999 y la segmentación del mercado en 2000.
+:::
+:::
+
+## Antecedentes (Deporte) {visibility="hidden"}
 
 ::: {.columns style="display: flex; align-items: center;"}
 
@@ -460,7 +665,7 @@ Pero ¿Es esto realmente un problema?<br>
 
 
 
-## Antecedentes (Fútbol)
+## Antecedentes (Fútbol) {visibility="hidden"}
 
 ```{mermaid}
 %%| fig-align: center
@@ -469,7 +674,7 @@ timeline
     1971 : Sloane <br>-<br> Los clubes maximizan utilidad
     1993 : Carmichel & Thomas <br>-<br> Primer estudio empírico (NBS)
     1997 : Szymanski & Smith <br>-<br> Mercado competitivo
-    1999 : Carmichel, Forest & Simmons <br>-<br> Primera utilización HPM
+    1999 : Carmichel, Forest & Simmons <br>-<br> Primer HPM
          : Dobson y Gerard <br>-<br> Segmentación del mercado
     %% 2015 : Ruijg & van Ophem <br>-<br> Categorización de equipos
     2021-24: Poli, Besson, y Ravene <br>-<br> Predictibilidad de los precios (85%)
@@ -581,7 +786,8 @@ $$P(Z)=P(z_1, z_2, \dots, z_n)$$
 ::: {.fragment .fade-up}
 ::: {.callout-tip appearance="minimal" icon=false}
 ## Mercado Consolidado
-Disminución del poder monopsónico. Mercado de muchos compradores y vendedores donde la información del rendimiento es observable.
+Disminución del poder monopsónico.<br>
+Mercado de muchos compradores y vendedores donde la información del rendimiento es observable.
 <br>*(Szymanski & Smith, 1997)*
 :::
 :::
