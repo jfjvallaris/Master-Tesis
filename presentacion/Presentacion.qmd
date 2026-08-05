@@ -21,6 +21,7 @@ format:
     # parallax-background-position: "top"
     chalkboard: true # Incompatible con embed-resources
     mathjax: true # Ecuaciones de LaTeX
+    include-in-header: speaker-view-layout.html # Speaker view sin "Upcoming"
 
 # embed-resources: true # Activar para guardar el html completo
 
@@ -227,7 +228,7 @@ df_mco_data['Color'] = [GRUPOS[g] for g in df_mco_data['Grupo']]
 ::: {.column width="45%"}
 ::: {data-id="caja-texto"}
 - Ausencia de literatura para el mercado argentino
-     - Revisión de 29 papers
+     - Revisión de 29 papers sobre 3298 identificados
 :::
 :::
 
@@ -493,7 +494,7 @@ Primer trabajo argentino de economía del deporte. **Directa**: impacto sobre el
 ::: {.callout-note appearance="minimal" icon=false title="Sloane (1971)"}
 ::: {style="font-size: 0.95em; line-height: 1.5;"}
 - El club maximiza **utilidad**, no ganancias
-- U(E, A, S, π)
+- **U(E, A, S, π)**: éxito deportivo, asistencia de espectadores, salud de la liga y beneficios
 - Los beneficios, como restricción de no negatividad
 :::
 :::
@@ -552,7 +553,7 @@ Modelan el mercado de pases como competitivo. Lo que importa acá: empíricament
 ::: {style="font-size: 0.95em; line-height: 1.5;"}
 - Inflación y **segmentación** del mercado inglés, 1990-1996
 - Tres tipos: transferencia horizontal, de ascenso y de descenso
-- Efecto de la ley **Bosman**
+<!-- - Efecto de la ley **Bosman** -->
 :::
 :::
 ::: {.notes}
@@ -1931,7 +1932,7 @@ except Exception as e:
 ::: {.column width="75%" style="width:70%; font-size: 90%;"}
 | Variable | Descripción | Signo |
 |:--|:-------------------------|:--:|
-| `edad` | Edad del jugador al momento de la transferencia (en años). | - |
+| `edad (edad²)` | Edad del jugador al momento de la transferencia (en años). | -  (-)|
 | `altura` | Altura del jugador (en centímetros). | + |
 | `comunitario` | Dummy: 1 si el jugador posee ciudadanía comunitaria. | + |
 | `extranjero` | Dummy: 1 si el jugador no es argentino. | ? |
@@ -1994,6 +1995,10 @@ except Exception as e:
 | `lvalor_plantel_v` | Logaritmo del valor total del equipo vendedor.                  | + |
 
 : {tbl-colwidths="[25,65,10]"}
+
+::: {style="font-size: 0.82em; color: #bdc3c7; margin-top: 34px; border-left: 3px solid #2ecc71; padding-left: 16px;"}
+El valor del plantel opera como un **vector resumen de características** —edad, rendimiento y el nivel competitivo donde ese rendimiento se produjo—, de modo que su coeficiente admite lectura como poder de negociación y como validación de origen.
+:::
 :::
 ::::
 
@@ -2012,28 +2017,28 @@ except Exception as e:
 <tr><th class="v">Variable</th><th>N</th><th>Media</th><th>D.E.</th><th>Mín</th><th>p25</th><th>Mediana</th><th>p75</th><th>Máx</th></tr>
 </thead>
 <tbody>
-<tr style="--g: transparent;"><td class="v">Precio (millones de €)</td><td>1484</td><td>0.655</td><td>2.049</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.390</td><td>40.305</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Edad</td><td>1484</td><td>27.87</td><td>4.65</td><td>18.00</td><td>24.00</td><td>28.00</td><td>31.00</td><td>43.00</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Altura (cm)</td><td>1479</td><td>179.39</td><td>6.62</td><td>159.00</td><td>175.00</td><td>180.00</td><td>185.00</td><td>198.00</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Comunitario</td><td>1484</td><td>0.26</td><td>0.44</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Extranjero</td><td>1484</td><td>0.19</td><td>0.40</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Partidos jugados</td><td>1397</td><td>24.09</td><td>12.17</td><td>1.00</td><td>14.00</td><td>25.00</td><td>33.00</td><td>58.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Goles</td><td>1397</td><td>2.51</td><td>3.81</td><td>0.00</td><td>0.00</td><td>1.00</td><td>3.00</td><td>28.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Asistencias</td><td>1417</td><td>1.49</td><td>2.09</td><td>0.00</td><td>0.00</td><td>1.00</td><td>2.00</td><td>15.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Amonestaciones *</td><td>1407</td><td>3.90</td><td>3.42</td><td>0.00</td><td>1.00</td><td>3.00</td><td>6.00</td><td>22.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Expulsiones</td><td>1407</td><td>0.28</td><td>0.58</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Goles concedidos *</td><td>1397</td><td>1.68</td><td>7.55</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>62.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Vallas invictas</td><td>1397</td><td>0.49</td><td>2.31</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>21.00</td></tr>
-<tr style="--g: #f39c12;"><td class="v">Ventanas restantes</td><td>1200</td><td>1.81</td><td>1.86</td><td>0.00</td><td>0.00</td><td>1.00</td><td>3.00</td><td>9.00</td></tr>
-<tr style="--g: #f39c12;"><td class="v">Verano</td><td>1484</td><td>0.43</td><td>0.50</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
-<tr style="--g: #2ecc71;"><td class="v">ln valor plantel comprador</td><td>1460</td><td>16.60</td><td>1.18</td><td>9.97</td><td>15.79</td><td>16.60</td><td>17.34</td><td>20.76</td></tr>
-<tr style="--g: #2ecc71;"><td class="v">ln valor plantel vendedor</td><td>1453</td><td>16.67</td><td>1.08</td><td>12.08</td><td>16.03</td><td>16.68</td><td>17.38</td><td>20.71</td></tr>
+<tr style="--g: transparent;"><td class="v">Precio (millones de €)</td><td>1116</td><td>0.872</td><td>2.323</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.785</td><td>40.305</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Edad</td><td>1116</td><td>27.06</td><td>4.43</td><td>18.00</td><td>24.00</td><td>27.00</td><td>31.00</td><td>39.00</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Altura (cm)</td><td>1111</td><td>179.33</td><td>6.54</td><td>159.00</td><td>175.00</td><td>180.00</td><td>184.00</td><td>198.00</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Comunitario</td><td>1116</td><td>0.24</td><td>0.43</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Extranjero</td><td>1116</td><td>0.22</td><td>0.42</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Partidos jugados</td><td>1047</td><td>24.66</td><td>12.41</td><td>1.00</td><td>15.00</td><td>25.00</td><td>34.00</td><td>58.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Goles</td><td>1047</td><td>2.67</td><td>3.82</td><td>0.00</td><td>0.00</td><td>1.00</td><td>4.00</td><td>24.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Asistencias</td><td>1063</td><td>1.56</td><td>2.13</td><td>0.00</td><td>0.00</td><td>1.00</td><td>2.00</td><td>13.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Amonestaciones *</td><td>1054</td><td>3.94</td><td>3.47</td><td>0.00</td><td>1.00</td><td>3.00</td><td>6.00</td><td>22.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Expulsiones</td><td>1054</td><td>0.28</td><td>0.57</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Goles concedidos *</td><td>1047</td><td>1.61</td><td>7.53</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>62.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Vallas invictas</td><td>1047</td><td>0.46</td><td>2.28</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>21.00</td></tr>
+<tr style="--g: #f39c12;"><td class="v">Ventanas restantes</td><td>832</td><td>2.61</td><td>1.70</td><td>1.00</td><td>1.00</td><td>2.00</td><td>4.00</td><td>9.00</td></tr>
+<tr style="--g: #f39c12;"><td class="v">Verano</td><td>1116</td><td>0.48</td><td>0.50</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
+<tr style="--g: #2ecc71;"><td class="v">ln valor plantel comprador</td><td>1095</td><td>16.66</td><td>1.20</td><td>11.56</td><td>15.92</td><td>16.74</td><td>17.40</td><td>20.76</td></tr>
+<tr style="--g: #2ecc71;"><td class="v">ln valor plantel vendedor</td><td>1089</td><td>16.64</td><td>1.12</td><td>12.08</td><td>15.94</td><td>16.69</td><td>17.38</td><td>20.71</td></tr>
 </tbody>
 </table>
 ```
 
 ::: {style="font-size: 0.5em; color: #bdc3c7; margin-top: 8px;"}
-n = 1484 transferencias · Posiciones: Defensa 31% · Medio campo 29% · Delantero 33% · Portero 8%
+n = 1116 transferencias · Posiciones: Defensa 29% · Medio campo 28% · Delantero 35% · Portero 7%
 :::
 
 ### Con precio
@@ -2076,28 +2081,28 @@ n = 453 transferencias · Posiciones: Defensa 28% · Medio campo 28% · Delanter
 <tr><th class="v">Variable</th><th>N</th><th>Media</th><th>D.E.</th><th>Mín</th><th>p25</th><th>Mediana</th><th>p75</th><th>Máx</th></tr>
 </thead>
 <tbody>
-<tr style="--g: transparent;"><td class="v">Precio (millones de €)</td><td>1031</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Edad</td><td>1031</td><td>29.20</td><td>4.41</td><td>19.00</td><td>26.00</td><td>29.00</td><td>32.00</td><td>43.00</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Altura (cm)</td><td>1027</td><td>179.63</td><td>6.61</td><td>159.00</td><td>175.00</td><td>180.00</td><td>185.00</td><td>198.00</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Comunitario</td><td>1031</td><td>0.27</td><td>0.44</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
-<tr style="--g: #9b59b6;"><td class="v">Extranjero</td><td>1031</td><td>0.19</td><td>0.39</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Partidos jugados</td><td>965</td><td>22.34</td><td>11.47</td><td>1.00</td><td>13.00</td><td>23.00</td><td>31.00</td><td>58.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Goles</td><td>965</td><td>2.02</td><td>3.31</td><td>0.00</td><td>0.00</td><td>1.00</td><td>2.00</td><td>28.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Asistencias</td><td>982</td><td>1.21</td><td>1.85</td><td>0.00</td><td>0.00</td><td>0.00</td><td>2.00</td><td>15.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Amonestaciones *</td><td>973</td><td>3.67</td><td>3.33</td><td>0.00</td><td>1.00</td><td>3.00</td><td>5.00</td><td>22.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Expulsiones</td><td>973</td><td>0.27</td><td>0.56</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Goles concedidos *</td><td>965</td><td>1.95</td><td>8.10</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>58.00</td></tr>
-<tr style="--g: #3498db;"><td class="v">Vallas invictas</td><td>965</td><td>0.58</td><td>2.50</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>21.00</td></tr>
-<tr style="--g: #f39c12;"><td class="v">Ventanas restantes</td><td>791</td><td>1.01</td><td>1.28</td><td>0.00</td><td>0.00</td><td>1.00</td><td>2.00</td><td>8.00</td></tr>
-<tr style="--g: #f39c12;"><td class="v">Verano</td><td>1031</td><td>0.40</td><td>0.49</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
-<tr style="--g: #2ecc71;"><td class="v">ln valor plantel comprador</td><td>1008</td><td>16.22</td><td>1.06</td><td>9.97</td><td>15.46</td><td>16.23</td><td>16.96</td><td>19.55</td></tr>
-<tr style="--g: #2ecc71;"><td class="v">ln valor plantel vendedor</td><td>1003</td><td>16.56</td><td>1.05</td><td>12.08</td><td>16.01</td><td>16.60</td><td>17.27</td><td>20.71</td></tr>
+<tr style="--g: transparent;"><td class="v">Precio (millones de €)</td><td>663</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Edad</td><td>663</td><td>28.57</td><td>4.27</td><td>19.00</td><td>25.00</td><td>29.00</td><td>32.00</td><td>39.00</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Altura (cm)</td><td>659</td><td>179.65</td><td>6.46</td><td>159.00</td><td>175.00</td><td>180.00</td><td>185.00</td><td>198.00</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Comunitario</td><td>663</td><td>0.25</td><td>0.43</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td></tr>
+<tr style="--g: #9b59b6;"><td class="v">Extranjero</td><td>663</td><td>0.23</td><td>0.42</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Partidos jugados</td><td>615</td><td>22.31</td><td>11.58</td><td>1.00</td><td>13.00</td><td>22.00</td><td>30.50</td><td>58.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Goles</td><td>615</td><td>2.00</td><td>3.05</td><td>0.00</td><td>0.00</td><td>1.00</td><td>3.00</td><td>24.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Asistencias</td><td>628</td><td>1.19</td><td>1.81</td><td>0.00</td><td>0.00</td><td>0.00</td><td>2.00</td><td>11.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Amonestaciones *</td><td>620</td><td>3.62</td><td>3.36</td><td>0.00</td><td>1.00</td><td>3.00</td><td>5.00</td><td>22.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Expulsiones</td><td>620</td><td>0.26</td><td>0.53</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>3.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Goles concedidos *</td><td>615</td><td>1.98</td><td>8.36</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>57.00</td></tr>
+<tr style="--g: #3498db;"><td class="v">Vallas invictas</td><td>615</td><td>0.58</td><td>2.57</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>21.00</td></tr>
+<tr style="--g: #f39c12;"><td class="v">Ventanas restantes</td><td>423</td><td>1.89</td><td>1.19</td><td>1.00</td><td>1.00</td><td>2.00</td><td>2.00</td><td>8.00</td></tr>
+<tr style="--g: #f39c12;"><td class="v">Verano</td><td>663</td><td>0.46</td><td>0.50</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
+<tr style="--g: #2ecc71;"><td class="v">ln valor plantel comprador</td><td>643</td><td>16.12</td><td>1.03</td><td>11.56</td><td>15.36</td><td>16.13</td><td>16.91</td><td>19.02</td></tr>
+<tr style="--g: #2ecc71;"><td class="v">ln valor plantel vendedor</td><td>639</td><td>16.46</td><td>1.10</td><td>12.08</td><td>15.78</td><td>16.55</td><td>17.18</td><td>20.71</td></tr>
 </tbody>
 </table>
 ```
 
 ::: {style="font-size: 0.5em; color: #bdc3c7; margin-top: 8px;"}
-n = 1031 transferencias · Posiciones: Defensa 32% · Medio campo 29% · Delantero 30% · Portero 9%
+n = 663 transferencias · Posiciones: Defensa 30% · Medio campo 28% · Delantero 33% · Portero 9%
 :::
 
 :::
@@ -2113,6 +2118,10 @@ n = 1031 transferencias · Posiciones: Defensa 32% · Medio campo 29% · Delante
 #| include: false
 
 dv = pd.read_csv('dta_tesis.csv', low_memory=False)
+
+# Se excluyen las transferencias con contrato vencido (rest_transfer_window == 0).
+# Los faltantes se conservan: el criterio reproduce las 1116 de la Tabla 2.
+dv = dv[~(dv.rest_transfer_window == 0)]
 dv['grupo'] = np.where(dv.transfer_fee_deflac > 0, 'Con precio', 'Sin precio')
 
 # Mismo criterio que en las torres de puntos: relleno solido = con precio,
@@ -2127,11 +2136,11 @@ def distribucion(col, titulo_eje):
         y = dv[col] if g == 'Total' else dv.loc[dv.grupo == g, col]
         e = ESTILO_G[g]
         fig.add_trace(go.Violin(y=y.dropna(), name=g, box_visible=True,
-                                meanline_visible=True, points=False,
+                                meanline_visible=True, points=False, hoveron='kde', hoverinfo='y',
                                 line_color=e['color'], fillcolor=e['fill']))
     fig.update_layout(
         height=540, showlegend=False, margin=dict(l=100, r=30, t=16, b=50),
-        violingap=0.55,
+        violingap=0.55, hovermode='closest',
         yaxis=dict(title=dict(text=titulo_eje, font=dict(size=20)),
                    tickfont=dict(size=18), gridcolor='rgba(255,255,255,0.08)'),
         xaxis=dict(tickfont=dict(size=20)),
@@ -2170,10 +2179,10 @@ for var, nom, color in [('lvalor_plantel_to_d', 'Comprador', '#e74c3c'),
     fig.add_trace(go.Violin(
         x=['Total'] * len(sub) + sub['grupo'].tolist(),
         y=sub[var].tolist() * 2,
-        name=nom, box_visible=True, meanline_visible=True, points=False,
+        name=nom, box_visible=True, meanline_visible=True, points=False, hoveron='kde', hoverinfo='y+name',
         line_color=color, fillcolor='rgba(0,0,0,0)'))
 fig.update_layout(
-    violinmode='group', violingap=0.5, violingroupgap=0.12,
+    violinmode='group', violingap=0.5, violingroupgap=0.12, hovermode='closest',
     height=540, margin=dict(l=100, r=30, t=16, b=50),
     yaxis=dict(title=dict(text='ln del valor del plantel', font=dict(size=20)),
                tickfont=dict(size=18), gridcolor='rgba(255,255,255,0.08)'),
@@ -2275,8 +2284,7 @@ La edad se incorpora con término cuadrático, como propone la literatura (Carmi
 ::: {.callout-note appearance="minimal" icon=false title="Modelo 2 — Incorporación del poder de negociación"}
 ::: {style="font-size: 0.8em; line-height: 1.45;"}
 - Entra $B_{it}$: valor de plantel comprador y vendedor
-- Especificación log-log $
-ightarrow$ elasticidades
+- Especificación log-log $\rightarrow$ elasticidades
 - Salen altura y extranjero
 :::
 :::
@@ -3082,14 +3090,12 @@ fig.show()
 
 - El censurado infla los coeficientes entre 4 y 10 veces, salvo el del vendedor, que directamente se anula (0.307 → −0.008)
 
-**Dónde se concentran los ceros.** Fracción de transferencias sin precio, por quintil de cada variable:
+**Dónde se concentran los ceros.** Fracción de transferencias sin precio por quintil, sobre las 832 con contrato vigente donde corre el Tobit. En esa muestra el 50.8% no tiene precio, que es la proporción que informa la tabla.
 
-- **edad**: de 0.16 en el quintil más joven a 0.85 en el más viejo, de forma monótona
-- **valor del plantel comprador**: de 0.90 en el quintil más bajo a 0.14 en el más alto
-- **ventanas restantes**: de 0.65 a 0.12
-- **valor del plantel vendedor**: plano, entre 0.37 y 0.60
-
-**La conexión.** Al sumar los ceros sin corregir, la pendiente se arrastra hacia donde ellos se concentran. Donde la concentración es fuerte y monótona —edad, comprador, ventanas— el coeficiente del censurado se dispara. Donde los ceros se reparten entre todos los valores —el plantel vendedor— la relación se destruye.
+- **valor del plantel comprador**: de **0.91** en el quintil más bajo a **0.13** en el más alto. Es el gradiente más pronunciado
+- **edad**: de **0.22** a **0.85**, creciendo de forma monótona
+- **ventanas restantes**: de **0.66** a **0.13**
+- **valor del plantel vendedor**: mucho más plano, entre **0.60** y **0.36**
 
 **Los ceros y su distancia al umbral.** Las transferencias sin precio están cargadas como ln(0+1) = 0, mientras que el umbral de censura está en ln(45.000) ≈ 10.71. Esos ceros quedan, entonces, **10.71 unidades logarítmicas por debajo de la cota**, un valor que ninguna operación observada alcanza jamás.
 
@@ -3468,7 +3474,7 @@ La teoría destaca el salario y la cláusula de rescisión. Esa información es 
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #e74c3c;"}
 [Medición del rendimiento]{style="color: #f1948a; font-weight: bold;"}
 
-Las estadísticas disponibles no aíslan el aporte propio de cada posición. El caso de los porteros es el más evidente.
+Faltan estadísticas que aíslen el aporte de **defensores** —quites, duelos— y de **mediocampistas** —pases progresivos, regates—. Los arqueros son la excepción: tienen métricas propias.
 :::
 
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #e74c3c;"}
@@ -3480,10 +3486,16 @@ La fiabilidad de los precios de *transfermarkt* es menor en Sudamérica. Las tra
 ::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #e74c3c;"}
 [Alcance de la muestra ampliada]{style="color: #f1948a; font-weight: bold;"}
 
-Incorporar las transferencias sin precio mejora la estimación de atributos, rendimiento y contrato, pero no capta el poder de negociación.
+Incorporar las transferencias útil para estimar atributos, rendimiento y contrato. El valor del plantel pierde su efecto de negociación, porque se suman operaciones donde no hubo negociación entre clubes.
 :::
 
 ::::
+
+::: {style="background: rgba(255,255,255,0.055); border-radius: 10px; padding: 14px 16px; border-left: 4px solid #f39c12; max-width: 78%; margin: 18px auto 0 auto; font-size: 0.66em; line-height: 1.45;"}
+[Umbral de censura constante]{style="color: #f5b041; font-weight: bold;"} [· no planteada explícitamente en el trabajo]{style="color: #bdc3c7; font-size: 0.85em;"}
+
+Se fija un único umbral para toda la muestra. No se explora que el piso efectivo de negociación difiera entre clubes, salvedad que Carson y Sun (2007) dejan planteada.
+:::
 
 ## Conclusiones: Agenda Futura
 

@@ -1,0 +1,54 @@
+<!--
+  Personaliza el layout "Default" del Speaker View de reveal.js:
+  oculta la vista "Upcoming" y deja que las notas ocupen toda la columna derecha.
+
+  El plugin de notas escribe el HTML del speaker view con document.write sobre
+  una ventana about:blank (mismo origen), asi que desde el deck podemos entrar
+  a su DOM e inyectarle una hoja de estilos.
+-->
+<script>
+(function () {
+  var CSS = [
+    'body[data-speaker-layout="default"] #upcoming-slide { display: none !important; }',
+    'body[data-speaker-layout="default"] #speaker-controls {',
+    '  top: 0 !important;',
+    '  height: 100% !important;',
+    '  padding-top: 40px;',
+    '}',
+    /* que las notas usen el alto disponible y se puedan scrollear solas */
+    'body[data-speaker-layout="default"] .speaker-controls-notes {',
+    '  font-size: 1.15em;',
+    '}'
+  ].join('\n');
+
+  function inject(win) {
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries++;
+      try {
+        var doc = win.document;
+        if (doc && doc.head && doc.getElementById('upcoming-slide')) {
+          if (!doc.getElementById('custom-speaker-layout')) {
+            var style = doc.createElement('style');
+            style.id = 'custom-speaker-layout';
+            style.textContent = CSS;
+            doc.head.appendChild(style);
+          }
+          clearInterval(timer);
+          return;
+        }
+      } catch (e) {
+        /* la ventana todavia no es accesible: reintentar */
+      }
+      if (tries > 200) clearInterval(timer); // ~10 s y se rinde
+    }, 50);
+  }
+
+  var nativeOpen = window.open;
+  window.open = function (url, name) {
+    var win = nativeOpen.apply(window, arguments);
+    if (win && name === 'reveal.js - Notes') inject(win);
+    return win;
+  };
+})();
+</script>
