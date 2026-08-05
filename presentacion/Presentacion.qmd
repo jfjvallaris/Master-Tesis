@@ -2106,6 +2106,92 @@ n = 1031 transferencias · Posiciones: Defensa 32% · Medio campo 29% · Delante
 \* Amonestaciones y goles concedidos difieren de la Tabla 8 de la tesis por un error de transcripción; acá figuran los valores calculados sobre la base.
 :::
 
+## Distribuciones: Total, Con Precio y Sin Precio {.top}
+
+```{python}
+#| label: setup-violin
+#| include: false
+
+dv = pd.read_csv('dta_tesis.csv', low_memory=False)
+dv['grupo'] = np.where(dv.transfer_fee_deflac > 0, 'Con precio', 'Sin precio')
+
+# Mismo criterio que en las torres de puntos: relleno solido = con precio,
+# hueco = sin precio. El total queda en gris.
+ESTILO_G = {'Total':      dict(color='#7f8c8d', fill='rgba(127,140,141,0.35)'),
+            'Con precio': dict(color='#ecf0f1', fill='rgba(236,240,241,0.32)'),
+            'Sin precio': dict(color='#ecf0f1', fill='rgba(0,0,0,0)')}
+
+def distribucion(col, titulo_eje):
+    fig = go.Figure()
+    for g in ['Total', 'Con precio', 'Sin precio']:
+        y = dv[col] if g == 'Total' else dv.loc[dv.grupo == g, col]
+        e = ESTILO_G[g]
+        fig.add_trace(go.Violin(y=y.dropna(), name=g, box_visible=True,
+                                meanline_visible=True, points=False,
+                                line_color=e['color'], fillcolor=e['fill']))
+    fig.update_layout(
+        height=540, showlegend=False, margin=dict(l=100, r=30, t=16, b=50),
+        violingap=0.55,
+        yaxis=dict(title=dict(text=titulo_eje, font=dict(size=20)),
+                   tickfont=dict(size=18), gridcolor='rgba(255,255,255,0.08)'),
+        xaxis=dict(tickfont=dict(size=20)),
+        font=dict(size=18), paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+    return fig
+```
+
+::: {.panel-tabset}
+
+### Edad
+
+```{python}
+#| label: violin-edad
+#| fig-align: center
+distribucion('age', 'Edad (años)').show()
+```
+
+### Ventanas restantes
+
+```{python}
+#| label: violin-ventanas
+#| fig-align: center
+distribucion('rest_transfer_window', 'Ventanas de transferencia restantes').show()
+```
+
+### Valor de los planteles
+
+```{python}
+#| label: violin-plantel
+#| fig-align: center
+
+fig = go.Figure()
+for var, nom, color in [('lvalor_plantel_to_d', 'Comprador', '#e74c3c'),
+                        ('lvalor_plantel_from_d', 'Vendedor', '#2ecc71')]:
+    sub = dv[dv[var].notna()]
+    fig.add_trace(go.Violin(
+        x=['Total'] * len(sub) + sub['grupo'].tolist(),
+        y=sub[var].tolist() * 2,
+        name=nom, box_visible=True, meanline_visible=True, points=False,
+        line_color=color, fillcolor='rgba(0,0,0,0)'))
+fig.update_layout(
+    violinmode='group', violingap=0.5, violingroupgap=0.12,
+    height=540, margin=dict(l=100, r=30, t=16, b=50),
+    yaxis=dict(title=dict(text='ln del valor del plantel', font=dict(size=20)),
+               tickfont=dict(size=18), gridcolor='rgba(255,255,255,0.08)'),
+    xaxis=dict(tickfont=dict(size=20),
+               categoryorder='array', categoryarray=['Total', 'Con precio', 'Sin precio']),
+    legend=dict(orientation='h', yanchor='bottom', y=1.0, xanchor='center', x=0.5,
+                title_text='', font=dict(size=19)),
+    font=dict(size=18), paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+fig.show()
+```
+
+:::
+
+::: {style="font-size: 0.45em; color: #bdc3c7; margin-top: 6px;"}
+\* La Tabla 7 de la tesis informa lo contrario para la edad: allí los transferidos con precio aparecen como los de mayor edad promedio. Sobre la base, la relación es la inversa.
+:::
+
+
 ## Estrategia de Estimación: Modelos Anidados {.top style="font-size: 0.9em;"}
 
 ::: {style="display: flex; justify-content: center; gap: 45px; font-size: 0.62em; color: #7f8c8d; margin-bottom: 8px;"}
