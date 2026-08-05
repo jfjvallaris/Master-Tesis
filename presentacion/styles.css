@@ -508,3 +508,35 @@
   white-space: nowrap;
   z-index: 2;
 }
+
+/* === Tabla de estadistica descriptiva === */
+.reveal .slides section .tabla-desc {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.60em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.reveal .slides section .tabla-desc th {
+  text-align: right;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.reveal .slides section .tabla-desc th.v { text-align: left; }
+
+.reveal .slides section .tabla-desc td {
+  text-align: right;
+  padding: 2px 8px;
+  border: none;
+  white-space: nowrap;
+}
+
+/* Nombre de la variable, con la linea de color de su grupo */
+.reveal .slides section .tabla-desc td.v {
+  text-align: left;
+  border-left: 3px solid var(--g, transparent);
+  padding-left: 12px;
+}
