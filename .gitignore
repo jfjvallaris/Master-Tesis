@@ -161,3 +161,9 @@ cython_debug/
 
 # Quarto Presentation files
 Presentacion_files/
+
+# Salida publicada en GitHub Pages: no ignorar nada de docs/
+# (hace falta explicitarlo porque 'dist/' y 'lib/' de arriba
+#  atrapan carpetas internas de reveal.js)
+!docs/
+!docs/**

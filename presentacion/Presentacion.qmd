@@ -46,7 +46,18 @@ execute:
 :::
 
 ::: {.notes}
-Speaker notes go here.
+::: {style="font-size: 0.78em;"}
+Las dos preguntas ordenan todo el trabajo y se corresponden con los dos enfoques que la literatura usa para modelar el precio de una transferencia.
+
+La primera —qué atributos determinan el precio y con qué incidencia— es la pregunta del **modelo de precios hedónicos**: el precio como función de las características del bien.
+
+La segunda —si los clubes tienen poder de mercado y/o de negociación— es la pregunta del **enfoque de negociación**. El trabajo termina midiendo el poder de negociación y descartando la medición del poder de mercado, por una razón que aparece más adelante: el número de clubes interesados en un jugador es desconocido a priori.
+
+Clasificación JEL declarada: L83 (deportes) y C5 (modelos econométricos).
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 
@@ -221,6 +232,17 @@ df_mco_data['Color'] = [GRUPOS[g] for g in df_mco_data['Grupo']]
 - Particularidades
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+El primer motivo de la justificación es el vacío de literatura local. El trabajo se apoya en una revisión sistemática reciente para mostrar que el mercado argentino está prácticamente ausente de la producción académica sobre valuación de futbolistas.
+
+Los otros tres motivos —importancia económica, interés social y particularidades del mercado— aparecen en las pantallas siguientes.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Justificación del problema {auto-animate=true}
 
 ::: {.columns}
@@ -238,6 +260,17 @@ df_mco_data['Color'] = [GRUPOS[g] for g in df_mco_data['Grupo']]
 ::: {style="font-size: 0.5em;"}
 Fuente: Franceschi, Brocard, Follert & Gouguet (2024). *Determinants of football players’ valuation: A systematic review*.
 :::
+:::
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La cifra proviene de Franceschi, Brocard, Follert y Gouguet (2024), una revisión sistemática que parte de 3298 trabajos identificados y retiene 29 tras aplicar los criterios de inclusión.
+
+El mapa muestra la distribución geográfica de esos 29: la concentración europea es abrumadora y Argentina no aparece. Ese es el hueco que el trabajo busca ocupar.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -263,12 +296,16 @@ Fuente: Franceschi, Brocard, Follert & Gouguet (2024). *Determinants of football
 :::
 
 
-::: {.notes }
-::: {style="font-size: 0.8em;"}
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+**Importancia económica.** Coremberg, Sanguinetti y Wierny (2016) estiman el Valor Bruto de Producción del fútbol argentino de 2013 en unos USD 5.000 millones, equivalentes a cerca de USD 7.000 millones actuales. Los clubes se apropian solo del 20%. El VBP representa el 2.2% del consumo de los hogares, cifra comparable a la de España en 1999.
 
-Los 5mM representan aprox U$S 7.000 millones actuales
+**Interés social.** Al rating se suma la función social: los clubes operan como espacio de contención durante el período de formación de los jugadores.
 
-El mercado de futbolistas es uno de los pocos mercados, en el cuál las firmas pagan una tarifa por el derecho a contratar un trabajador con formación especializada, que está prestando sus servicios en otra firma
+**Particularidades.** El mercado de transferencias es uno de los pocos, quizá el único, donde una firma paga una tarifa por el derecho a contratar a un trabajador con formación especializada que presta servicios en otra firma. Los grandes deportes de conjunto de América del Norte perdieron esa característica al establecerse la agencia libre en 1976.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -330,6 +367,19 @@ Contrastar resultados con la evidencia de mercados europeos.
 
 ---
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+El objetivo general combina las dos preguntas de investigación: estimar precios implícitos y cuantificar el poder de negociación.
+
+Los cuatro específicos se reparten en dos pares. El primero y el cuarto miran la relación con la literatura internacional desde ángulos distintos: **validación** pregunta si los determinantes hallados en Europa operan también acá; **discusión** compara las magnitudes obtenidas contra la evidencia europea.
+
+El segundo y el tercero son el trabajo econométrico propiamente dicho: construir la estrategia de estimación y aplicarla.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Hipótesis de Investigación
 
 ::: {style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;"}
@@ -369,13 +419,6 @@ El tamaño del club genera asimetrías: presiona el precio a la baja al comprar 
 :::
 :::
 :::
-::: {.notes }
-::: {style="font-size: 0.9em;"}
-
-Existe una discrepancia en el concepto del ***tamaño*** de los clubes. En la investigación se sintetizan las dos ultimas hipótesis en una sola ***tamaño economico*** = Valor del plantel. Pero no necesariamente un club entendido como ***grande*** es el que tiene el plantel mas caro
-
-:::
-:::
 
 :::
 
@@ -387,17 +430,24 @@ de transferencia<br>
 (Descartada por falta de proxy directa para ingresos de clubes)
 :::
 :::
-::: {.notes }
-::: {style="font-size: 0.9em;"}
-
-Pero ¿Es esto realmente un problema?<br>
-"La diferencia de ingresos es en sí misma una característica del poder de negociación."
-
-:::
-:::
 :::
 
 ::: {.fragment}
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Las cuatro hipótesis retenidas se ordenan por su origen teórico. Las dos primeras vienen del modelo hedónico: el precio debería reflejar la calidad observable del jugador, medida por producción histórica (goles, asistencias) y por disponibilidad reciente (partidos jugados, que además señala ausencia de lesiones).
+
+La tercera recoge una ambigüedad que la literatura internacional resuelve con un término cuadrático: la experiencia suma mientras la vida útil restante y el valor de reventa restan.
+
+La cuarta introduce el poder de negociación por la vía del tamaño del club. En la investigación las hipótesis cuarta y quinta terminan sintetizadas en una sola, el **tamaño económico** aproximado por el valor del plantel. Conviene advertir que un club socialmente *grande* puede no ser el que tiene el plantel más caro.
+
+La quinta hipótesis —el crecimiento de los ingresos empuja los precios— se descarta por ausencia de una proxy directa de ingresos de los clubes argentinos. El propio trabajo observa que la diferencia de ingresos ya constituye, en sí misma, una dimensión del poder de negociación, con lo cual parte de ese efecto queda capturado por el valor del plantel.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 
@@ -456,6 +506,9 @@ Arriba, **economía del deporte**; abajo, **economía del fútbol**. Marcador ll
 ::: {style="font-size: 0.72em;"}
 **Principio de invariancia**: la distribución del talento entre equipos termina igual con o sin restricciones a la movilidad. Cambia **quién se queda con la renta**, el club o el jugador, no la asignación. Antecedente deportivo del teorema de Coase.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -472,6 +525,9 @@ Arriba, **economía del deporte**; abajo, **economía del fútbol**. Marcador ll
 ::: {style="font-size: 0.72em;"}
 **Louis-Schmelling**: Joe Louis ganaba más dinero cuanto más fuerte era su rival. **Producto conjunto invertido**: el espectáculo lo produce el enfrentamiento, no el club; son coproductores antes que competidores. Si el producto es el campeonato, la unidad económica es la liga, un monopolio natural.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -486,6 +542,9 @@ Arriba, **economía del deporte**; abajo, **economía del fútbol**. Marcador ll
 ::: {.notes}
 ::: {style="font-size: 0.72em;"}
 Primer trabajo argentino de economía del deporte. **Directa**: impacto sobre el producto bruto vía comercialización e inversión. **Indirecta**: mejora en calidad de vida y productividad laboral.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 :::
@@ -502,6 +561,9 @@ Primer trabajo argentino de economía del deporte. **Directa**: impacto sobre el
 ::: {style="font-size: 0.72em;"}
 **U = U(E, A, S, π)**: E el éxito deportivo, A la asistencia de espectadores, S la "salud" de la liga —el balance competitivo— y π los beneficios, sujeta a π ≥ 0. El club maximiza esa utilidad; el beneficio opera como restricción.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -517,6 +579,9 @@ Primer trabajo argentino de economía del deporte. **Directa**: impacto sobre el
 ::: {style="font-size: 0.72em;"}
 **Solución de negociación de Nash**: el precio surge del reparto del excedente entre comprador y vendedor según su poder relativo. De ahí que no sea realista tratarlos de forma simétrica.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -531,6 +596,9 @@ Primer trabajo argentino de economía del deporte. **Directa**: impacto sobre el
 ::: {style="font-size: 0.72em;"}
 Modelan el mercado de pases como competitivo. Lo que importa acá: empíricamente, negociación y precios hedónicos son difíciles de distinguir.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -544,6 +612,9 @@ Modelan el mercado de pases como competitivo. Lo que importa acá: empíricament
 ::: {.notes}
 ::: {style="font-size: 0.72em;"}
 **Precios hedónicos**: el precio como función de los atributos del bien, acá los del jugador. Es el enfoque que adopta esta tesis.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 :::
@@ -560,6 +631,9 @@ Modelan el mercado de pases como competitivo. Lo que importa acá: empíricament
 ::: {style="font-size: 0.72em;"}
 Segmentan por **tipo de operación** —horizontal, de ascenso y de descenso— cruzado con el nivel de división, y buscan qué variables pesan en cada segmento. Miden además el efecto de la ley Bosman.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -575,6 +649,9 @@ Segmentan por **tipo de operación** —horizontal, de ascenso y de descenso— 
 ::: {style="font-size: 0.72em;"}
 Clasifican clubes para saber si la transferencia implica mejora o deterioro. Adaptan el ranking UEFA porque un buen ranking no se corresponde con salarios altos. Mismo problema de identificación que enfrenta esta tesis.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -589,6 +666,9 @@ Clasifican clubes para saber si la transferencia implica mejora o deterioro. Ada
 ::: {style="font-size: 0.72em;"}
 Predictibilidad de los precios en torno al **85%**. Marca el estado del arte contra el que se contrasta este trabajo.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -596,16 +676,19 @@ Predictibilidad de los precios en torno al **85%**. Marca el estado del arte con
 :::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Lo que se ve al fusionar las dos líneas.** La economía del fútbol no llega después de que la economía del deporte se consolidó: Sloane (1971) cae entre Neale y Di Marco. Nace en paralelo.
+::: {style="font-size: 0.78em;"}
+La línea fusiona dos tradiciones que suelen presentarse por separado: arriba la economía del deporte, abajo la economía del fútbol.
 
-**Y lo que se ve del lado argentino.** Di Marco es contemporáneo de esa primera camada teórica, pero después de 1974 no hay hitos locales en el cuadro. El trabajo llega tarde en Argentina.
+**Lo que se ve al fusionarlas.** La economía del fútbol aparece en paralelo a la economía del deporte, y no como derivación posterior. Sloane (1971) cae entre Neale (1964) y Di Marco (1974).
 
-**El corte metodológico.** Todos los aportes teóricos son anteriores a 1975; toda la evidencia de estimación arranca en 1993 con Carmichael y Thomas. Hay casi veinte años entre el marco conceptual y el primer contraste empírico.
+**El corte metodológico.** Todos los aportes teóricos del cuadro son anteriores a 1975 y toda la evidencia de estimación arranca en 1993 con Carmichael y Thomas. Median casi veinte años entre el marco conceptual y el primer contraste empírico.
 
-**Si preguntan por qué falta tal trabajo.** La línea recoge los avances asociados a esta investigación. Hubo otra producción en el período, lateral o sobre otras ramas: el racismo, por ejemplo, se abordó varias veces sin resultados concluyentes.
+**El costado argentino.** Di Marco es contemporáneo de la primera camada teórica, y después de 1974 no hay hitos locales en el cuadro.
 
-**Hacia dónde va.** Los cuatro trabajos empíricos son los que arman la tradición en la que se inscribe esta tesis: el enfoque de negociación en 1993, el debate sobre competencia en 1997, la primera aplicación de precios hedónicos en 1999 y la segmentación del mercado en 2000.
+Los cuatro trabajos empíricos arman la tradición en la que se inscribe esta tesis: negociación en 1993, el debate sobre competencia en 1997, la primera aplicación de precios hedónicos en 1999 y la segmentación del mercado, también en 1999.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -651,16 +734,14 @@ Predictibilidad de los precios en torno al **85%**. Marca el estado del arte con
 :::
 :::
 :::
-::: {.notes }
-::: {style="font-size: 0.6em;"}
-**1. ROTTENBERG (1956)** <br>
-**Principio de invarianza:** El mercado libre es tan eficiente como la cláusula de reserva en términos de asignación de recursos
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Pantalla de reserva, reemplazada por la línea de tiempo unificada.
 
-**Cláusula de reserva:** impedir la movilidad de los jugadores, otorgando al club apoderado, pleno poder para disponer del futuro del jugador. Los jugadores, solo podían abandonar el club si la entidad deportiva los dejaba en libertad de acción. Se requería de dicho consentimiento, aun con el contrato vencido.
-
-**El mercado laboral es monopsonista**. Para la época, los jugadores de béisbol, y los futbolistas también, eran propiedad de los equipos de por vida.
-
-**El mercado de productos es monopolístico**. Esta es una característica específica para el caso específico del béisbol norteamericano, donde existen derechos de exclusividad en las ciudades para cada equipo. Esta exclusividad deriva en el ***ancla 3***: Hay clubes ricos y pobres, basados en asistencias en relación con el tamaño de la población. 
+Amplía las anclas teóricas de la economía del deporte. La **cláusula de reserva** impedía la movilidad del jugador y otorgaba al club pleno poder sobre su futuro, incluso con el contrato vencido. Sobre ese régimen Rottenberg formula el **principio de invariancia**: el mercado libre asigna el talento igual que la cláusula de reserva, y lo que cambia es quién se queda con la renta, el club o el jugador.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -681,10 +762,14 @@ timeline
     2021-24: Poli, Besson, y Ravene <br>-<br> Predictibilidad de los precios (85%)
 
 ```
-::: {.notes }
-::: {style="font-size: 0.7em;"}
-**Dobson y Gerard (2000)** <br>
-- La segmentación del mercado tuvo como referencia tres tipos de transferencia (horizontal, ascenso, descenso)
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Pantalla de reserva, reemplazada por la línea de tiempo unificada.
+
+Dobson y Gerrard (1999) segmentan el mercado inglés por tipo de operación —horizontal, de ascenso y de descenso— cruzado con el nivel de división, y estiman qué variables pesan en cada segmento.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -736,9 +821,18 @@ Según Carmichel & Thomas (1993)
 :::
 :::
 
-::: {.notes }
-::: {style="font-size: 0.6em;"}
-**Por qué**: Se puede comentar como lo resuelve el baseball finalmente
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+**El porqué** se remonta al *retain and transfer system*, aplicado en Inglaterra desde 1893 sobre el molde de la cláusula de reserva del béisbol norteamericano. Davenport (1969) resume el resultado: la cláusula creó un mercado nuevo, el de los contratos de jugadores. Desde entonces se compran y venden jugadores porque el derecho de exclusividad sobre el uso de su fuerza de trabajo, mientras el contrato está vigente, constituye una mercancía comerciable.
+
+El pasaje de Davenport que cita el trabajo es elocuente: la liga de béisbol nació en libertad de mercado, los Cincinnati Red Stockings ganaron los 57 partidos del campeonato de 1869, el público perdió interés y ningún club obtuvo beneficios. El despegue llegó con la cláusula de reserva en 1880.
+
+**El para qué** sigue a Carmichael y Thomas (1993), con un objetivo doble: recomponer los planteles para mejorar el rendimiento deportivo, y permitir que los jugadores busquen mejores oportunidades, ingresos o satisfacción laboral.
+
+La tercera motivación es contable y propia de España: el Plan General de Contabilidad solo reconoce los derechos federativos adquiridos a terceros, con lo cual los jugadores de cantera no computan al patrimonio y penalizan la capacidad crediticia del club.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -772,6 +866,21 @@ El mercado de transferencias no es verdaderamente competitivo: la negociación e
 :::
 :::
 
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+**La ecuación.** La solución de negociación de Nash maximiza el producto de las ganancias de ambas partes respecto de su punto de desacuerdo. **S(P)** y **B(P)** son las valoraciones del vendedor y del comprador ante un precio **P**; **s** y **b**, lo que cada uno obtiene si la operación se cae. El precio reparte el excedente conjunto según el poder relativo.
+
+**Heterogeneidad y escasez.** Carmichael y Thomas (2000) responden a la propuesta de mercado competitivo de Szymanski y Smith (1997). El argumento tiene dos casos: en el extremo, un club busca a un jugador puntual y hay monopolio bilateral; el caso más probable es que varios equipos busquen al jugador de un club determinado, con lo cual el vendedor conserva cierto poder monopólico.
+
+**Fallo de competencia.** Carmichael (2006) da dos razones por las que el mercado no llega a ser verdaderamente competitivo: la incertidumbre, que conduce al riesgo y a la incompletitud contractual; y la negociación de pequeños números asociada a la especificidad de la transacción, donde la identidad de las partes importa.
+
+La consecuencia es decisiva para la estrategia empírica: cuando las partes afectan el precio, los resultados del modelo hedónico estándar quedan invalidados (Feenstra, 1995). Esa es la razón por la que el trabajo le agrega un término de negociación.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 ## Modelo de Precios Hedónicos (HPM)
@@ -814,6 +923,23 @@ Los clubes compran jugadores para abrir mercados o ***vender camisetas***.
 :::
 :::
 
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+**El modelo.** Lancaster (1966) plantea formalmente el problema; Rosen (1974) lo convierte en una función hedónica estimable, consistente con firmas maximizadoras de beneficios y consumidores maximizadores de utilidad. Existen mercados competitivos implícitos que definen precios sombra de equilibrio para cada característica del bien: son los que igualan oferta y demanda de los atributos. Acá, cada atributo del jugador tiene un precio implícito y el precio de la transferencia resulta de la suma de esas valoraciones.
+
+**Mercado consolidado.** Szymanski y Smith (1997) sostienen que la caída del poder monopsónico consolidó un mercado de muchos compradores y vendedores. Los mismos autores advierten algo que el trabajo retoma varias veces: empíricamente, negociación y precios hedónicos son difíciles de distinguir.
+
+**Información perfecta.** Kuper y Szymanski (2012), en *Soccernomics*, llevan el argumento al extremo. Bajo ese supuesto el precio se corresponde con la calidad y un hedónico puro alcanzaría.
+
+**Ineficiencia y marketing.** Altman (2013), fundador de North Yard Analytics, objeta esa correspondencia. Para los mejores jugadores hay muy pocos compradores y vendedores: cuando tres o cuatro equipos pujan por tres o cuatro jugadores, la eficiencia sufre. Su segundo argumento es que los clubes también compran para vender camisetas o abrir mercados; el trabajo cita a Boca Juniors incorporando a Naohiro Takahara en 2001 para captar público japonés.
+
+De ahí una distinción que el trabajo subraya: la eficiencia económica es más amplia que la deportiva, porque incluye las expectativas de ingresos futuros. Se trata de convertir dinero en más dinero. Es la disputa entre la noción de firma de Sloane (1971) y la de Rottenberg (1956).
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 
@@ -1192,6 +1318,21 @@ plt.show()
 
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Acá se arma el modelo que el trabajo efectivamente estima.
+
+Harding, Rosenthal y Sirmans (2003) muestran que en mercados débiles —pocos agentes, pocos sustitutos para el bien heterogéneo— el excedente no se reduce a cero, porque no entran nuevos compradores ni vendedores. Ese excedente positivo se reparte según el poder de negociación.
+
+Para incorporarlo se agrega un término **B_j** a la función hedónica. Valores positivos de **B_j** indican poder de negociación favorable al **vendedor**, que empuja el precio hacia arriba; valores negativos, favorable al **comprador**, que opera como descuento.
+
+La advertencia de Szymanski y Smith sigue en pie: los dos enfoques son difíciles de separar empíricamente. El trabajo elige el hedónico por su potencia para modelar bienes diferenciados por atributos, y le suma variables de negociación por considerar certeras las críticas sobre la competencia del mercado.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 
 ## Supuestos del modelo
 ::: {style="font-size: 0.85em;"}
@@ -1211,6 +1352,9 @@ Harding et al. no modelan explícitamente el poder de mercado a partir del núme
 Cotteleer et al. muestran que esta es una limitación del enfoque original, pero acá se mantiene esta exclusión para conservar comparabilidad y simplicidad del modelo.
 La negociación se interpreta como resultado de atributos de los agentes, no de la estructura del mercado.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -1225,6 +1369,9 @@ Se descarta el supuesto de simetría en los efectos de las características de c
 Harding et al. imponen simetría como restricción identificadora.
 Sin embargo, en mercados laborales y de transferencias esta simetría resulta poco realista.
 Eliminar esta restricción permite capturar diferencias estructurales entre compradores y vendedores.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 :::
@@ -1245,6 +1392,9 @@ Cotteleer et al. relajan explícitamente el supuesto de simetría y permiten coe
 Carmichael y Thomas muestran que en negociaciones laborales los roles no son intercambiables.
 En el mercado de transferencias de futbolistas, clubes vendedores y compradores enfrentan restricciones y objetivos distintos, por lo que la asimetría es conceptualmente más adecuada.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -1261,6 +1411,9 @@ Este es un supuesto estándar de exogeneidad utilizado para identificar el model
 No implica que se elimine todo posible sesgo, sino que bajo este supuesto los coeficientes pueden interpretarse como efectos de negociación.
 Cotteleer et al. adoptan este supuesto como alternativa a imponer simetría, privilegiando interpretabilidad.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 :::
@@ -1276,6 +1429,19 @@ donde $B_j$ representa las características de negociación del comprador y del 
 :::
 :::
 
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La ecuación descompone el precio de una transferencia *j* en dos partes aditivas: la función hedónica evaluada en los atributos del jugador, y el efecto de la negociación en esa operación puntual. **B_j** se interpreta como un desvío respecto del valor de mercado, producto de la asimetría de poder entre las partes.
+
+Los cuatro supuestos definen qué se conserva y qué se modifica del modelo de Harding, Rosenthal y Sirmans (2003). Cada uno tiene su propio comentario al pasar el fragmento.
+
+El conjunto persigue un objetivo único: que los coeficientes de las variables de club puedan leerse como poder de negociación, separados de los precios implícitos de los atributos del jugador.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 ## Especificación empírica
@@ -1354,6 +1520,23 @@ $$
 
 ::::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Las tres ecuaciones son la misma, abierta en etapas.
+
+**La transformación logarítmica** de la variable dependiente cumple tres funciones. Convierte los coeficientes en cambios porcentuales, es decir en precios implícitos directamente legibles. Es consistente con una distribución log-normal, que respeta la no negatividad del precio. Y responde al criterio del rango de Weisberg (2005): cuando los valores abarcan más de un orden de magnitud, conviene trabajar en logaritmos.
+
+**La descomposición de *Z* ** separa cuatro bloques: **J** las características del jugador, **R** el rendimiento de la temporada anterior, **L** el contrato y **S** el tiempo. El rezago de **R** es deliberado: al momento de negociar, la información disponible es la de la temporada ya jugada.
+
+**La descomposición de *B* ** es donde se materializa el supuesto de asimetría. El poder de negociación entra con dos coeficientes propios, **λ_v** para el valor del plantel vendedor y **λ_c** para el comprador. Si se hubiese mantenido la simetría de Harding et al., habría un único parámetro y la pregunta sobre la asimetría quedaría sin respuesta empírica.
+
+Al estar ambos en logaritmos, los coeficientes se leen como elasticidades: cuánto varía el precio ante un cambio porcentual en el valor del plantel.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 
 
 ## Información Muestral {auto-animate=true .top}
@@ -1394,6 +1577,19 @@ $$
 * La información contractual se complementó con capturas del sitio web en *archive.org* e información de *mercadodepases.ar* y diversos medios periodísticos.
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Punto de partida del recorte muestral: 1484 traspasos del fútbol argentino relevados en transfermarkt, desde el mercado de verano europeo de 2021 hasta 2024.
+
+La fuente principal es única, con dos complementos para la información contractual, que es la más frágil del relevamiento: capturas históricas del sitio en archive.org y datos de mercadodepases. Esa fragilidad explica buena parte de las bajas que vienen en las pantallas siguientes.
+
+Las cuatro pantallas de esta serie recorren el mismo embudo: de 1484 observaciones crudas a la muestra efectivamente estimable.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Información Muestral {auto-animate=true .top}
 
 :::: {.w-container}
@@ -1432,6 +1628,19 @@ $$
 
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La primera baja es conceptual antes que técnica: 368 transferencias de jugadores con el contrato vencido.
+
+Cuando el contrato venció, el club vendedor perdió los derechos federativos sobre el jugador y no tiene nada que cobrar. La transferencia se produce igual, y sin tarifa. El trabajo lo formula con precisión: para estos casos la probabilidad de observar un precio es cero.
+
+La distinción es la que sostiene toda la estrategia de censura posterior. Un cero por contrato vencido responde a una razón institucional; un cero con contrato vigente responde a una decisión de mercado. Solo el segundo es el objeto de la corrección Tobit.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Información Muestral {auto-animate=true .top}
 
 :::: {.w-container}
@@ -1465,6 +1674,19 @@ $$
 * 44 con precio de transferencia. $\frac{\bar{x_p}}{\mu_p} = 0.6$
 
 * Potencial sesgo de poca popularidad (jugador o equipo vendedor)
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Segunda baja: 284 observaciones sin información contractual, que es lo que impide clasificarlas en el grupo anterior.
+
+De esas, 44 tenían precio de transferencia, y su precio medio equivale a 0.6 del precio medio general. El dato importa porque las bajas no son aleatorias: las transferencias que quedan sin registro contractual tienden a ser las más baratas.
+
+De ahí el sesgo potencial que el trabajo declara, asociado a la poca popularidad del jugador o del equipo vendedor. Los datos con menos cobertura periodística son los que peor se registran.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 
@@ -1501,6 +1723,19 @@ $$
 
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Tercera baja: faltantes en las estadísticas de rendimiento y en la valoración de los planteles.
+
+Opera la misma lógica que en la pantalla anterior. Un jugador con pocos partidos registrados en ligas de menor cobertura, o un club de una liga periférica sin valuación de plantel, quedan fuera. El sesgo potencial se asocia otra vez a la popularidad del equipo o a la nacionalidad del vendedor.
+
+Declarar la dirección probable del sesgo permite al lector calibrar los resultados: la muestra final sobrerrepresenta el segmento más visible del mercado.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Muestra Final {auto-animate=true .top}
 
 :::: {.w-container}
@@ -1531,6 +1766,19 @@ $$
 * Se recopilaron 769 transferencias con información relevante completa:<br> <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#fff;vertical-align:middle;"></span> **Con Precio (388)** y <span style="display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-sizing:border-box;vertical-align:middle;"></span> **Sin Precio (381)**.
 
 * La incorporación de las transferencias sin precio a la muestra se modela usando *Tobit*
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La muestra de regresión queda en 769 transferencias con información completa, repartidas casi por mitades entre 388 con precio y 381 sin precio.
+
+Conviene tener presente que en el trabajo conviven tres recortes distintos. Las **descriptivas** y los gráficos de distribución usan las 1116 transferencias con contrato verificado, de las cuales 453 tienen precio: son las Tablas 2 y 3. Los **modelos de precios positivos** corren sobre las que tienen precio e información completa. Los **modelos con censura** incorporan además las que no tienen precio y conservan contrato vigente.
+
+Esa proporción de ceros cercana a la mitad es el hecho que obliga a salir del MCO. Descartarlos desperdicia la mitad de la información; tratarlos como precio cero observado distorsiona las estimaciones. El Tobit es la salida que el trabajo adopta.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 
 
@@ -1570,6 +1818,21 @@ Es la **sumatoria** de los valores de mercado individuales de todos los jugadore
 :::
 
 ::::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Dos variables de transfermarkt que conviene no confundir.
+
+El **precio** es la cifra declarada de la operación. El detalle relevante es la normalización: el dato siempre se expresa como el equivalente al 100% del pase. Una venta del 70% por 7 millones se registra como 10 millones. Sin esa normalización, las operaciones parciales aparecerían artificialmente baratas.
+
+El **valor de mercado** se construye por criterio de la comunidad de transfermarkt, sin algoritmo. No pretende anticipar el precio de una operación puntual; es el valor esperado del jugador en el mercado, condicionado al contexto y a las modalidades de fichaje.
+
+El **valor del plantel** es la suma de los valores individuales del equipo, y es la variable con la que el trabajo aproxima el tamaño económico del club y, por esa vía, su poder de negociación. Al ser una suma de valuaciones subjetivas agregadas, arrastra la calidad de cada una, y esa es una de las limitaciones que se declaran al cierre.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
 
 
 
@@ -1727,6 +1990,19 @@ def clean_value(value):
 :::
 
 ::::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La pantalla muestra cómo se lee una ficha de transfermarkt y qué decisiones se tomaron al convertirla en observaciones.
+
+Interesa por una razón metodológica: el relevamiento no fue una descarga de base, sino la reconstrucción registro por registro de una fuente pensada para consumo periodístico. Los casos que la ficha marca de manera especial —cesiones, retornos de préstamo, operaciones sin cifra— exigen un criterio explícito, y ese criterio determina qué termina siendo una transferencia en la muestra.
+
+La reproducibilidad del trabajo depende de que estas reglas queden escritas.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
 
 
 
@@ -1915,6 +2191,19 @@ except Exception as e:
     print(f"⚠️ Error: {e}")
 ```
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Distribución de las transferencias a lo largo del período, por ventana.
+
+El mercado argentino tiene dos ventanas por temporada y el volumen se reparte de manera desigual entre ellas. Esa estacionalidad justifica dos decisiones de la especificación: la variable de estación —el indicador de verano— y la medición del contrato restante en **ventanas** en lugar de meses.
+
+La segunda es la más interesante. Lo que aprieta a un club a vender no es el paso del tiempo en sí, sino la cantidad de oportunidades de venta que le quedan antes de perder al jugador sin compensación. Contar ventanas mide exactamente eso.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 
 ## Definición de Variables y Signos Esperados {.smaller}
 
@@ -2002,6 +2291,19 @@ El valor del plantel opera como un **vector resumen de características** —eda
 :::
 ::::
 
+:::
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La tabla fija los signos esperados antes de estimar, que es la forma correcta de someter las hipótesis a contraste.
+
+Vale la pena mirar dónde el trabajo se permite un signo ambiguo. Las posiciones llevan interrogante porque la teoría no ordena a priori cuánto vale un delantero frente a un defensor. `extranjero` también, porque compiten dos efectos: la señal de calidad de haber sido buscado afuera y el costo de adaptación. La edad lleva signo negativo con cuadrática, recogiendo la ambigüedad de la tercera hipótesis.
+
+Sobre las variables de negociación conviene una advertencia de interpretación. El valor del plantel resume muchas características del club —división, categoría deportiva, capacidad económica, país—, y por eso su coeficiente captura poder de negociación junto con otros atributos del club de origen y destino. La lectura como poder de negociación puro exige tener presente ese contenido múltiple.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -2111,6 +2413,21 @@ n = 663 transferencias · Posiciones: Defensa 30% · Medio campo 28% · Delanter
 \* Amonestaciones y goles concedidos difieren de la Tabla 8 de la tesis por un error de transcripción; acá figuran los valores calculados sobre la base.
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Las tres pestañas usan las 1116 transferencias con contrato verificado, el mismo recorte de las Tablas 2 y 3 del trabajo: 453 con precio y 663 sin precio.
+
+La comparación entre pestañas anticipa buena parte de los resultados. Los transferidos con precio son más jóvenes, tienen más partidos jugados, más contrato por delante y pertenecen a clubes de mayor valor de plantel. Cada una de esas diferencias reaparece después como coeficiente significativo.
+
+El reparto por posición se mantiene estable entre grupos, con la excepción de los porteros, que pesan casi el doble entre los transferidos sin precio.
+
+**Sobre el asterisco.** Las amonestaciones y los goles concedidos difieren de la Tabla 8 del trabajo por un error de transcripción. Los valores de esta pantalla son los recalculados sobre la base.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Distribuciones: Total, Con Precio y Sin Precio {.top}
 
 ```{python}
@@ -2200,6 +2517,23 @@ fig.show()
 \* La Tabla 7 de la tesis informa lo contrario para la edad: allí los transferidos con precio aparecen como los de mayor edad promedio. Sobre la base, la relación es la inversa.
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Los violines completan lo que la tabla anterior no puede mostrar: la forma de cada distribución.
+
+**Edad.** Los transferidos sin precio se concentran en edades mayores y su distribución tiene una cola derecha más pesada. Es la traducción visual del coeficiente negativo de la edad.
+
+**Ventanas restantes.** La diferencia entre grupos es la más marcada. Las transferencias sin precio se acumulan en valores bajos, cerca del vencimiento del contrato, cuando el club vendedor ya casi no tiene poder para reclamar una tarifa.
+
+**Valor de los planteles.** Comprador y vendedor comparten pantalla porque lo que interesa es la brecha. El plantel comprador se corre hacia la derecha en las operaciones con precio, y esa separación es la que después aparece como el coeficiente más grande del modelo.
+
+**Sobre el asterisco.** La Tabla 7 del trabajo informa lo contrario para la edad. La inversión se verificó recalculando sobre la base original.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 
 ## Estrategia de Estimación: Modelos Anidados {.top style="font-size: 0.9em;"}
 
@@ -2277,6 +2611,9 @@ El modelo hedónico más simple: el precio se explica únicamente por los atribu
 
 La edad se incorpora con término cuadrático, como propone la literatura (Carmichael y Thomas, 1993): la experiencia suma valor hasta un punto a partir del cual se impone la pérdida de potencial.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -2293,6 +2630,9 @@ La edad se incorpora con término cuadrático, como propone la literatura (Carmi
 Se suman las características generales de los clubes: el logaritmo del **valor de mercado del plantel** comprador y vendedor de la temporada anterior, como *proxy* del poder de negociación. Al ser una especificación log-log, λ_v y λ_c se leen como **elasticidades precio–valoración del plantel**.
 
 Se aprovecha para depurar las características personales que, como en buena parte de la literatura hedónica, no resultan significativas: la **altura** y la condición de **extranjero**.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 :::
@@ -2311,6 +2651,9 @@ Segunda depuración, ahora sobre el rendimiento: salen las estadísticas no sign
 
 Es el modelo más parsimonioso sin censura y el que se prefiere para interpretar los resultados.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -2328,9 +2671,31 @@ En lugar de representar a los clubes mediante el valor de sus planteles, se los 
 
 El objetivo es saturar el modelo y detectar si existen factores no observables de los equipos que alteren sustancialmente los coeficientes estimados en el Modelo 3.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
+:::
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Los cuatro modelos están anidados, y esa es la lógica de la secuencia: cada uno se obtiene del anterior agregando o quitando variables, de modo que las diferencias entre columnas sean atribuibles a esos cambios.
+
+El **Modelo 1** es el hedónico puro, con **B_it = 0**: ninguna característica de los clubes. Incluye el efecto cuadrático de la edad, que es la forma en que la literatura internacional modela el ciclo de valor del jugador.
+
+El **Modelo 2** incorpora el valor de plantel de comprador y vendedor, y depura las variables tradicionalmente no significativas —altura, condición de extranjero, comunitario—.
+
+El **Modelo 3** hace una segunda depuración, ahora sobre el rendimiento: salen las estadísticas sin significatividad o con signo opuesto al esperado, que carecen de interpretación teórica. Es el modelo preferido y el que después se estima por Tobit.
+
+El **Modelo 4** reemplaza las variables de club por efectos fijos de comprador y vendedor. Es un modelo saturado que sirve de control: si los efectos fijos cambiaran sustancialmente el resto, habría factores no observables de los clubes contaminando la estimación.
+
+Una observación de lectura: la sección metodológica indica que el efecto cuadrático de la edad se elimina en el Modelo 2, mientras la Tabla 9 lo muestra todavía presente en el 2 y ausente en el 3. La secuencia de esta pantalla sigue a la tabla.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -2372,6 +2737,9 @@ Inocuo para las observaciones con precio y permite incorporar los ceros.
 - Inocuo: ln(45.249) ≈ ln(45.250).
 - **Analogía FIFA:** si prohibieran los pases gratis sin fijar mínimo, los clubes pondrían 1 euro simbólico. La voluntad de las partes sería la misma → el cero es resultado de negociación, no dato faltante.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -2391,6 +2759,9 @@ Para estimar alcanza con conocer dónde está esa cota.
 - **Royston (1992):** no rechaza normalidad de los precios positivos (62%) → menos probable aún que la brecha esconda valores cerca de cero.
 - No hace falta observar ningún y* bajo el umbral, solo conocer la cota.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -2409,6 +2780,9 @@ Se adopta $L=\ln(45.000)$, el número redondo más cercano al mínimo observado 
 - En muestras grandes no hay pérdida de eficiencia.
 - Sugieren números redondos. Acá aplica a medias: precios en euros, negociación en dólares. → **L = ln(45.000)**.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -2417,11 +2791,17 @@ Se adopta $L=\ln(45.000)$, el número redondo más cercano al mínimo observado 
 ::::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Si preguntan por la muestra**
+::: {style="font-size: 0.78em;"}
+El problema que ordena toda la segunda mitad del trabajo.
 
-- Figura = **1.116** con contrato verificado (Tabla 2), de las cuales **453** con precio (Tabla 3).
-- Distinta de la muestra de regresión: **769** = 388 con precio + 381 sin precio, las de información completa.
+Cerca de la mitad de las transferencias con contrato vigente se registran sin precio. Cargadas como **ln(0+1) = 0**, esos ceros quedan muy por debajo de cualquier operación observada: la transferencia más barata de la muestra ronda los 45.249 euros constantes, con lo cual el umbral de censura se ubica en torno a **ln(45.000) ≈ 10,71**.
+
+Ahí está la particularidad respecto del Tobit de manual. El caso clásico censura en cero, donde el salto entre la cota y la primera observación es nulo. Acá la cota está muy por encima de cero, y entre el cero registrado y el umbral median unas 10,71 unidades logarítmicas de vacío.
+
+Carson y Sun (2007) muestran mediante simulaciones de Monte Carlo que ubicar mal el umbral introduce más sesgo que ignorar la censura. De ahí la insistencia del trabajo en fundamentar dónde se fija.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -2459,6 +2839,9 @@ Se estima solo con las observaciones de precio positivo. Equivale a un modelo tr
 - Riesgo: si la decisión de transferir se correlaciona con lo que determina el valor → **sesgo de selección**.
 - Válido igual si el interés se limita a los transferidos con precio.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -2487,6 +2870,9 @@ Incorpora las transferencias sin precio **sin corrección alguna**: asume que un
 - MCO con los positivos **y** los ceros con contrato vigente.
 - Supone que el valor nulo es un resultado válido y observable.
 - Sin ajuste por censura: los coeficientes ignoran la probabilidad de pertenecer al grupo con precio.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 :::
@@ -2521,6 +2907,9 @@ Trata la censura como un **fenómeno estructural del mercado** y ajusta la estim
 - La base no tiene estadísticas de jugadores no transferidos.
 - **Carmichael et al. (1999):** el enfoque de negociación es incompatible con selección-corrección. Toda variable de la ecuación de precio debe ir en la de probabilidad de transferencia, pero para el no transferido no existe club comprador.
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
 :::
 :::
 
@@ -2546,6 +2935,26 @@ Los coeficientes de pendiente de MCO estiman directamente el cambio marginal, mi
 - Continuas: efecto parcial al promedio (EPA) o efecto parcial promedio (**EPP**, preferido).
 - Discretas: la comparación MCO vs Tobit no es directa (Wooldridge, 2010).
 :::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+:::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Tres formas de tratar el mismo problema, que después se comparan lado a lado.
+
+El **truncado** descarta las observaciones sin precio y estima por MCO sobre las positivas. Es la opción implícita de cualquier regresión que simplemente ignore los ceros. Su costo es de eficiencia y, si la selección no es aleatoria, también de sesgo.
+
+El **censurado** incorpora los ceros por MCO sin corrección, tratando el precio cero como un resultado válido y observable. Es el peor de los tres, y la comparación posterior lo muestra con claridad.
+
+El **Tobit** trata la censura como fenómeno estructural del mercado: modela conjuntamente la probabilidad de observar un precio y su magnitud condicional. Se aplica exclusivamente sobre la especificación del Modelo 3.
+
+Una advertencia de interpretación que el trabajo retoma de Wooldridge (2010): los coeficientes de pendiente de MCO estiman directamente el cambio marginal, mientras el coeficiente Tobit requiere un factor de ajuste para ser comparable. Por eso la tabla que sigue trabaja con **efectos marginales** y no con parámetros crudos.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -2613,38 +3022,17 @@ Variable dependiente: `lprecio`. Errores estándar robustos de Huber-White entre
 :::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Relaciones entre modelos.** Las dos slides son la misma tabla: la segunda es para seguir hablando sin el puntero encima.
+::: {style="font-size: 0.78em;"}
+La Tabla 9 del trabajo, con las cuatro columnas de modelos anidados.
 
-**M1 → M2** · entran los valores de plantel
+Lo que conviene mirar al recorrerla: qué variables sobreviven a las dos depuraciones, cuánto se mueven los coeficientes al incorporar el valor de plantel entre el Modelo 1 y el 2, y qué pasa con el ajuste.
 
-- R² 0.34 → 0.63, el salto más grande del cuadro
-- **edad** se achica de −0.449 a −0.169 y la cuadrática deja de ser significativa
-- El término cuadrático sitúa el mínimo en **37.4 años**, edad que solo **12 observaciones** superan: el tramo creciente descansa en muy pocos casos. Su pérdida de significancia en M2 respalda eliminarlo
-- **comunitario** pierde significancia justo acá: era proxy de acceso a Europa
-- Las **posiciones** recién ahora discriminan: medios +27%, delanteros +29% (Kennedy, 1981)
-- **temporada** pasa de no significativa a 18% real anual
-- Elasticidades: comprador 0.53, vendedor 0.31
+El salto de bondad de ajuste entre el Modelo 1 y el 2 es la evidencia central a favor del enfoque de este trabajo: incorporar la identidad económica de los clubes explica una porción sustancial de la variabilidad del precio que el hedónico puro deja afuera.
 
-**M2 → M3** · depuración
-
-- Salen edad², comunitario, asistencias, amonestaciones, expulsiones, las de arquero y verano
-- Los coeficientes que quedan casi no se mueven: el modelo es robusto a la depuración
-- Ramsey RESET p = 0.91 → es lo que justifica quedarse con este
-
-**M3 → M4** · efectos fijos
-
-- R² 0.918, pero con 115 grados de libertad: saturación, no un modelo mejor
-- Los planteles salen, los absorben los efectos fijos de club
-- Sobreviven edad, ventanas y goles; posiciones y temporada pierden significancia
-
-**Si preguntan**
-
-- Signos contrarios (expuls, goles_conced, vallas_inv): sin interpretación teórica, se depuran en M3. Muestra chica de arqueros
-- Errores robustos de Huber-White: Breusch-Pagan rechaza homocedasticidad en los cuatro
-- R²: el modelo es explicativo, no predictivo
-- N 390 contra 388: faltantes en las variables de plantel
-- edad² sigue en M2 y se elimina en M3. Metodología dice que sale en M2: es error del capítulo
+El Modelo 4, con efectos fijos, cumple su función de control. Sus coeficientes conservan el orden de magnitud de los del Modelo 3, lo cual indica que las variables de club capturan buena parte de lo que capturarían los efectos fijos.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -2695,38 +3083,15 @@ Variable dependiente: `lprecio`. Errores estándar robustos de Huber-White entre
 :::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Relaciones entre modelos.** Las dos slides son la misma tabla: la segunda es para seguir hablando sin el puntero encima.
+::: {style="font-size: 0.78em;"}
+La misma tabla en versión estática, para detenerse en las cifras.
 
-**M1 → M2** · entran los valores de plantel
+Dos lecturas que ordenan lo que sigue. Primero, la edad es el atributo individual más determinante y entra de forma lineal decreciente en el modelo preferido. Segundo, el coeficiente del valor de plantel del comprador es el más grande de toda la tabla, bastante por encima del vendedor.
 
-- R² 0.34 → 0.63, el salto más grande del cuadro
-- **edad** se achica de −0.449 a −0.169 y la cuadrática deja de ser significativa
-- El término cuadrático sitúa el mínimo en **37.4 años**, edad que solo **12 observaciones** superan: el tramo creciente descansa en muy pocos casos. Su pérdida de significancia en M2 respalda eliminarlo
-- **comunitario** pierde significancia justo acá: era proxy de acceso a Europa
-- Las **posiciones** recién ahora discriminan: medios +27%, delanteros +29% (Kennedy, 1981)
-- **temporada** pasa de no significativa a 18% real anual
-- Elasticidades: comprador 0.53, vendedor 0.31
-
-**M2 → M3** · depuración
-
-- Salen edad², comunitario, asistencias, amonestaciones, expulsiones, las de arquero y verano
-- Los coeficientes que quedan casi no se mueven: el modelo es robusto a la depuración
-- Ramsey RESET p = 0.91 → es lo que justifica quedarse con este
-
-**M3 → M4** · efectos fijos
-
-- R² 0.918, pero con 115 grados de libertad: saturación, no un modelo mejor
-- Los planteles salen, los absorben los efectos fijos de club
-- Sobreviven edad, ventanas y goles; posiciones y temporada pierden significancia
-
-**Si preguntan**
-
-- Signos contrarios (expuls, goles_conced, vallas_inv): sin interpretación teórica, se depuran en M3. Muestra chica de arqueros
-- Errores robustos de Huber-White: Breusch-Pagan rechaza homocedasticidad en los cuatro
-- R²: el modelo es explicativo, no predictivo
-- N 390 contra 388: faltantes en las variables de plantel
-- edad² sigue en M2 y se elimina en M3. Metodología dice que sale en M2: es error del capítulo
+Esa asimetría entre comprador y vendedor es el hallazgo que el trabajo destaca al concluir, y es la que justifica haber levantado el supuesto de simetría de Harding et al.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 ## Resultados: Efectos Estimados del Modelo 3 {.top}
@@ -2789,21 +3154,17 @@ fig.show()
 ```
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Acá se lee el Modelo 3 en detalle.**
+::: {style="font-size: 0.78em;"}
+Los efectos del Modelo 3 con sus intervalos de confianza, agrupados por la descomposición que se presentó en la metodología: jugador, rendimiento, contrato y tiempo, negociación.
 
-- **edad** −10% por año. Lineal: la experiencia ganada en el fútbol local no compensa el paso del tiempo
-- **pj** +1.2% por partido · **goles** +2.8% por gol
-- **ventanas restantes** +13.8%. Al revés, perder una cuesta casi 14%. Es asociación, no receta para renovar contratos
-- **temporada** +16.4% real anual
-- **planteles**: comprador 0.54 contra vendedor 0.31, la asimetría
+El gráfico permite ver de un vistazo lo que la tabla obliga a reconstruir: qué intervalos cruzan el cero y cuáles quedan claramente de un lado.
 
-**Lo que el gráfico muestra y la tabla no**
+Del bloque de rendimiento sobreviven las dos estadísticas más reconocidas, partidos jugados y goles. El trabajo lo lee como una limitación de las variables disponibles antes que como una ausencia de efecto: las estadísticas públicas capturan mal el aporte de defensores y mediocampistas, cuyo rendimiento se juega en acciones que transfermarkt no registra.
 
-- El intervalo de **portero** es el más ancho del modelo. La escasez de observaciones en esa posición y la especificidad de su rol impiden una estimación precisa; la amplitud del intervalo lo expresa con más claridad que el asterisco de la tabla
-- **Ojo con la escala**: pj y goles parecen pegados al cero porque el coeficiente es por *un* partido o *un* gol. Veinte partidos más superan cualquier dummy de posición
-- **edad** es el único negativo y tiene el intervalo más angosto: es el efecto mejor estimado del modelo
-- *Unidades*: las de plantel son elasticidades, porcentaje ante 1%; el resto son semi-elasticidades, porcentaje por unidad
+El bloque de negociación concentra los dos coeficientes de mayor magnitud.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -2909,18 +3270,15 @@ fig.show()
 ```
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Advertencia de lectura.** El salto de M1 a M3 acumula **dos** cambios: la incorporación del poder de negociación, que ocurre en M2, y la depuración posterior. No es atribuible únicamente a la entrada de los clubes.
+::: {style="font-size: 0.78em;"}
+La comparación directa entre el modelo base y el preferido, variable por variable.
 
-**Lo más estable: el rendimiento.**
+Las aspas marcan las variables que uno de los dos modelos no estima: el Modelo 1 carece de las de negociación, el Modelo 3 deja fuera las depuradas. Los tramos punteados unen esos casos.
 
-- **goles** varía apenas **−12.5%** (0.032 → 0.028) y **pj** un **−25%** (0.016 → 0.012)
-- El resto se mueve mucho más: la magnitud de **edad** se reduce un **76%**, **ventanas** cae **−32%**, y posiciones y temporada cambian de escala o de signo
-- El efecto del rendimiento individual se sostiene al incorporar las variables de club
-
-**Si preguntan por la escala.** La estabilidad visual de pj y goles está favorecida por el tamaño de sus coeficientes, que se miden por partido y por gol. Medidos por un desvío estándar de la propia variable, **pj** pasa de +0.20 a +0.15 y **goles** de +0.145 a +0.127, magnitudes comparables a las dummies de posición (0.24 y 0.26). El efecto no es pequeño; la robustez, en términos relativos, se sostiene.
-
-**Las aspas.** Verde donde la depuración del M3 eliminó la variable, gris en las dos de plantel, que el M1 todavía no incorporaba.
+Lo que interesa observar es cuánto se mueven los coeficientes de los atributos del jugador al incorporar las variables de club. Ese desplazamiento mide el sesgo por omisión de la identidad de los clubes en un hedónico puro: parte de lo que el Modelo 1 atribuye a las características del jugador corresponde en realidad a con quién negocia.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -2961,6 +3319,19 @@ Variable dependiente: `lprecio`, sobre la especificación del **Modelo 3** y las
 \* p<0.1, \*\* p<0.05, \*\*\* p<0.01 &nbsp;·&nbsp; Grupos: [Jugador]{style="color:#9b59b6;"} · [Rendimiento]{style="color:#3498db;"} · [Negociación]{style="color:#2ecc71;"} · [Contrato y tiempo]{style="color:#f39c12;"}
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Pantalla oculta.
+
+Corresponde a la Tabla 10 del trabajo, presentada como los parámetros estimados del modelo censurado y del Tobit. Al contrastarla con la base, los valores de la columna Tobit coinciden con **efectos marginales** y no con parámetros crudos: para la edad, el parámetro Tobit es del orden de −0,31 mientras la tabla informa −0,181, que es el efecto marginal que reaparece en la Tabla 11.
+
+Como esa información ya está en la Tabla 11, la pantalla se retira de la exposición y se conserva únicamente la comparación de efectos marginales, que es la correcta.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 
 ## Resultados: Efectos Marginales de las Tres Estimaciones {.top}
 
@@ -2994,28 +3365,15 @@ Efectos parciales promedio, condicionados a la probabilidad de que la variable l
 :::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**El mensaje.** El Tobit recupera las magnitudes del truncado con la significatividad que aporta incorporar los ceros.
+::: {style="font-size: 0.78em;"}
+La Tabla 11, que pone los tres estimadores en la misma unidad: efectos marginales.
 
-**Lo que se mantiene**
+Es la comparación válida. Los coeficientes crudos del Tobit no son directamente comparables con los de MCO, porque el Tobit modela conjuntamente la probabilidad de observar un precio y su magnitud. Al pasar a efectos marginales, las tres columnas miden lo mismo.
 
-- **pj** 1.2% → casi 2% · **comprador** 0.54 → 0.66
-- **ventanas** 13.8% → 13.6%, prácticamente idéntico: el resultado más estable del trabajo
-
-**Lo que cambia**
-
-- **edad**: el efecto negativo crece de 10% a 18%
-- **goles**: casi triplica, de 2.8% a 7%
-- **vendedor**: se reduce a un tercio, de 0.31 a 0.11
-- **posiciones** pierden significancia; **portero** pasa a significativo, unos 60% sobre los defensores, con la salvedad de su escasa proporción en la muestra
-- **temporada** deja de ser significativa
-
-**La columna del censurado.** Coeficientes de 4 a 10 veces los del truncado: es lo que ocurre al incorporar los ceros sin corregir. Concentra todo el efecto de negociación en el comprador (2.442) y anula al vendedor (−0.008).
-
-**Si preguntan**
-
-- **Las posiciones son indicativas.** Wooldridge advierte que el factor de escala sirve como aproximación para variables continuas, pero no para discretas. El efecto parcial de una dummy en el Tobit hay que obtenerlo estimando E(y|x) con la variable en 1 y en 0, y tomando la diferencia; promediando esa diferencia sobre los individuos se llega al efecto parcial promedio. No está claro que el software siga ese procedimiento, de ahí la cautela
-- Son efectos parciales promedio, condicionados a que la variable latente supere el umbral de censura (10.7)
+La lectura tiene dos capas. Para los atributos del jugador, del rendimiento y del contrato, el Tobit se acerca al truncado y le agrega precisión, aprovechando las observaciones que el truncado descarta. Para las variables de negociación, las tres columnas se separan de manera notoria.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -3085,27 +3443,22 @@ fig.show()
 ```
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**El mensaje.** Las tres estimaciones corren sobre la misma especificación. El Tobit recupera las magnitudes del truncado; el censurado se desmadra.
+::: {style="font-size: 0.78em;"}
+**El mensaje.** Las tres estimaciones corren sobre la misma especificación. El Tobit recupera las magnitudes del truncado, mientras el censurado se desmadra: infla los coeficientes entre 4 y 10 veces, salvo el del vendedor, que directamente se anula.
 
-- El censurado infla los coeficientes entre 4 y 10 veces, salvo el del vendedor, que directamente se anula (0.307 → −0.008)
+**Dónde se concentran los ceros.** Fracción de transferencias sin precio por quintil, sobre las 832 con contrato vigente donde corre el Tobit. En esa muestra el 50,8% no tiene precio, que es la proporción que informa la tabla.
 
-**Dónde se concentran los ceros.** Fracción de transferencias sin precio por quintil, sobre las 832 con contrato vigente donde corre el Tobit. En esa muestra el 50.8% no tiene precio, que es la proporción que informa la tabla.
+- **valor del plantel comprador**: de 0,91 en el quintil más bajo a 0,13 en el más alto. Es el gradiente más pronunciado
+- **edad**: de 0,22 a 0,85, creciendo de forma monótona
+- **ventanas restantes**: de 0,66 a 0,13
+- **valor del plantel vendedor**: mucho más plano, entre 0,60 y 0,36
 
-- **valor del plantel comprador**: de **0.91** en el quintil más bajo a **0.13** en el más alto. Es el gradiente más pronunciado
-- **edad**: de **0.22** a **0.85**, creciendo de forma monótona
-- **ventanas restantes**: de **0.66** a **0.13**
-- **valor del plantel vendedor**: mucho más plano, entre **0.60** y **0.36**
+**Por qué esto explica el gráfico.** La variable con el gradiente más fuerte es la que más se infla cuando el censurado trata los ceros como precio observado, porque los ceros están sistemáticamente del lado de los planteles compradores chicos. La variable con el gradiente más plano es la que se anula, porque sus ceros se reparten de manera pareja y borran la señal.
 
-**Los ceros y su distancia al umbral.** Las transferencias sin precio están cargadas como ln(0+1) = 0, mientras que el umbral de censura está en ln(45.000) ≈ 10.71. Esos ceros quedan, entonces, **10.71 unidades logarítmicas por debajo de la cota**, un valor que ninguna operación observada alcanza jamás.
-
-Cada modelo hace algo distinto con esa distancia:
-
-- **Truncado**: los ceros no existen, la distancia es irrelevante
-- **Censurado**: toma el 0 al pie de la letra, como si el precio hubiera sido de un euro. Arrastra la recta hacia un punto que está a 10.71 unidades del mínimo real, y de ahí el desmadre
-- **Tobit**: su verosimilitud solo usa el indicador de que la observación cae por debajo de el umbral. El valor con que se haya cargado el cero **no entra en la estimación**, y por eso el modelo es inmune a esa codificación
-
-**Comprobación.** Recodificando los ceros en la cota en lugar de en ln(1), la distorsión media del censurado cae de 4.00 a 1.17 veces. La *magnitud* del inflado, entonces, no es interpretable: informa el patrón, no el factor.
+La corrección Tobit devuelve ambos coeficientes a magnitudes compatibles con el truncado.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -3168,31 +3521,17 @@ El resto de las variables explica las dos cosas: la probabilidad de tener precio
 :::::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**De dónde sale.** Si se define w = 1 cuando hay precio, ese binario sigue un probit cuyo coeficiente es, justamente, β/σ. Es decir que el probit estima directamente esa razón, y por eso se la puede contrastar contra la que da el Tobit.
+::: {style="font-size: 0.78em;"}
+El control de especificación: la Tabla 12 compara los coeficientes estandarizados del Probit sobre la probabilidad de tener precio contra los del Tobit.
 
-**Qué mirar, según Wooldridge.** Dos señales de problema: que una variable salga significativa en el probit con un signo y significativa en el Tobit con el contrario; o que, con el mismo signo, las magnitudes sean muy distintas. Y una licencia: **no hay que preocuparse por los cambios de signo ni por las diferencias de magnitud en variables que resultan insignificantes en ambos modelos.**
+La idea del contraste es directa. Si el mecanismo que decide **si** hay precio es el mismo que determina **cuánto** vale, ambos conjuntos de coeficientes deberían ordenarse de forma parecida. Esa correspondencia es justamente lo que el Tobit supone al usar un único vector de parámetros para las dos decisiones.
 
-**El resultado.** No hay grandes diferencias, salvo en las variables de negociación.
+El resultado sostiene el uso del Tobit para los atributos del jugador, del rendimiento y del contrato. Las variables de negociación se comportan de manera menos consistente, y esa es la grieta que el trabajo reconoce al concluir: para estudiar poder de negociación conviene restringirse a las transferencias con precio positivo.
 
-- **`delantero`** muestra la mayor diferencia (−0.207), pero es insignificante en las dos estimaciones: la licencia de Wooldridge la deja afuera
-- **`lvalor_plantel_v`** queda entonces como la única discrepancia relevante: 0.121 y significativa al 1% en el Tobit, contra −0.028 y sin significancia en el probit. Explica el precio, no la probabilidad de que haya precio
-- El resto de las diferencias queda por debajo de 0.12
-
-**Por qué la comparación es informativa.** El Tobit descansa en el supuesto de que un mismo índice gobierna dos decisiones distintas: si la transferencia tendrá precio y cuánto será ese precio. El probit estima la primera sin atarla a la segunda. La coincidencia entre ambas estimaciones vuelve inocuo el supuesto; la divergencia indica que las dos decisiones responden a mecanismos separados. Acá esa divergencia se concentra en el poder de negociación del vendedor.
-
-**Si preguntan.** Las posiciones deben tomarse como indicativas: no está claro que el software siga el método de Wooldridge para variables binarias.
-
-**IDEA — versión corregida, no expuesta.**
-
-**Dónde están los ceros: se verifica directo, sin modelos.** Fracción de transferencias sin precio por quintil del regresor:
-
-- **edad**: 0.16 → 0.85 (monótona). **valor plantel comprador**: 0.90 → 0.14. **valor plantel vendedor**: plano, 0.37 a 0.60. **rest_ventana**: 0.65 → 0.12.
-- Efectos parciales del probit sobre P(tener precio): un año más de edad, **−4.2 pp**; 10% más de valor del comprador, **+1.6 pp**.
-
-**No usar el cambio de pendiente del censurado como prueba.** Su coeficiente es, según la variable, entre el 86% y el 100% del margen extensivo multiplicado por 13.98 (la media del log-precio de las positivas). El factor "4 a 10x" es esa constante, y depende de haber codificado los ceros en ln(1)=0 en vez de en la cota: puestos en la cota, la distorsión cae a 1.17x. Contraejemplo: `delantero` invierte el signo (+0.263 → −0.262) con probit no significativo.
-
-**Pendiente sin resolver, aparte de esto:** el test de Cragg rechaza el Tobit frente al modelo de dos partes (probit + truncada). El rechazo viene de la escala: σ del Tobit 1.61 contra 0.73 dentro de las positivas.
+Cuando la correspondencia falla de manera generalizada, la alternativa natural sería un modelo de doble valla al estilo de Cragg (1971), que separa la decisión de participar de la de cuánto pagar.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -3237,15 +3576,15 @@ Efectos porcentuales sobre el precio. Primer valor: **Modelo 3** (solo precios p
 ::::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Cierre de la exposición de resultados.** Los números están en pantalla; acá va el énfasis. La lectura de todo esto queda para conclusiones.
+::: {style="font-size: 0.78em;"}
+Cierre descriptivo del capítulo empírico, antes de pasar a la interpretación.
 
-- **Edad.** Mantiene signo negativo en las tres estimaciones y gana magnitud al corregir la censura. La relación es lineal: el término cuadrático no sobrevive a la incorporación de las variables de club
-- **Rendimiento.** Partidos y goles conservan signo y significancia en las tres estimaciones. El resto de las estadísticas no supera la depuración
-- **Contrato.** Las ventanas restantes son el coeficiente que menos varía entre estimaciones. Al pasar al Tobit, la temporada pierde significancia
-- **Negociación.** Al corregir la censura el efecto del comprador aumenta y el del vendedor se reduce; la distancia entre ambos se amplía
-- **Advertencia a repetir.** Lo de las ventanas es una asociación. Conviene decirlo acá, antes de que alguien lo lea como una recomendación de política contractual
-- **A notar si hay tiempo.** Las posiciones pierden significancia en el Tobit, igual que la perdían en el Modelo 1 cuando el valor de los planteles no estaba
+Los tres bloques que quedan firmes: la edad como atributo individual dominante, con relación lineal decreciente; las dos estadísticas de rendimiento más reconocidas, partidos jugados y goles; y el tiempo contractual restante medido en ventanas.
+
+El bloque de negociación queda firme en magnitud y con una asimetría marcada entre comprador y vendedor, con la salvedad de identificación que las pantallas anteriores dejaron planteada.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -3282,16 +3621,17 @@ El club maximiza $U(E,\,A,\,S,\,\pi)$ (Sloane, 1971), y el mercado interviene en
 ::::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Cómo interviene el mercado en cada argumento.**
+::: {style="font-size: 0.78em;"}
+La primera conclusión es teórica y responde a las dos preguntas iniciales.
 
-**S, salud de la liga.** Es el único donde el mercado opera en contra. Cada club maximiza su propia utilidad, y reforzarse mejora su éxito deportivo a costa del balance competitivo del conjunto. Es la tensión de Neale que aparece en Antecedentes: la firma es la liga, pero quien decide es el club. El mercado de pases es el mecanismo por el cual el óptimo individual se aparta del colectivo. Ningún club internaliza S, y por eso el fair play financiero tiene que imponerla desde afuera.
+**Por qué** se comercian jugadores: porque existe un derecho de exclusividad sobre el uso de su fuerza de trabajo mientras rige el contrato. Ese derecho se estableció con dos objetivos, proteger el patrimonio de los clubes y sostener el interés del público mediante la estabilización de los planteles.
 
-**E y π, en trade-off.** El mercado es el instrumento que convierte uno en otro: vender mejora los beneficios y deteriora el rendimiento deportivo; comprar hace lo inverso. No son argumentos que el club optimice por separado, están conectados por el precio. Evidencia propia: los equipos de mayor valor pagan por encima del rendimiento y las características del jugador, con una elasticidad de 0.54. Es un club sacrificando π por E.
+**Para qué**: porque esos activos sirven para ganar partidos y para generar ingresos de manera directa e indirecta. La doble función es la que hace del jugador un activo comercializable y a la vez un trabajador con derechos.
 
-**A, asistencia.** Tiene dos canales. El indirecto pasa por E: mejores resultados, más público. El directo no pasa por el resultado — un fichaje resonante vende entradas y camisetas antes de jugar, que es el argumento de la slide "Ineficiencia y Marketing".
-
-**El cierre.** El mercado toca los cuatro argumentos, pero con signos distintos, y dos de ellos están en tensión directa. Por eso el precio es un objeto negociado y no un precio de equilibrio de mercado, que es en el fondo la justificación del enfoque de negociación de todo el trabajo.
+La segunda parte de la respuesta es la que conecta con el marco teórico: dado que los clubes persiguen objetivos deportivos junto a los económicos, la eficiencia de una compra se evalúa en un espacio más amplio que el de convertir dinero en victorias.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -3349,15 +3689,17 @@ El club maximiza $U(E,\,A,\,S,\,\pi)$ (Sloane, 1971), y el mercado interviene en
 ::::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-**Respuesta a la primera pregunta de investigación.** Acá sí corresponde interpretar: lo que en Resultados quedó descripto, se lee.
+::: {style="font-size: 0.78em;"}
+Los modelos hedónicos explican una porción considerable de la variabilidad del precio, sobre todo al incorporar el valor de plantel. Queda bastante por explicar.
 
-- **Edad.** El atributo personal más determinante. La relación estimada es lineal decreciente, sin el tramo creciente que supone la forma cuadrática. Es el punto donde el trabajo se aparta de la literatura internacional, y se desarrolla en la slide siguiente
-- **Posición.** Significativa en mediocampistas y delanteros sobre los defensores, pero solo cuando se controla por el valor de los planteles
-- **Porteros.** La escasez de observaciones en esa posición y lo diferente de su rol vuelven inestable el coeficiente. Amerita evaluar su exclusión del modelo
-- **Nacionalidad.** El pasaporte comunitario pierde peso al incorporar los identificadores de los clubes: operaba como señal de acceso al fútbol europeo, donde los planteles son más caros
-- **Rendimiento.** Solo las estadísticas de mayor reconocimiento muestran influencia. Es el resultado más robusto del trabajo: se sostiene tanto al incorporar las variables de club como al corregir por censura
-- **Contrato.** Las ventanas restantes son el efecto más estable de las tres estimaciones. La proximidad del vencimiento reduce el precio de venta
+El trabajo identifica con precisión qué falta y por qué. El **salario** y la **cláusula de rescisión** son destacados por la teoría como determinantes relevantes, y resultan inaccesibles en todas las principales ligas del mundo con la excepción de Alemania. Es una restricción estructural: tanto clubes como jugadores tienen incentivos para mantener esa información reservada, y solo cambiaría por regulación de organismos superiores.
+
+Sobre el rendimiento, solo las estadísticas más reconocidas —partidos jugados y goles— muestran influencia. El trabajo lo atribuye a la construcción de las variables antes que a la ausencia de efecto, y sugiere para próximos estudios estadísticas más específicas por posición, combinadas con métodos de estimación que penalicen menos la incorporación de variables.
+
+Sobre la posición, resultan significativos mediocampistas y delanteros. Para los porteros, la escasez de observaciones y lo distinto de su rol sugieren evaluar su exclusión del modelo.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -3400,12 +3742,17 @@ Forma de U · **3** (4%)
 ::::
 
 ::: {.notes}
-::: {style="font-size: 0.7em;"}
-El resultado se aparta de la forma dominante, pero corresponde al segundo patrón más frecuente entre los que alcanzan significatividad. Una explicación posible es que los clubes argentinos no valoren la experiencia tanto como el potencial, o que exista discrepancia con los equipos europeos sobre cuándo concluye el período de formación del jugador, particularmente al momento de vender.
+::: {style="font-size: 0.78em;"}
+El hallazgo que más se aparta de la literatura internacional.
 
-La Premier League es la liga más estudiada de la revisión; solo dos de los 29 artículos salen de Europa.
+Los trabajos centrados en el fútbol inglés y europeo encuentran una relación cuadrática cóncava entre edad y precio: el valor crece durante la formación, alcanza un máximo y decae. Acá la relación resulta **lineal decreciente** en el modelo preferido, y el término cuadrático pierde significatividad.
 
-**La variable dependiente no es la misma en toda la revisión.** Parte de la evidencia proviene de tasaciones y no de precios negociados: 15 de los 29 artículos usan estimaciones de Transfermarkt en al menos una de sus especificaciones, aunque la revisión no informa en cuántas de las 111 la dependiente es la tasación. Las tasaciones se forman con heurísticas que incorporan la edad, de modo que la forma de U invertida podría estar en parte incorporada al modo de valuar antes que emergiendo de las operaciones.
+El trabajo ofrece dos explicaciones posibles. Que los clubes argentinos valoren el potencial por encima de la experiencia. O que exista una discrepancia con los clubes europeos respecto de cuándo termina el período de formación de un jugador, particularmente al momento de vender.
+
+La segunda es la más interesante para el mercado argentino: si el destino habitual de la venta es Europa, el comprador paga por lo que el jugador puede llegar a ser, y el tramo ascendente de la curva de edad transcurre antes de que la transferencia ocurra.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
 :::
 :::
 
@@ -3461,6 +3808,23 @@ Elasticidad precio&ndash;valor del plantel.<br>Ambas positivas: los dos empujan 
 
 ::::::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La conclusión sobre poder de negociación, que es la parte más contraintuitiva del trabajo.
+
+Los clubes más grandes por valor de plantel, **cuando compran, pagan más**. En términos de negociación, eso constituye un poder negativo: en lugar de conseguir un descuento, elevan el precio. Los vendedores, en cambio, exhiben poder de negociación positivo.
+
+El resultado coincide con la hipótesis de Ruijg y van Ophem (2015): a medida que un jugador demuestra mejor rendimiento se incorpora a equipos de mayor nivel de competencia, donde se manejan precios más altos. Estar en una categoría superior implica pagos más elevados y, al mismo tiempo, mayores posibilidades de reventa, principalmente por el acceso a compradores potenciales más grandes.
+
+De ahí una lectura estratégica que el trabajo apunta: retener un porcentaje de una futura venta puede ser una buena forma de captar ingresos al vender a un club más grande, con el riesgo de que el jugador no rinda igual en una competencia más exigente.
+
+**Una advertencia de interpretación.** El valor del plantel resume muchas dimensiones del club: división, categoría, capacidad económica, país. Parte de lo que se lee como poder de negociación puede corresponder al origen competitivo del jugador. Separar ambos componentes exige controles adicionales que exceden el alcance de este trabajo.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Conclusiones: Limitaciones
 
 :::: {style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-content: space-evenly; font-size: 0.72em; line-height: 1.45;"}
@@ -3497,6 +3861,23 @@ Incorporar las transferencias útil para estimar atributos, rendimiento y contra
 Se fija un único umbral para toda la muestra. No se explora que el piso efectivo de negociación difiera entre clubes, salvedad que Carson y Sun (2007) dejan planteada.
 :::
 
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+Las limitaciones que el trabajo reconoce, ordenadas por gravedad.
+
+La **información contractual** ausente —salario y cláusula de rescisión— es la más severa, y no depende del investigador.
+
+Las **variables de rendimiento** disponibles no aíslan el aporte propio de cada posición. El caso más claro son defensores y mediocampistas: quites, duelos ganados, pases progresivos o regates no están en la fuente, y sin ellos su contribución queda invisible. Los porteros tienen estadísticas propias en la base, y su problema es distinto: la escasez de observaciones.
+
+El **umbral de censura** se fija único para todo el mercado. Es razonable como primera aproximación y conceptualmente discutible: el precio mínimo por debajo del cual un club prefiere no cobrar puede depender del club. Un umbral individual resulta difícil de identificar dentro de un Tobit estándar.
+
+A esto se suma el **sesgo de selección** declarado en la construcción de la muestra: las bajas por información faltante se concentran en jugadores y clubes de menor cobertura.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
+
 ## Conclusiones: Agenda Futura
 
 :::: {style="flex: 1; display: grid; grid-template-columns: 65%; justify-content: center; gap: 24px; align-content: space-evenly; font-size: 0.72em; line-height: 1.45;"}
@@ -3524,6 +3905,23 @@ Para el poder de negociación, restringirse a las transferencias con precio posi
 :::
 
 ::::
+
+::: {.notes}
+::: {style="font-size: 0.78em;"}
+La agenda que el trabajo deja abierta.
+
+**Variables.** Propensión a las lesiones, fama del jugador, convocatorias a la selección nacional, y estadísticas de rendimiento específicas por posición.
+
+**Métodos.** Estimadores que penalicen menos la incorporación de variables, lo cual apunta a técnicas de regularización frente a la depuración por significatividad que se usa acá.
+
+**Diseño.** Una distinción que surge de los propios resultados: para estudiar el efecto de las características individuales y del rendimiento conviene incorporar las transferencias sin precio; para estudiar el poder de negociación conviene restringirse a las de precio positivo, porque el precio es el ámbito donde la negociación efectivamente ocurre.
+
+Y una línea que el trabajo no recorre pero que sus datos permiten: descomponer qué parte del efecto atribuido al valor del plantel corresponde al origen competitivo del jugador, incorporando controles de división, nacionalidad y posición en la tabla.
+:::
+::: {style="font-size: 0.6em; color: #7f8c8d; margin-top: 0.8em;"}
+Comentario de Claude a partir de la lectura del trabajo final
+:::
+:::
 
 ## {.cierre background-image="fondo.png" background-size="cover" background-opacity="0.8"}
 

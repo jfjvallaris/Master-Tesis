@@ -1,0 +1,543 @@
+/* Agregar padding al section para que el recuadro tenga espacio */
+.centrar-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+#title-slide {
+  padding: 100px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Clase para diapositivas con texto pequeño */
+.letra-chica {
+  font-size: 0.6em !important; /* Ajusta el tamaño aquí */
+}
+
+/* Clase para diapositivas con texto gigante */
+.letra-grande {
+  font-size: 1.5em !important;
+}
+
+/* Crear un pseudo-elemento como recuadro detrás del contenido */
+#title-slide::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  width: 90% !important;
+  height: 100% !important;
+  min-height: 60% !important;
+  z-index: 0 !important;
+}
+
+/* Asegurar que el texto esté por encima del recuadro */
+#title-slide h1.title,
+#title-slide p.subtitle,
+#title-slide .quarto-title-authors {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.reveal .title {
+  font-size: 3em !important;
+  text-shadow: 0px 4px 10px rgba(0,0,0,0.8) !important;
+  margin-bottom: 30px !important;
+}
+
+.reveal .subtitle {
+  font-size: 1.8em !important;
+}
+
+.reveal .quarto-title-author-name {
+  font-size: 1.5em !important;
+  color: #bdc3c7 !important;
+  margin-top: 30px !important;
+}
+
+.reveal .slides section:not(#title-slide) {
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  padding: 2.5% !important;
+  
+  /* MANTENEMOS TU 110% PERO SIN TRANSFORM */
+  width: 110% !important; 
+  height: 100% !important;
+  
+  /* Truco para centrar sin usar translate */
+  position: absolute !important;
+  left: -5% !important; /* Movemos a la izquierda la mitad del exceso (10% / 2) */
+  top: 0 !important;
+  margin: 0 !important;
+  transform: none !important; /* Esto es lo que arregla el salto */
+
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important; 
+  align-items: stretch !important;
+}
+
+.reveal .slides section:not(#title-slide).box-ancha {
+  width: 110% !important; 
+  left: -5% !important; /* (100 - 130) / 2 = -15 */
+  
+  /* Aseguramos que no se rompa el centrado */
+  margin: 0 !important;
+  transform: none !important;
+  top: 0 !important;
+}
+
+/* NUEVA CLASE PARA FORZAR ALINEACIÓN SUPERIOR */
+.reveal .slides section:not(#title-slide).top {
+  justify-content: flex-start !important;
+  padding-top: 40px !important; /* Un poco de aire arriba */
+}
+
+/* .reveal .slides section:not(#title-slide) {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+  padding: 2.5% !important;
+  width: 110% !important; Ancho de la caja negra 
+  height: 100% !important;
+
+  /* Centrado horizontal si el ancho en mayor a 100% 
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto !important;
+  box-sizing: border-box !important;
+
+
+/* Distribuir contenido verticalmente 
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: stretch !important;
+} */
+
+/* AJUSTE GLOBAL PARA ESTAS SLIDES: Maximizar espacio texto */
+.reveal .slides section[data-auto-animate] {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important; /* Pega todo arriba */
+    padding-top: 10px !important;
+}
+
+/* CONTENEDOR DE 3 COLUMNAS */
+.w-container { 
+    display: flex; 
+    gap: 30px; 
+    justify-content: center; 
+    align-items: flex-end; /* Alineados al piso del contenedor */
+    height: 300px; /* Altura reducida para dejar más espacio abajo */
+    margin-bottom: 20px;
+    margin-top: -50px;
+}
+
+/* COLUMNAS / TORRES */
+.tower-main { 
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 3px; 
+    width: 160px; 
+    align-content: end; 
+}
+
+.tower-sec { 
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 3px; 
+    width: 160px;
+    align-content: end; 
+    padding-left: 30px;
+}
+
+.tower-trash {
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 3px; 
+    width: 160px;
+    align-content: end; 
+    opacity: 0.7;
+    border-left: 1px dashed rgba(255,255,255,0.3);
+    padding-left: 80px;
+}
+
+/* PUNTOS */
+.d { 
+    width: 16px; 
+    height: 16px; 
+    border-radius: 50%; 
+    transition: all 1s ease-in-out;
+}
+
+/* ESTADOS */
+.g { background-color: #bdc3c7; } /* Gris */
+.r { background-color: #e74c3c; opacity: 0.5; } /* Rojo Basura */
+/* Con precio = relleno solido | Sin precio = hueco.
+   El binario se codifica por relleno y no por tono, para dejar libres
+   el verde y el violeta como colores de grupos de variables. */
+.ok-price {
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.55);
+}
+
+.ok-noprice {
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+}
+
+/* TEXTO EXPLICATIVO (Ahora tiene mucho más espacio) */
+.txt-ref { 
+    margin-top: 0; 
+    font-size: 0.9em; 
+    color: #eee; 
+    text-align: left;
+    border-top: 1px solid #555;
+    padding-top: 15px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* === Tablas de resultados de regresión (.tabla-reg) ===
+   Cada modelo ocupa un par de columnas: coeficiente y error estándar.
+   Las estrellas de significatividad van en una ranura de ancho fijo
+   para que no desplacen el punto decimal (equivale al r@{.}l de LaTeX). */
+
+.reveal .slides section .tabla-reg {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+  font-size: 0.86em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.reveal .slides section .tabla-reg th {
+  text-align: center;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.reveal .slides section .tabla-reg td {
+  padding: 1px 4px;
+  border: none;
+  white-space: nowrap;
+}
+
+/* Columna de nombres: aloja la línea de color del grupo */
+.reveal .slides section .tabla-reg td.v,
+.reveal .slides section .tabla-reg th.v {
+  text-align: left;
+  border-left: 3px solid transparent;
+  padding-left: 12px;
+}
+
+/* Coeficiente: alineado a la derecha, con ranura fija para las estrellas */
+.reveal .slides section .tabla-reg td.c {
+  text-align: right;
+  padding-right: 0;
+}
+
+.reveal .slides section .tabla-reg td.c .s {
+  display: inline-block;
+  width: 2.1em;
+  text-align: left;
+  padding-left: 1px;
+}
+
+/* Error estándar, pegado al coeficiente */
+.reveal .slides section .tabla-reg td.e {
+  text-align: left;
+  padding-left: 2px;
+  color: #bdc3c7;
+}
+
+/* Estadísticos del modelo (celdas combinadas) */
+.reveal .slides section .tabla-reg td.st {
+  text-align: center;
+}
+
+/* Aire entre bloques de modelo, sin línea vertical: la separación la da
+   el espacio a la izquierda de la celda que abre cada bloque */
+.reveal .slides section .tabla-reg td.c,
+.reveal .slides section .tabla-reg td.n,
+.reveal .slides section .tabla-reg td.st {
+  padding-left: 22px;
+}
+
+/* Separador horizontal entre grupos de variables */
+.reveal .slides section .tabla-reg tr.sep td {
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* Línea de color por grupo de variables (misma paleta que la slide de
+   modelos anidados) */
+.reveal .slides section .tabla-reg tr.g-jug    td.v { border-left-color: #9b59b6; }
+.reveal .slides section .tabla-reg tr.g-rend   td.v { border-left-color: #3498db; }
+.reveal .slides section .tabla-reg tr.g-tiempo td.v { border-left-color: #f39c12; }
+.reveal .slides section .tabla-reg tr.g-negoc  td.v { border-left-color: #2ecc71; }
+
+/* Resaltado del modelo preferido, vía <colgroup> para que funcione
+   también debajo de las celdas combinadas */
+.reveal .slides section .tabla-reg col.m3 {
+  background: rgba(52, 152, 219, 0.13);
+}
+
+/* --- Variante angosta (.tabla-angosta): para tablas de pocas columnas.
+   Sin `width: 100%` la tabla se ajusta a su contenido, así la columna de
+   nombres deja de estirarse; el margen automático la centra. --- */
+
+.reveal .slides section .tabla-reg.tabla-angosta {
+  width: auto;
+  margin: 0 auto;
+  font-size: 0.72em;
+}
+
+/* Alineada a la izquierda y más compacta, para convivir con una columna
+   de texto al costado */
+.reveal .slides section .tabla-reg.tabla-angosta.tabla-izq {
+  margin: 0;
+  font-size: 0.76em;
+}
+
+.reveal .slides section .tabla-reg.tabla-angosta.tabla-izq td.c {
+  padding-left: 30px;
+}
+
+/* Aire entre el nombre de la variable y la primera columna de datos */
+.reveal .slides section .tabla-reg.tabla-angosta td.v,
+.reveal .slides section .tabla-reg.tabla-angosta th.v {
+  padding-right: 34px;
+}
+
+.reveal .slides section .tabla-reg.tabla-angosta th,
+.reveal .slides section .tabla-reg.tabla-angosta td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Más separación entre modelos, que acá no tienen par coef./e.e. */
+.reveal .slides section .tabla-reg.tabla-angosta td.c {
+  padding-left: 42px;
+}
+
+/* --- Variante exploratoria (.tabla-hover): resalta fila y modelo al
+   pasar el mouse. El bloque de modelo se identifica con data-m, para que
+   el resaltado abarque el par coeficiente + error estándar. --- */
+
+.reveal .slides section .tabla-hover tbody tr.fila-hl td {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.reveal .slides section .tabla-hover td.col-hl,
+.reveal .slides section .tabla-hover th.col-hl {
+  background: rgba(52, 152, 219, 0.16);
+}
+
+/* Intersección fila × modelo: el tono más fuerte marca la celda apuntada */
+.reveal .slides section .tabla-hover tbody tr.fila-hl td.col-hl {
+  background: rgba(52, 152, 219, 0.34);
+}
+
+.reveal .slides section .tabla-hover tbody tr:hover {
+  cursor: default;
+}
+
+/* === Ajustes SOLO para la slide de Definición de Variables === */
+
+.reveal .slides section.tabla-ancha {
+  width: 100% !important;
+}
+
+.reveal .slides section.tabla-ancha > div,
+.reveal .slides section.tabla-ancha .panel-tabset,
+.reveal .slides section.tabla-ancha .tabset,
+.reveal .slides section.tabla-ancha .tab-content,
+.reveal .slides section.tabla-ancha .tab-pane,
+.reveal .slides section.tabla-ancha .columns {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.reveal .slides section.tabla-ancha .columns {
+  display: flex !important;
+}
+
+.reveal .slides section.tabla-ancha .column {
+  box-sizing: border-box !important;
+  flex: 0 0 auto !important;
+}
+
+.reveal .slides section.tabla-ancha table {
+  width: 100% !important;
+  table-layout: fixed !important;
+}
+
+/* Slide de cierre: sin caja de sección, para que el recuadro lo aporte
+   el propio contenido y se vea el fondo alrededor */
+.reveal .slides section:not(#title-slide).cierre {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  justify-content: flex-end !important;
+}
+
+/* Banda de base: rectángulo oscuro al pie, sin degradado */
+.reveal .slides section:not(#title-slide).cierre::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 22% !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* === Línea de tiempo unificada de Antecedentes ===
+   Posición = disciplina (arriba deporte, abajo fútbol).
+   Relleno del marcador = tipo de aporte (lleno teórico, hueco estimación). */
+
+.reveal .slides section .lt {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: 1fr 46px 1fr;
+  column-gap: 10px;
+  height: 330px;
+  font-size: 0.50em;
+  line-height: 1.35;
+}
+
+.reveal .slides section .lt .espina {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  align-self: center;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.reveal .slides section .lt .arriba {
+  grid-row: 1;
+  align-self: end;
+  text-align: center;
+  padding-bottom: 16px;
+}
+
+.reveal .slides section .lt .abajo {
+  grid-row: 3;
+  align-self: start;
+  text-align: center;
+  padding-top: 16px;
+}
+
+.reveal .slides section .lt .anio {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.reveal .slides section .lt .autor { color: #ecf0f1; }
+
+.reveal .slides section .lt .aporte {
+  color: #bdc3c7;
+  font-size: 0.92em;
+  margin-top: 3px;
+}
+
+.reveal .slides section .lt .marca {
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reveal .slides section .lt .marca i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.reveal .slides section .lt .teorico i  { background: #ecf0f1; }
+.reveal .slides section .lt .empirico i { background: transparent; border: 3px solid #ecf0f1; }
+
+/* Corte de escala: marca que entre dos hitos pasó mucho tiempo */
+.reveal .slides section .lt .corte {
+  grid-row: 2;
+  align-self: center;
+  justify-self: start;
+  transform: translateX(-50%);
+  font-size: 1.7em;
+  letter-spacing: -0.18em;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1;
+  z-index: 2;
+}
+
+.reveal .slides section .lt .corte-lbl {
+  grid-row: 2;
+  align-self: center;
+  justify-self: start;
+  transform: translate(-50%, -150%);
+  font-size: 0.82em;
+  color: #bdc3c7;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* === Tabla de estadistica descriptiva === */
+.reveal .slides section .tabla-desc {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.60em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.reveal .slides section .tabla-desc th {
+  text-align: right;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.reveal .slides section .tabla-desc th.v { text-align: left; }
+
+.reveal .slides section .tabla-desc td {
+  text-align: right;
+  padding: 2px 8px;
+  border: none;
+  white-space: nowrap;
+}
+
+/* Nombre de la variable, con la linea de color de su grupo */
+.reveal .slides section .tabla-desc td.v {
+  text-align: left;
+  border-left: 3px solid var(--g, transparent);
+  padding-left: 12px;
+}
+
